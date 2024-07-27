@@ -1,4 +1,4 @@
-from modules.prompt_manager import PromptManager
+rom modules.prompt_manager import PromptManager
 from modules.model_loader import ModelLoader
 from modules.transcript_cleaner import TranscriptCleaner
 from modules.transcript_extractor import TranscriptExtractor
@@ -6,7 +6,7 @@ from modules.transcript_extractor import TranscriptExtractor
 # Initialize PromptManager
 prompt_manager = PromptManager()
 
-# Initialize ModelLoader with the base URL for the AI model server
+# Initialize ModelLoader with the base URL for the AI model server and model name
 model_loader = ModelLoader(base_url="http://localhost:11434", model_name="llama3.1")
 
 # Initialize TranscriptCleaner with the ModelLoader and PromptManager
