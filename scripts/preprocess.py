@@ -1,5 +1,5 @@
-from model_loader import ModelLoader
-from cleaner import TranscriptCleaner
+from modules.model_loader import ModelLoader
+from modules.transcript_cleaner import TranscriptCleaner
 
 def preprocess_transcript(transcript):
     cleaner = TranscriptCleaner(model_loader=ModelLoader(base_url="http://localhost:11434", model_name="llama3.1"))

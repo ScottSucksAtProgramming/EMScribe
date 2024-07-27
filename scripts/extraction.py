@@ -1,5 +1,5 @@
-from model_loader import ModelLoader
-from extractor import TranscriptExtractor
+from modules.model_loader import ModelLoader
+from modules.transcript_extractor import TranscriptExtractor
 
 def extract_information(transcript):
     extractor = TranscriptExtractor(model_loader=ModelLoader(base_url="http://localhost:11434", model_name="llama3.1"))
