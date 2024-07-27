@@ -1,4 +1,6 @@
-rom modules.prompt_manager import PromptManager
+# scripts/main.py
+
+from modules.prompt_manager import PromptManager
 from modules.model_loader import ModelLoader
 from modules.transcript_cleaner import TranscriptCleaner
 from modules.transcript_extractor import TranscriptExtractor

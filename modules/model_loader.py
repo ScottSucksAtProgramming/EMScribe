@@ -16,6 +16,7 @@ class ModelLoader:
             model_name (str): The name of the model to use.
             base_url (str): The base URL of the model API.
         """
+        self.base_url = base_url
         self.model_name = model_name
         self.client = Ollama(base_url=base_url)
 

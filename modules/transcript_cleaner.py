@@ -1,3 +1,5 @@
+# modules/transcript_cleaner.py
+
 from modules.model_loader import ModelLoader
 from modules.prompt_manager import PromptManager
 
@@ -31,7 +33,7 @@ class TranscriptCleaner:
         Returns:
             str: The cleaned transcript.
         """
-        prompt = self.prompt_manager.get_prompt("clean_transcript", transcript)
+        prompt = self.prompt_manager.get_prompt("clean_transcript", transcript=transcript)
         response = self.model_loader.generate(prompt)
-        cleaned_transcript = response.generations[0][0].text
+        cleaned_transcript = response
         return cleaned_transcript.strip()
