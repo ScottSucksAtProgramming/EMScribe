@@ -35,11 +35,11 @@ class TranscriptExtractor:
             "incident_info",
             "patient_demographics",
             "patient_histories",
-            "Treatments Done",
-            "Objective Assessment",
-            "Treatment Plan",
-            "Transport Information",
-            "Transfer of Care"
+            # "Treatments Done",
+            # "Objective Assessment",
+            # "Treatment Plan",
+            # "Transport Information",
+            # "Transfer of Care"
         ]
         
         extracted_data = {}
