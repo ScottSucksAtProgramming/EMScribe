@@ -1,4 +1,5 @@
 from modules.model_loader import ModelLoader
+from modules.prompt_manager import PromptManager
 
 class TranscriptExtractor:
     """
@@ -6,43 +7,37 @@ class TranscriptExtractor:
 
     Attributes:
         model_loader (ModelLoader): An instance of ModelLoader to interact with the AI model.
+        prompt_manager (PromptManager): An instance of PromptManager to manage prompts.
     """
 
-    def __init__(self, model_loader):
+    def __init__(self, model_loader: ModelLoader, prompt_manager: PromptManager):
         """
-        Initializes the TranscriptExtractor with a ModelLoader instance.
+        Initializes the TranscriptExtractor with a ModelLoader instance and a PromptManager instance.
 
         Args:
             model_loader (ModelLoader): An instance of ModelLoader to interact with the AI model.
+            prompt_manager (PromptManager): An instance of PromptManager to manage prompts.
         """
         self.model_loader = model_loader
+        self.prompt_manager = prompt_manager
 
-    def extract(self, transcript):
+    def extract(self, transcript: str) -> dict:
         """
-        Extracts relevant information from the EMS transcript.
+        Extracts information from the transcript using the specified prompts.
 
         Args:
-            transcript (str): The transcript from which to extract information.
+            transcript (str): The transcript to extract information from.
 
         Returns:
             dict: A dictionary containing the extracted information.
         """
-        prompts = {
-            "Demographics": "Extract the patient's name, age, and gender from the transcript: {transcript}",
-            "Medical History": "List the patient's past medical conditions and medications mentioned in the transcript: {transcript}",
-            "Chief Complaint": "Identify the patient's chief complaint from the transcript: {transcript}",
-            "History of Present Illness": "Describe the history of the present illness from the transcript: {transcript}",
-            "Treatments Done": "List the treatments done by the sending facility or interventions the patient completed on his own: {transcript}",
-            "Objective Assessment": "Provide an objective assessment of the patient by body system: {transcript}",
-            "Treatment Plan": "Outline the treatment plan provided to the patient by the EMS crew: {transcript}",
-            "Transport Information": "Detail how the patient was transported: {transcript}",
-            "Transfer of Care": "Provide information about the transfer of care: {transcript}"
-        }
-
         extracted_data = {}
+        prompts = self.prompt_manager.get_prompts()
+        
         for key, prompt in prompts.items():
             full_prompt = prompt.format(transcript=transcript)
-            response = self.model_loader.generate(full_prompt, stream=False)
-            extracted_data[key] = response
+            response = self.model_loader.generate(full_prompt)
+            extracted_text = response.generations[0][0].text.strip()
+            extracted_data[key] = extracted_text
         
         return extracted_data
