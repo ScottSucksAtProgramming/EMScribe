@@ -103,14 +103,14 @@ def process_transcript(transcript):
     extracted_data = {
         "Call Information": extract_call_information(cleaned_transcript),
         "Demographics": extract_demographics(cleaned_transcript),
-        # "Medical History": extract_medical_history(cleaned_transcript),
-        # "Chief Complaint": extract_chief_complaint(cleaned_transcript),
-        # "History of Present Illness": extract_history_of_present_illness(cleaned_transcript),
-        # "Treatments Done": extract_treatments_done(cleaned_transcript),
-        # "Objective Assessment": extract_objective_assessment(cleaned_transcript),
-        # "Treatment Plan": extract_treatment_plan(cleaned_transcript),
-        # "Transport Information": extract_transport_information(cleaned_transcript),
-        # "Transfer of Care": extract_transfer_of_care(cleaned_transcript)
+        "Medical History": extract_medical_history(cleaned_transcript),
+        "Chief Complaint": extract_chief_complaint(cleaned_transcript),
+        "History of Present Illness": extract_history_of_present_illness(cleaned_transcript),
+        "Treatments Done": extract_treatments_done(cleaned_transcript),
+        "Objective Assessment": extract_objective_assessment(cleaned_transcript),
+        "Treatment Plan": extract_treatment_plan(cleaned_transcript),
+        "Transport Information": extract_transport_information(cleaned_transcript),
+        "Transfer of Care": extract_transfer_of_care(cleaned_transcript)
     }
     return extracted_data
 
