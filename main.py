@@ -1,4 +1,5 @@
 from scripts.preprocess import preprocess_transcript
+from scripts.extraction import process_transcript
 
 def main():
     # Example transcript text
@@ -8,12 +9,10 @@ def main():
     The chief complaint is chest pain that started two hours ago...
     """
     
-    # Preprocess the transcript
-    cleaned_transcript = preprocess_transcript(transcript)
-    print("Cleaned Transcript:")
-    print(cleaned_transcript)
-    
-    # Add further processing and extraction steps here
+    # Process the transcript
+    extracted_data = process_transcript(transcript)
+    print("Extracted Data:")
+    print(extracted_data)
 
 if __name__ == "__main__":
     main()
