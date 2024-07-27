@@ -3,7 +3,7 @@ from modules.prompt_manager import PromptManager
 
 class TranscriptExtractor:
     """
-    A class to extract information from EMS transcripts using an AI model.
+    A class to extract information from an EMS transcript using an AI model.
 
     Attributes:
         model_loader (ModelLoader): An instance of ModelLoader to interact with the AI model.
@@ -12,7 +12,7 @@ class TranscriptExtractor:
 
     def __init__(self, model_loader: ModelLoader, prompt_manager: PromptManager):
         """
-        Initializes the TranscriptExtractor with a ModelLoader instance and a PromptManager instance.
+        Initializes the TranscriptExtractor with a ModelLoader and PromptManager instance.
 
         Args:
             model_loader (ModelLoader): An instance of ModelLoader to interact with the AI model.
@@ -29,15 +29,24 @@ class TranscriptExtractor:
             transcript (str): The transcript to extract information from.
 
         Returns:
-            dict: A dictionary containing the extracted information.
+            dict: A dictionary with the extracted information.
         """
-        extracted_data = {}
-        prompts = self.prompt_manager.get_prompts()
+        extraction_keys = [
+            "incident_info",
+            "patient_demographics",
+            "patient_histories",
+            "Treatments Done",
+            "Objective Assessment",
+            "Treatment Plan",
+            "Transport Information",
+            "Transfer of Care"
+        ]
         
-        for key, prompt in prompts.items():
-            full_prompt = prompt.format(transcript=transcript)
-            response = self.model_loader.generate(full_prompt)
-            extracted_text = response.generations[0][0].text.strip()
-            extracted_data[key] = extracted_text
+        extracted_data = {}
+        
+        for key in extraction_keys:
+            prompt = self.prompt_manager.get_prompt(key, transcript=transcript)
+            response = self.model_loader.generate(prompt)
+            extracted_data[key] = response.strip()
         
         return extracted_data
