@@ -1,8 +1,8 @@
-from model_loader import ModelLoader
+from modules.model_loader import ModelLoader
 
 class TranscriptExtractor:
     """
-    A class to extract specific information from an EMS transcript using an AI model.
+    A class to extract information from transcripts.
 
     Attributes:
         model_loader (ModelLoader): An instance of ModelLoader to interact with the AI model.
@@ -17,47 +17,30 @@ class TranscriptExtractor:
         """
         self.model_loader = model_loader
 
-    def extract_information(self, transcript: str) -> dict:
+    def extract(self, transcript: str) -> dict:
         """
-        Extracts specific information from the transcript.
+        Extracts various sections from the given transcript.
 
         Args:
-            transcript (str): The cleaned EMS transcript.
+            transcript (str): The transcript from which to extract information.
 
         Returns:
-            dict: A dictionary containing extracted information.
+            dict: A dictionary containing the extracted sections.
         """
-        sections = [
-            "Demographics",
-            "Medical History",
-            "Chief Complaint",
-            "History of Present Illness",
-            "Treatments Done",
-            "Objective Assessment",
-            "Treatment Plan",
-            "Transport Information",
-            "Transfer of Care"
-        ]
-
         prompts = {
-            "Demographics": f"Extract the patient's name, age, and gender from the transcript: {transcript}",
-            "Medical History": f"List the patient's past medical conditions and medications mentioned in the transcript: {transcript}",
-            "Chief Complaint": f"Identify the patient's chief complaint from the transcript: {transcript}",
-            "History of Present Illness": f"Describe the history of the present illness from the transcript: {transcript}",
-            "Treatments Done": f"List the treatments done by the sending facility or interventions the patient completed on his own: {transcript}",
-            "Objective Assessment": f"Provide an objective assessment of the patient by body system: {transcript}",
-            "Treatment Plan": f"Outline the treatment plan provided to the patient by the EMS crew: {transcript}",
-            "Transport Information": f"Detail how the patient was transported: {transcript}",
-            "Transfer of Care": f"Provide information about the transfer of care: {transcript}"
+            "Demographics": "Extract the patient's name, age, and gender from the transcript: {}",
+            "Medical History": "List the patient's past medical conditions and medications mentioned in the transcript: {}",
+            "Chief Complaint": "Identify the patient's chief complaint from the transcript: {}",
+            "History of Present Illness": "Describe the history of the present illness from the transcript: {}",
+            "Treatments Done": "List the treatments done by the sending facility or interventions the patient completed on his own: {}",
+            "Objective Assessment": "Provide an objective assessment of the patient by body system: {}",
+            "Treatment Plan": "Outline the treatment plan provided to the patient by the EMS crew: {}",
+            "Transport Information": "Detail how the patient was transported: {}",
+            "Transfer of Care": "Provide information about the transfer of care: {}"
         }
 
-        extracted_info = {}
-        for section, prompt in prompts.items():
-            response = self.model_loader.generate(
-                model=self.model_loader.model_name,
-                prompts=[prompt],
-                stream=False
-            )
-            extracted_info[section] = response.generations[0][0].text.strip()
+        extracted_data = {}
+        for key, prompt in prompts.items():
+            extracted_data[key] = self.model_loader.generate(prompt.format(transcript))
 
-        return extracted_info
+        return extracted_data
