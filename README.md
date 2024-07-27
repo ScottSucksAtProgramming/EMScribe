@@ -1,3 +1,4 @@
+
 # EMScribe 2.0
 
 ## Overview
@@ -29,40 +30,65 @@ EMScribe 2.0 is a project designed to create comprehensive EMS narratives in a u
    ```bash
    git clone <repository_url>
    cd emscribe
+   ```
 
-2.	**Set Up a Virtual Environment:**
+2. **Set Up a Virtual Environment:**
 
-```bash
-python -m venv venv
-source venv/bin/activate
-```
+   ```bash
+   python -m venv venv
+   source venv/bin/activate
+   ```
 
-3.	**Install Dependencies:**
+3. **Install Dependencies:**
 
-```bash
-pip install -r requirements.txt
-```
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-4.	**Configure Ollama:**
+4. **Configure Ollama:**
 
-Ensure Ollama is running locally and accessible at http://localhost:11434.
+   Ensure Ollama is running locally and accessible at `http://localhost:11434`.
 
 ## Directory Structure
+
 ```plaintext
 emscribe/
+├── modules/
+│   ├── __init__.py
+│   ├── model_loader.py
+│   ├── prompt_manager.py
+│   ├── transcript_cleaner.py
+│   ├── transcript_extractor.py
+│   ├── prompts/
+│       ├── __init__.py
+│       ├── extraction_prompts.py
+│       ├── cleaning_prompts.py
 ├── scripts/
+│   ├── __init__.py
 │   ├── extraction.py
 │   ├── preprocess.py
+│   ├── main.py
 ├── README.md
 ├── requirements.txt
 ├── venv/
 ```
 
-## Running the Extraction Script
+## Running the Scripts
+
+### Extraction Script
 
 To run the extraction script, use the following command:
+
 ```bash
 python -m scripts.extraction
+```
+
+### Preprocess Script
+
+To run the preprocess script, use the following command:
+
+```bash
+python -m scripts.preprocess
 ```
 
 ### Example Transcript Input
@@ -79,25 +105,28 @@ The script will output detailed information extracted from the transcript, forma
 
 ## Development
 
-## Adding New Features
+### Adding New Features
 
 To add new features or enhance existing ones, follow these steps:
 
-1.	Create a New Branch:
-```bash
-git checkout -b feature/new-feature
-```
+1. **Create a New Branch:**
 
-2.	Make Changes and Commit:
-```bash
-git add .
-git commit -m "Adds new feature"
-```
+   ```bash
+   git checkout -b feature/new-feature
+   ```
 
-3.	Push the Branch and Create a Pull Request:
-```bash
-git push origin feature/new-feature
-```
+2. **Make Changes and Commit:**
+
+   ```bash
+   git add .
+   git commit -m "Adds new feature"
+   ```
+
+3. **Push the Branch and Create a Pull Request:**
+
+   ```bash
+   git push origin feature/new-feature
+   ```
 
 ### Contribution Guidelines
 
@@ -108,7 +137,7 @@ git push origin feature/new-feature
 
 ## License
 
-There is currently no license for this project. 
+There is currently no license for this project.
 
 ## Contact
 
