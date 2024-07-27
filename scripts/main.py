@@ -7,7 +7,7 @@ from modules.transcript_extractor import TranscriptExtractor
 prompt_manager = PromptManager()
 
 # Initialize ModelLoader with the base URL for the AI model server
-model_loader = ModelLoader(base_url="http://localhost:11434")
+model_loader = ModelLoader(base_url="http://localhost:11434", model_name="llama3.1")
 
 # Initialize TranscriptCleaner with the ModelLoader and PromptManager
 cleaner = TranscriptCleaner(model_loader, prompt_manager)
