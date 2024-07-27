@@ -1,8 +1,8 @@
 from model_loader import ModelLoader
 
-class Cleaner:
+class TranscriptCleaner:
     """
-    A class to clean transcripts using an AI model for natural language processing.
+    A class to clean up an EMS transcript using an AI model.
 
     Attributes:
         model_loader (ModelLoader): An instance of ModelLoader to interact with the AI model.
@@ -10,7 +10,7 @@ class Cleaner:
 
     def __init__(self, model_loader: ModelLoader):
         """
-        Initializes the Cleaner with a ModelLoader instance.
+        Initializes the TranscriptCleaner with a ModelLoader instance.
 
         Args:
             model_loader (ModelLoader): An instance of ModelLoader to interact with the AI model.
@@ -19,13 +19,13 @@ class Cleaner:
 
     def clean_transcript(self, transcript: str) -> str:
         """
-        Cleans the given transcript by removing repeating words, phrases, and lines while preserving meaningful information.
+        Cleans up the transcript by removing repeating words, phrases, or lines.
 
         Args:
-            transcript (str): The transcript to be cleaned.
+            transcript (str): The original EMS transcript.
 
         Returns:
-            str: The cleaned transcript.
+            str: The cleaned-up version of the transcript.
         """
         prompt = f"""
         You will act as an expert in natural language processing to help me clean up a transcript of an EMS medical call. The transcript is in plain text format and may contain various transcription errors. Your primary task is to identify and remove any repeating words, phrases, or lines that do not contribute to the meaningful content of the transcript. Additionally, ensure that all meaningful information is preserved as much as possible.
@@ -56,6 +56,5 @@ class Cleaner:
             prompts=[prompt],
             stream=False
         )
-        # Extract the text from the LLMResult object
-        cleaned_transcript = response.generations[0][0].text
-        return cleaned_transcript.strip()
+        cleaned_transcript = response.generations[0][0].text.strip()
+        return cleaned_transcript
