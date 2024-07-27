@@ -1,4 +1,3 @@
-from scripts.preprocess import preprocess_transcript
 from scripts.extraction import process_transcript
 
 def main():
