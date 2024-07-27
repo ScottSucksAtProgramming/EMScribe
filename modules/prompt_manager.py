@@ -1,5 +1,8 @@
 # modules/prompt_manager.py
 
+from modules.prompts.extraction_prompts import extraction_prompts
+from modules.prompts.cleaning_prompts import cleaning_prompts
+
 class PromptManager:
     """
     A class to manage and format prompts for various tasks.
@@ -8,14 +11,15 @@ class PromptManager:
         prompts (dict): A dictionary of predefined prompts.
     """
 
-    def __init__(self, prompts):
+    def __init__(self):
         """
         Initializes the PromptManager with a dictionary of prompts.
-
-        Args:
-            prompts (dict): A dictionary where keys are prompt names and values are prompt templates.
         """
-        self.prompts = prompts
+        self.prompts = {
+            **extraction_prompts,
+            **cleaning_prompts,
+            # Add other prompt modules as needed...
+        }
 
     def get_prompt(self, key, **kwargs):
         """
