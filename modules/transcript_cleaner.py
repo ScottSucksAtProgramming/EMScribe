@@ -1,4 +1,4 @@
-from model_loader import ModelLoader
+from modules.model_loader import ModelLoader
 
 class TranscriptCleaner:
     """
