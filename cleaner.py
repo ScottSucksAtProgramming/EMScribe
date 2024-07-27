@@ -1,11 +1,32 @@
-import re
-from model_loader import AIModel
+from model_loader import ModelLoader
 
-class TranscriptCleaner:
-    def __init__(self, ai_model):
-        self.ai_model = ai_model
+class Cleaner:
+    """
+    A class to clean transcripts using an AI model for natural language processing.
 
-    def clean_transcript(self, transcript):
+    Attributes:
+        model_loader (ModelLoader): An instance of ModelLoader to interact with the AI model.
+    """
+
+    def __init__(self, model_loader: ModelLoader):
+        """
+        Initializes the Cleaner with a ModelLoader instance.
+
+        Args:
+            model_loader (ModelLoader): An instance of ModelLoader to interact with the AI model.
+        """
+        self.model_loader = model_loader
+
+    def clean_transcript(self, transcript: str) -> str:
+        """
+        Cleans the given transcript by removing repeating words, phrases, and lines while preserving meaningful information.
+
+        Args:
+            transcript (str): The transcript to be cleaned.
+
+        Returns:
+            str: The cleaned transcript.
+        """
         prompt = f"""
         You will act as an expert in natural language processing to help me clean up a transcript of an EMS medical call. The transcript is in plain text format and may contain various transcription errors. Your primary task is to identify and remove any repeating words, phrases, or lines that do not contribute to the meaningful content of the transcript. Additionally, ensure that all meaningful information is preserved as much as possible.
 
@@ -30,10 +51,11 @@ class TranscriptCleaner:
 
         {transcript}
         """
-        cleaned_transcript = self.ai_model.generate(prompt)
+        response = self.model_loader.generate(
+            model=self.model_loader.model_name,
+            prompts=[prompt],
+            stream=False
+        )
+        # Extract the text from the LLMResult object
+        cleaned_transcript = response.generations[0][0].text
         return cleaned_transcript.strip()
-
-    def preprocess_transcript(self, transcript):
-        cleaned_transcript = self.clean_transcript(transcript)
-        cleaned_transcript = re.sub(r'\s+', ' ', cleaned_transcript).strip()
-        return cleaned_transcript
