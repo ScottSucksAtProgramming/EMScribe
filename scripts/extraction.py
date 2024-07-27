@@ -2,11 +2,19 @@ from modules.model_loader import ModelLoader
 from modules.transcript_extractor import TranscriptExtractor
 
 def extract_information(transcript):
+    """
+    Extracts information from the given transcript.
+
+    Args:
+        transcript (str): The transcript from which to extract information.
+
+    Returns:
+        dict: A dictionary containing the extracted sections.
+    """
     extractor = TranscriptExtractor(model_loader=ModelLoader(base_url="http://localhost:11434", model_name="llama3.1"))
     extracted_data = extractor.extract(transcript)
     return extracted_data
 
-# Example usage
 if __name__ == "__main__":
     example_transcript = "Patient name is John Doe. Age: 45. Gender: Male. Past medical history includes hypertension and diabetes. The chief complaint is chest pain that started two hours ago..."
     extracted_data = extract_information(example_transcript)
