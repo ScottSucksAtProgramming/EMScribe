@@ -1,9 +1,9 @@
 import re
-from model_loader import ModelLoader
+from model_loader import AIModel
 
-class Cleaner:
-    def __init__(self, model_name, base_url="http://localhost:11434"):
-        self.model_loader = ModelLoader(model_name, base_url)
+class TranscriptCleaner:
+    def __init__(self, ai_model):
+        self.ai_model = ai_model
 
     def clean_transcript(self, transcript):
         prompt = f"""
@@ -30,21 +30,10 @@ class Cleaner:
 
         {transcript}
         """
-        response = self.model_loader.generate(prompt)
-        cleaned_transcript = response.generations[0][0].text
+        cleaned_transcript = self.ai_model.generate(prompt)
         return cleaned_transcript.strip()
 
     def preprocess_transcript(self, transcript):
-        # Apply the cleaning function
         cleaned_transcript = self.clean_transcript(transcript)
-        
-        # Further basic preprocessing steps (if any)
         cleaned_transcript = re.sub(r'\s+', ' ', cleaned_transcript).strip()
-        
         return cleaned_transcript
-
-# Example usage
-if __name__ == "__main__":
-    example_transcript = "The patient is experiencing experiencing shortness of breath. The patient is The patient is also complaining of chest pain."
-    cleaner = Cleaner(model_name="llama3", base_url="http://localhost:11434")
-    print(cleaner.preprocess_transcript(example_transcript))
