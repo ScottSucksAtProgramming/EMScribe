@@ -89,9 +89,9 @@ extraction_prompts = {
         - Additional Context: [No Info]
 
         Here is the transcript: {transcript}""",
-    "Treatments Done": "List the treatments done by the sending facility or interventions the patient completed on his own: {transcript}",
-    "Objective Assessment": "Provide an objective assessment of the patient by body system: {transcript}",
-    "Treatment Plan": "Outline the treatment plan provided to the patient by the EMS crew: {transcript}",
-    "Transport Information": "Detail how the patient was transported: {transcript}",
-    "Transfer of Care": "Provide information about the transfer of care: {transcript}",
+    # "Treatments Done": "List the treatments done by the sending facility or interventions the patient completed on his own: {transcript}",
+    # "Objective Assessment": "Provide an objective assessment of the patient by body system: {transcript}",
+    # "Treatment Plan": "Outline the treatment plan provided to the patient by the EMS crew: {transcript}",
+    # "Transport Information": "Detail how the patient was transported: {transcript}",
+    # "Transfer of Care": "Provide information about the transfer of care: {transcript}",
 }
