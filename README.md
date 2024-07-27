@@ -2,7 +2,7 @@
 # EMScribe 2.0
 
 <p align="center">
-  <img src="images/emscribe_logo.png" alt="EMScribe Logo" />
+  <img src="images/emscribe_logo.png" alt="EMScribe Logo" width="500" />
 </p>
 
 ## Overview
