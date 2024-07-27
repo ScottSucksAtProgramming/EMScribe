@@ -8,7 +8,7 @@ class TranscriptCleaner:
         model_loader (ModelLoader): An instance of ModelLoader to interact with the AI model.
     """
 
-    def __init__(self, model_loader: ModelLoader):
+    def __init__(self, model_loader):
         """
         Initializes the TranscriptCleaner with a ModelLoader instance.
 
@@ -17,15 +17,15 @@ class TranscriptCleaner:
         """
         self.model_loader = model_loader
 
-    def clean_transcript(self, transcript: str) -> str:
+    def clean(self, transcript):
         """
-        Cleans up the transcript by removing repeating words, phrases, or lines.
+        Cleans the provided EMS transcript using the AI model.
 
         Args:
-            transcript (str): The original EMS transcript.
+            transcript (str): The transcript to be cleaned.
 
         Returns:
-            str: The cleaned-up version of the transcript.
+            str: The cleaned transcript.
         """
         prompt = f"""
         You will act as an expert in natural language processing to help me clean up a transcript of an EMS medical call. The transcript is in plain text format and may contain various transcription errors. Your primary task is to identify and remove any repeating words, phrases, or lines that do not contribute to the meaningful content of the transcript. Additionally, ensure that all meaningful information is preserved as much as possible.
@@ -51,10 +51,5 @@ class TranscriptCleaner:
 
         {transcript}
         """
-        response = self.model_loader.generate(
-            model=self.model_loader.model_name,
-            prompts=[prompt],
-            stream=False
-        )
-        cleaned_transcript = response.generations[0][0].text.strip()
-        return cleaned_transcript
+        response = self.model_loader.generate(prompt, stream=False)
+        return response
