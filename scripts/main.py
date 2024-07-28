@@ -5,6 +5,7 @@ from modules.model_loader import ModelLoader
 from modules.transcript_cleaner import TranscriptCleaner
 from modules.transcript_extractor import TranscriptExtractor
 from modules.narrative_manager import NarrativeManager
+from modules.refiner import Refiner
 
 # Initialize PromptManager
 prompt_manager = PromptManager()
@@ -36,7 +37,7 @@ def example_generate_narrative():
 
         Do you have any shortness of breath? 
 
-        No, but I do feel nauseous and dizzy. I've also been sweating a lot. I took one of my nitro tabs but it didn't help. Any time I stand up or try to do any activity the pain gets worse. I feel a little better when I'm laying down.
+        No, but I do feel nauseous and dizzy. I've also been sweating a lot. I took one of my nitro tabs but it didn't help. Any time I stand up or try to do any activity the pain gets worse. I feel a little better when I'm lying down.
 
         Does the pain radiate or move?
 
@@ -76,11 +77,14 @@ Vitals are 102/54, heart rate 100 weak and regular, 17 breaths per minutes regul
     """
 
     # Step 1: Extract information from the transcript
-    cleaned_transcript = cleaner.clean(example_transcript)
-    extracted_data = extractor.extract(cleaned_transcript)
+    extracted_data = extractor.extract(example_transcript)
     
-    # Step 2: Use the extracted data to generate the narrative
-    narrative = narrative_manager.generate_narrative("presoaped_format", data=extracted_data)
+    # Step 2: Review and refine the extracted data
+    refiner = Refiner(extracted_data)
+    refined_data = refiner.review_data()
+    
+    # Step 3: Use the refined data to generate the narrative
+    narrative = narrative_manager.generate_narrative("presoaped_format", data=refined_data)
     
     print("Generated Narrative:")
     print(narrative)
@@ -95,8 +99,7 @@ def example_clean_transcript():
 # Example usage for extracting information from a transcript
 def example_extract_information():
     example_transcript = "Patient John Doe, 45 years old, male, experiencing chest pain for the past 2 hours. History of hypertension and diabetes."
-    cleaned_transcript = cleaner.clean(example_transcript)
-    extracted_data = extractor.extract(cleaned_transcript)
+    extracted_data = extractor.extract(example_transcript)
     print("Extracted Information:")
     print(extracted_data)
 
