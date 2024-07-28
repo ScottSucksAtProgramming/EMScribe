@@ -139,6 +139,21 @@ The chief complaint is chest pain that started two hours ago...
 
 The script will output detailed information extracted from the transcript, formatted into comprehensive EMS narratives.
 
+## Running the Application with Your Own Transcript
+
+To run the application and provide your own transcript, follow these steps:
+
+1. Open your terminal or command prompt.
+2. Navigate to the project directory.
+3. Run the main script:
+
+    ```bash
+    python -m scripts.main
+    ```
+
+4. When prompted, enter your EMS transcript. The application will process the transcript and generate a comprehensive EMS narrative.
+
+
 ## Development
 
 ### Adding New Features
