@@ -75,10 +75,13 @@ Blood sugar is 84.
 Vitals are 102/54, heart rate 100 weak and regular, 17 breaths per minutes regular and labored, SpO2 is 98%, EtCO2 is 33.
     """
 
-    # Step 1: Extract information from the transcript
-    extracted_data = extractor.extract(example_transcript)
+    # Step 1: Clean the transcript
+    cleaned_transcript = cleaner.clean(example_transcript)
     
-    # Step 2: Use the extracted data to generate the narrative
+    # Step 2: Extract information from the cleaned transcript
+    extracted_data = extractor.extract(cleaned_transcript)
+    
+    # Step 3: Use the extracted data to generate the narrative
     narrative = narrative_manager.generate_narrative("presoaped_format", data=extracted_data)
     
     print("Generated Narrative:")
@@ -94,7 +97,8 @@ def example_clean_transcript():
 # Example usage for extracting information from a transcript
 def example_extract_information():
     example_transcript = "Patient John Doe, 45 years old, male, experiencing chest pain for the past 2 hours. History of hypertension and diabetes."
-    extracted_data = extractor.extract(example_transcript)
+    cleaned_transcript = cleaner.clean(example_transcript)
+    extracted_data = extractor.extract(cleaned_transcript)
     print("Extracted Information:")
     print(extracted_data)
 
