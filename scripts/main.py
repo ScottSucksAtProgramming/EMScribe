@@ -53,7 +53,7 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(description="EMScribe 2.0 CLI")
-    parser.add_argument("action", choices=["clean", "extract", "narrative"], help="Action to perform")
+    parser.add_argument("action", choices=["clean", "extract", "generate"], help="Action to perform")
     parser.add_argument("file", help="Path to the transcript file")
 
     args = parser.parse_args()
@@ -69,5 +69,5 @@ if __name__ == "__main__":
         example_clean_transcript(transcript)
     elif args.action == "extract":
         example_extract_information(transcript)
-    elif args.action == "narrative":
+    elif args.action == "generate":
         example_generate_narrative(transcript)
