@@ -1,6 +1,6 @@
 extraction_prompts = {
-    "incident_info":
-        """Extract the following EMS incident information from the provided transcript: unit or vehicle number, response mode (emergent/non-emergent), crew type (full crew/paramedic only), any delays in response, starting location, incident location, dispatch complaint, and any additional information given to the crew by dispatch. Analyze the transcript carefully to find the most accurate answers for each item. If you are uncertain about any information, mark it with a 🚩 emoji.
+    "incident_info":"""
+        Extract the following EMS incident information from the provided transcript: unit or vehicle number, response mode (emergent/non-emergent), crew type (full crew/paramedic only), any delays in response, starting location, incident location, dispatch complaint, and any additional information given to the crew by dispatch. Analyze the transcript carefully to find the most accurate answers for each item. If you are uncertain about any information, mark it with a 🚩 emoji.
 
         Present the extracted information in a clear, concise bulleted list format. If any fields lack information, write [No Info]. If there are multiple entries for the same field, prioritize the most likely correct entry and list the others as well, marking them clearly. Never make assumptions or add information this is not explicitly available in the transcript.
 
@@ -18,8 +18,8 @@ extraction_prompts = {
         - Additional information: Unit was told to stand-by until police arrived.
 
         Here is the transcript: {transcript}""",
-    "patient_demographics": 
-        """Extract the following patient information: name, date of birth, age, gender, race or ethnicity, phone number, address or facility name, room number, and next of kin or family contact information. Calculate the age if necessary. Assume the gender if not explicitly stated based on the name provided.
+    "patient_demographics": """
+        Extract the following patient information: name, date of birth, age, gender, race or ethnicity, phone number, address or facility name, room number, and next of kin or family contact information. Calculate the age if necessary. Assume the gender if not explicitly stated based on the name provided.
 
         Present the extracted information in a concise bulleted list format. If some fields are empty, write [No Info]. If multiple entries are found for the same field, prioritize the one that is most likely correct, and list the others as well, marking them clearly. Never make assumptions or add information this is not explicitly available in the transcript.
 
@@ -37,8 +37,8 @@ extraction_prompts = {
         - Next of Kin or Family Contact Information: [No Info]
 
         Here is the transcript: {transcript}""",
-    "patient_histories": 
-        """Extract the following medical history from the provided transcript of an EMS incident: medical history, surgical history, social history, family history, social history, patient medications, and patient allergies. Analyze the full transcript carefully to find the most accurate answers for each item. Never make assumptions or add information this is not explicitly available in the transcript. Translate any used medical abbreviations into the full term (HTN would become hypertension, GERD to gastro-esophageal reflux disease). If you are uncertain about any information, mark it with a 🚩 emoji.
+    "patient_histories": """
+    Extract the following medical history from the provided transcript of an EMS incident: medical history, surgical history, social history, family history, social history, patient medications, and patient allergies. Analyze the full transcript carefully to find the most accurate answers for each item. Never make assumptions or add information this is not explicitly available in the transcript. Translate any used medical abbreviations into the full term (HTN would become hypertension, GERD to gastro-esophageal reflux disease). If you are uncertain about any information, mark it with a 🚩 emoji.
 
         Present the extracted information in a clear, concise, bulleted list format. If any fields lack information, write [No Info]; if there are no allergies, write 'No Known Allergies'. If there are multiple entries for the same field, list them alphabetically.
 
@@ -55,7 +55,8 @@ extraction_prompts = {
         - Allergies: No Known Allergies
 
         Here is the transcript: {transcript}""",
-        "history_of_present_illness": """Extract the subjective and history of present illness information from the provided EMS medical transcript of a patient’s visit. Never make assumptions or add information this is not explicitly available in the transcript. Your task is to identify and extract the following elements:
+    "history_of_present_illness": """
+        Extract the subjective and history of present illness information from the provided EMS medical transcript of a patient’s visit. Never make assumptions or add information this is not explicitly available in the transcript. Your task is to identify and extract the following elements:
 
         - Chief Complaint (CC) and its duration
         - Any associated signs, symptoms or other complaints
@@ -114,8 +115,38 @@ extraction_prompts = {
 
         Please provide the relevant findings based on the provided information from the following information: 
         {transcript}
+    """,
+    "labs_and_tests": """
+         You are an AI Agent tasked with extracting all lab results, point-of-care test results, and imaging results for EMS incidents from the provided information. You must critically review the information multiple times to ensure accuracy. 
+ 
+        Please use the following template to provide your response:
+
+        -Lab Values and Point of Care Test Results-
+        Blood Pressure: [Systolic]/[Diastolic]; Heart Rate: [Heart Rate] ([Strength and Rhythm]); 
+        Respirations: [Respiratory Rate]; SpO2: [SpO2]% ([Room Air or On Oxygen]);
+        EKG: [EKG Intepretation]
+        BGL:  [Capillary Blood Glucose Level] mg/dl;
+        Pain: [Pain Score]/10;
+        CT [CT Scan Target] [with or without] contrast @ [Date / Time of Scan]: [Scan Impression]
+        MRI [MRI Scan Target] @ [Date / Time of Scan]: [Scan Impression]
+        Cincinnati: [Positive / Negative]
+        LA Motor Score: [Value]
+        Metabolic - Na: [VALUE] ([High, Low, Critical]); K: [VALUE] ([High, Low, Critical]); Cl: [VALUE] ([High, Low, Critical]); CO2: [VALUE] ([High, Low, Critical]); BUN: [VALUE] ([High, Low, Critical]); Cr: [VALUE] ([High, Low, Critical]); Gluc: [VALUE] ([High, Low, Critical]); [VALUE] ([High, Low, Critical]); Mg: [VALUE] ([High, Low, Critical]); [VALUE] ([High, Low, Critical]
+        Hematology - WBC: [VALUE] ([High, Low, Critical]); Hgb: [VALUE] ([High, Low, Critical]); Hct: [VALUE] ([High, Low, Critical]); Plat: [VALUE] ([High, Low, Critical]); 
+        Hepatic - Tot. Bilirubin: [VALUE] ([High, Low, Critical]); ALT: [VALUE] ([High, Low, Critical]); AST: [VALUE] ([High, Low, Critical]); ALP: [VALUE] ([High, Low, Critical]);  
+        Coagulation - PT: [VALUE] ([High, Low, Critical]); (a)PTT: [VALUE] ([High, Low, Critical]); INR: [VALUE] ([High, Low, Critical]); 
+        Cardiac - Troponin: [VALUE] ([High, Low, Critical]); -> [VALUE] ([High, Low, Critical]); -> [VALUE] ([High, Low, Critical]); CK: [VALUE] ([High, Low, Critical]); CK-MB: [VALUE] ([High, Low, Critical]); CPK: [VALUE] ([High, Low, Critical]); BNP: [VALUE] ([High, Low, Critical]); 
+	
+    There are numerous other tests which may have been performed. You must review the complete set of information multiple times to find these values and provide them. If a test is not performed or there are no results it should be omitted.
+
+    Rules:
+    - Never make any assumptions or add any information not explicitly provided.
+    - Only include the sections for tests, labs, or imaging that was done otherwise, the section must be omitted from the response.
+    - Do not give any explanations or any other comments / information except for the completed section.
+
+    Please provide the relevant findings based on the provided information from the following information: 
+    {transcript}
     """
-    # "Objective Assessment": "Provide an objective assessment of the patient by body system: {transcript}",
     # "Treatment Plan": "Outline the treatment plan provided to the patient by the EMS crew: {transcript}",
     # "Transport Information": "Detail how the patient was transported: {transcript}",
     # "Transfer of Care": "Provide information about the transfer of care: {transcript}",
