@@ -46,8 +46,7 @@ narrative_prompts = {
             Use the following data:
             {data}
             """,
-        "subjective": 
-            """
+        "subjective": """
             You will be generating the second section of an EMS narrative from provided data. This section is called the Subjective and it contains information about the patient's initial situation during a medical emergency.
             
             Subjective
@@ -74,7 +73,6 @@ narrative_prompts = {
 
             Use the following data:
             {data}""",
-
         "history_of_present_illness": """
             You will be generating the History of Present Illness subsection for an EMS narrative from provided data. This section contains information about story and events leading up to the patient's current illness.
             
@@ -120,6 +118,41 @@ narrative_prompts = {
 
                     Consider following the following flow: The description and story of their illness up to the 911 call. Including the reason for the 911 call if the symptoms have been. Followed by information related to the OPQRST acronym. And end with the patient's consent, or refusal to be transported to the hospital.
             Use the following data:
+            {data}""",
+        "patient_histories": """
+            You will be generating the Patient Histories subsection for an EMS narrative from provided data. This section contains a bulleted list of the patient's medical history, surgical history, social history, family history, sexual history, prescribed medications and allergies.
+
+            Patient Histories Sub-Section
+                As opposed to the brief pertinent history given in the previous section this section lists out the patients full history. It must include the following if they are available:
+                    - The patient's Medical History
+                    - The patient's Surgical History
+                    - The patient's Social History, 
+                    - The patient's Family History 
+                    - The patient's Sexual history (rarely provided)
+                    - The patient's Medications and Allergies.
+
+                Rules for this Section
+                    - These must not be be formatted in to paragraphs, they must be listed out under each category. If no related information provided the section can be omitted from the narrative.
+                    - NEVER make any assumptions or inferences. Stick to documenting only the information is provided. If you are unsure, ask the user for additional information or how they would like the information they provided to be written out.
+
+                For Example:
+
+                    -Patient Histories-
+                    - Medical History: hypertension, hyperlipidemia, heart attack with stents, diabetes, chronic kidney disease, sleep apnea, depression, obesity, gastro-esophageal reflux disease
+                    - Surgical History: Left knee replacement (2012), right shoulder surgery (1998)
+                    - Social History: Former Smoker. Drinks socially. Denies recreational drug use.
+                    - Family History: Father- deceased due to stroke. Mother- Deceased from heart attack.
+                    - Medications: Labetalol, Cardizem, Tylenol, atorvastatin, nitroglycerine, escitalopram
+                    - Allergies: Cat and dog dander. No know drug allergies.
+
+                A template for this section may look like
+                    - Medical History: [Medical History including dates when applicable or provided, separated by commas.] 
+                    - Surgical History: [Surgical Procedure including dates and locations where performed when applicable or provided, separated by commas.]
+                    - Social History: [Frequency of nicotine or vaporizer use, frequency of alcohol use, frequency of any other recreational drugs, separate by commas]
+                    - Family History: [Status of parents, and siblings (alive or deceased, and any notable medical history they have.]
+                    - Medications: [List of the medications the patient is prescribed, separated by commas.
+                    - Allergies: [List of and food, drug, or environmental allergies the patient has, separated by commas.]
+        Use the following data:
             {data}"""
     }
 }   
