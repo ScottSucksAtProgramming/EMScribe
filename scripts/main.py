@@ -29,7 +29,7 @@ def example_generate_narrative():
     extracted_data = extractor.extract(example_transcript)
     
     # Step 2: Use the extracted data to generate the narrative
-    narrative = narrative_manager.generate_narrative("presoaped_format", extracted_data)
+    narrative = narrative_manager.generate_narrative("presoaped_format", data=extracted_data)
     
     print("Generated Narrative:")
     print(narrative)
@@ -46,8 +46,7 @@ def example_extract_information():
     example_transcript = "Patient John Doe, 45 years old, male, experiencing chest pain for the past 2 hours. History of hypertension and diabetes."
     extracted_data = extractor.extract(example_transcript)
     print("Extracted Information:")
-    for key, value in extracted_data.items():
-        print(f"{key}: {value}")
+    print(extracted_data)
 
 if __name__ == "__main__":
     # Example usage

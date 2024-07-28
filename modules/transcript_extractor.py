@@ -1,3 +1,5 @@
+# modules/transcript_extractor.py
+
 from modules.model_loader import ModelLoader
 from modules.prompt_manager import PromptManager
 
@@ -21,32 +23,22 @@ class TranscriptExtractor:
         self.model_loader = model_loader
         self.prompt_manager = prompt_manager
 
-    def extract(self, transcript: str) -> dict:
+    def extract(self, transcript: str) -> str:
         """
-        Extracts information from the transcript using the specified prompts.
+        Extracts information from the transcript using specified prompts.
 
         Args:
             transcript (str): The transcript to extract information from.
 
         Returns:
-            dict: A dictionary with the extracted information.
+            str: The extracted information in a single string.
         """
-        extraction_keys = [
-            "incident_info",
-            "patient_demographics",
-            "patient_histories",
-            # "Treatments Done",
-            # "Objective Assessment",
-            # "Treatment Plan",
-            # "Transport Information",
-            # "Transfer of Care"
-        ]
-        
-        extracted_data = {}
-        
-        for key in extraction_keys:
+        extracted_data = []
+        prompt_keys = ["incident_info", "patient_demographics", "patient_histories", "history_of_present_illness"]
+
+        for key in prompt_keys:
             prompt = self.prompt_manager.get_prompt(key, transcript=transcript)
             response = self.model_loader.generate(prompt)
-            extracted_data[key] = response.strip()
-        
-        return extracted_data
+            extracted_data.append(response)
+
+        return "\n\n".join(extracted_data).strip()

@@ -32,7 +32,7 @@ Unit 292 responded emergent from headquarters, with a full crew and no delay, to
 Pre-Arrival Template:
 
 PRE-ARRIVAL:
-Unit [Unit Identifier] responded [Response Mode] from [Starting Location], with a [Crew Type] and [Delays], to [Scene Location] for a [Dispatch Complaint]. [Additional Information].
+Unit [unit] responded [response_mode] from [starting_location], with a [crew_type] and [delays], to [incident_location] for a [dispatch_complaint]. [additional_information].
 
 Rules for This Section
 - Ensure all information is factual and based on the pre-arrival scene without assumptions.

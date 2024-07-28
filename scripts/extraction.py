@@ -23,5 +23,4 @@ if __name__ == "__main__":
     example_transcript = "Patient John Doe, 45 years old, male, experiencing chest pain for the past 2 hours. History of hypertension and diabetes."
     extracted_data = extract_information(example_transcript)
     print("Extracted Information:")
-    for key, value in extracted_data.items():
-        print(f"{key}: {value}")
+    print(extracted_data)
