@@ -4,14 +4,18 @@ narrative_prompts = {
             You will be generating the first section of an EMS narrative from provided data. This section is called the Pre-Arrival and it contains information about the ambulance response to an EMS incident before it arrives at the scene of the emergency.
 
             This section should include:
-            - The Unit's identifier or ambulance number.
-            - The mode of transportation- emergent, non-emergent, or otherwise.
-            - The location where the unit started.
-            - The Crew Type- light crew, driver only, full crew.
-            - Any delays experienced during the response to the scene.
-            - The location of the scene.
-            - The dispatch complaint.
-            - The Pre-Arrival section should also include any additional information which s provided that occurred before the unit got to the emergency scene. This can include but is not limited to a change in response mode, change in location or patient status, updated information about the location the unit is responding to, and other information provided to the crew.
+                - The Unit's identifier or ambulance number.
+                - The mode of transportation- emergent, non-emergent, or otherwise.
+                - The location where the unit started.
+                - The Crew Type- light crew, driver only, full crew.
+                - Any delays experienced during the response to the scene.
+                - The location of the scene.
+                - The dispatch complaint.
+                - The Pre-Arrival section should also include any additional information which s provided that occurred before the unit got to the emergency scene. This can include but is not limited to a change in response mode, change in location or patient status, updated information about the location the unit is responding to, and other information provided to the crew.
+
+            Rules for this section:
+                - Do not make any assumptions.
+                - Do not respond with anything except the completed section. No explanation, No notes. Just the completed Pre-Arrival.
 
             For Example:
 
@@ -55,7 +59,8 @@ narrative_prompts = {
                 - The complaint the patient has (which might be different from the dispatch complaint), or the nature of the illness / injury as described by the EMS provider if the patient (or their family)  isn't able provide the information.
 
             Rules for This Section
-                - If patient details are incomplete, ask the user to provide the missing information, such as age or specific complaint.
+                - Do not make any assumptions.
+                - Do not respond with anything except the completed section. No explanation, No notes. Just the completed Subjective.
 
             For example:
 
