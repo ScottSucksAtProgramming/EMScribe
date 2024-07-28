@@ -67,6 +67,12 @@ def example_generate_narrative():
         Lung sounds a clear and equal bilaterally. Chest expansion is adequate and even. Respiratory pattern is regular and elevated with increased work of breathing.
 
         Frederich is calm and his behavior is appropriate to the situation. thought pattern and speech are organized no bizarre behavior noted.
+
+        EKG shows Sinus Rhythm at 100 with PVCs.
+
+Blood sugar is 84.
+
+Vitals are 102/54, heart rate 100 weak and regular, 17 breaths per minutes regular and labored, SpO2 is 98%, EtCO2 is 33.
     """
 
     # Step 1: Extract information from the transcript
