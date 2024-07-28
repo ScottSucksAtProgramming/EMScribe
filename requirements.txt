@@ -20,6 +20,7 @@ h11                      0.14.0
 httpcore                 1.0.5
 httpx                    0.27.0
 idna                     3.7
+iniconfig                2.0.0
 Jinja2                   3.1.4
 jsonpatch                1.33
 jsonpointer              3.0.0
@@ -44,12 +45,14 @@ packaging                24.1
 pathspec                 0.12.1
 pip                      24.1.2
 platformdirs             4.2.2
+pluggy                   1.5.0
 preshed                  3.0.9
 pydantic                 2.8.2
 pydantic_core            2.20.1
 Pygments                 2.18.0
 PyMuPDF                  1.24.9
 PyMuPDFb                 1.24.9
+pytest                   8.3.2
 PyYAML                   6.0.1
 requests                 2.32.3
 rich                     13.7.1
