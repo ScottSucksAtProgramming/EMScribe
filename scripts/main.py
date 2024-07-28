@@ -1,6 +1,7 @@
 # scripts/main.py
 
-import argparse
+import pyperclip
+import os
 from modules.prompt_manager import PromptManager
 from modules.model_loader import ModelLoader
 from modules.transcript_cleaner import TranscriptCleaner
@@ -22,47 +23,51 @@ extractor = TranscriptExtractor(model_loader, prompt_manager)
 # Initialize NarrativeManager with the ModelLoader and PromptManager
 narrative_manager = NarrativeManager(model_loader=model_loader, prompt_manager=prompt_manager)
 
-# Function to read transcript from a file
-def read_transcript_from_file(file_path):
-    with open(file_path, 'r') as file:
-        return file.read()
-
-# Function to clean a transcript and display the output
-def clean_transcript_and_display_output(file_path):
-    example_transcript = read_transcript_from_file(file_path)
-    cleaned_transcript = cleaner.clean(example_transcript)
-    print("Cleaned Transcript:")
-    print(cleaned_transcript)
-
-# Function to extract information from a transcript and display the output
-def extract_information_and_display_output(file_path):
-    example_transcript = read_transcript_from_file(file_path)
-    extracted_data = extractor.extract(example_transcript)
-    print("Extracted Information:")
-    print(extracted_data)
-
-# Function to generate a narrative and display the output
-def generate_narrative_and_display_output(file_path):
-    example_transcript = read_transcript_from_file(file_path)
-    cleaned_transcript = cleaner.clean(example_transcript)
-    extracted_data = extractor.extract(cleaned_transcript)
+def example_generate_narrative(transcript):
+    # Step 1: Extract information from the transcript
+    extracted_data = extractor.extract(transcript)
+    
+    # Step 2: Use the extracted data to generate the narrative
     narrative = narrative_manager.generate_narrative("presoaped_format", data=extracted_data)
+    
     print("Generated Narrative:")
     print(narrative)
+    pyperclip.copy(narrative)
+    print("\nThe generated narrative has been copied to your clipboard.")
 
-def main():
+def example_clean_transcript(transcript):
+    cleaned_transcript = cleaner.clean(transcript)
+    print("Cleaned Transcript:")
+    print(cleaned_transcript)
+    pyperclip.copy(cleaned_transcript)
+    print("\nThe cleaned transcript has been copied to your clipboard.")
+
+def example_extract_information(transcript):
+    extracted_data = extractor.extract(transcript)
+    print("Extracted Information:")
+    print(extracted_data)
+    pyperclip.copy(extracted_data)
+    print("\nThe extracted information has been copied to your clipboard.")
+
+if __name__ == "__main__":
+    import argparse
+
     parser = argparse.ArgumentParser(description="EMScribe 2.0 CLI")
-    parser.add_argument("action", choices=["clean", "extract", "generate"], help="Action to perform")
-    parser.add_argument("file_path", help="Path to the transcript text file")
+    parser.add_argument("action", choices=["clean", "extract", "narrative"], help="Action to perform")
+    parser.add_argument("file", help="Path to the transcript file")
 
     args = parser.parse_args()
 
-    if args.action == "clean":
-        clean_transcript_and_display_output(args.file_path)
-    elif args.action == "extract":
-        extract_information_and_display_output(args.file_path)
-    elif args.action == "generate":
-        generate_narrative_and_display_output(args.file_path)
+    if not os.path.isfile(args.file):
+        print(f"Error: File '{args.file}' not found.")
+        exit(1)
 
-if __name__ == "__main__":
-    main()
+    with open(args.file, "r") as f:
+        transcript = f.read()
+
+    if args.action == "clean":
+        example_clean_transcript(transcript)
+    elif args.action == "extract":
+        example_extract_information(transcript)
+    elif args.action == "narrative":
+        example_generate_narrative(transcript)
