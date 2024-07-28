@@ -31,7 +31,7 @@ EMScribe 2.0 is a project designed to create comprehensive EMS narratives in a u
 1. **Clone the Repository:**
 
    ```bash
-   git clone <repository_url>
+   git clone https://github.com/ScottSucksAtProgramming/EMScribe.git
    cd emscribe
    ```
 
@@ -105,7 +105,7 @@ emscribe/
 
 ### Extraction Script
 
-To run the extraction script, use the following command:
+To run the extraction script and extract detailed patient information from a transcript, use the following command:
 
 ```bash
 python -m scripts.extraction
@@ -113,7 +113,7 @@ python -m scripts.extraction
 
 ### Preprocess Script
 
-To run the preprocess script, use the following command:
+To clean a transcript by removing repeated words and lines, correcting basic errors, and ensuring meaningful information is preserved, use the following command:
 
 ```bash
 python -m scripts.preprocess
@@ -121,7 +121,7 @@ python -m scripts.preprocess
 
 ### Main Script
 
-To run the main script which demonstrates cleaning, extracting, and generating narratives, use the following command:
+To demonstrate cleaning, extracting, and generating narratives, use the following command:
 
 ```bash
 python -m scripts.main

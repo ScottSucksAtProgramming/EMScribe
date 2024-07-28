@@ -1,7 +1,8 @@
+
 # EMScribe 2.0 Documentation
 
 <div style="text-align: center;">
-    <img src="assets/emscribe_logo_small.jpg" alt="EMScribe Logo" width="300"/>
+    <img src="imiages/emscribe_logo.jpg" alt="EMScribe Logo" width="300"/>
 </div>
 
 Welcome to the EMScribe 2.0 documentation. This documentation covers everything you need to know about installing, using, and contributing to EMScribe 2.0.
