@@ -2,7 +2,7 @@ extraction_prompts = {
     "incident_info":
         """Extract the following EMS incident information from the provided transcript: unit or vehicle number, response mode (emergent/non-emergent), crew type (full crew/paramedic only), any delays in response, starting location, incident location, dispatch complaint, and any additional information given to the crew by dispatch. Analyze the transcript carefully to find the most accurate answers for each item. If you are uncertain about any information, mark it with a 🚩 emoji.
 
-        Present the extracted information in a clear, concise bulleted list format. If any fields lack information, write [No Info]. If there are multiple entries for the same field, prioritize the most likely correct entry and list the others as well, marking them clearly.
+        Present the extracted information in a clear, concise bulleted list format. If any fields lack information, write [No Info]. If there are multiple entries for the same field, prioritize the most likely correct entry and list the others as well, marking them clearly. Never make assumptions or add information this is not explicitly available in the transcript.
 
         Here is an example result:
 
@@ -21,7 +21,7 @@ extraction_prompts = {
     "patient_demographics": 
         """Extract the following patient information: name, date of birth, age, gender, race or ethnicity, phone number, address or facility name, room number, and next of kin or family contact information. Calculate the age if necessary. Assume the gender if not explicitly stated based on the name provided.
 
-        Present the extracted information in a concise bulleted list format. If some fields are empty, write [No Info]. If multiple entries are found for the same field, prioritize the one that is most likely correct, and list the others as well, marking them clearly.
+        Present the extracted information in a concise bulleted list format. If some fields are empty, write [No Info]. If multiple entries are found for the same field, prioritize the one that is most likely correct, and list the others as well, marking them clearly. Never make assumptions or add information this is not explicitly available in the transcript.
 
         Here is an example result:
 
@@ -38,7 +38,7 @@ extraction_prompts = {
 
         Here is the transcript: {transcript}""",
     "patient_histories": 
-        """Extract the following medical history from the provided transcript of an EMS incident: medical history, surgical history, social history, family history, social history, patient medications, and patient allergies. Analyze the full transcript carefully to find the most accurate answers for each item. It is okay to assume medical history based on the context in the transcript or known patient medications. Translate any used medical abbreviations into the full term (HTN would become hypertension, GERD to gastro-esophageal reflux disease). If you are uncertain about any information, mark it with a 🚩 emoji.
+        """Extract the following medical history from the provided transcript of an EMS incident: medical history, surgical history, social history, family history, social history, patient medications, and patient allergies. Analyze the full transcript carefully to find the most accurate answers for each item. Never make assumptions or add information this is not explicitly available in the transcript. Translate any used medical abbreviations into the full term (HTN would become hypertension, GERD to gastro-esophageal reflux disease). If you are uncertain about any information, mark it with a 🚩 emoji.
 
         Present the extracted information in a clear, concise, bulleted list format. If any fields lack information, write [No Info]; if there are no allergies, write 'No Known Allergies'. If there are multiple entries for the same field, list them alphabetically.
 
@@ -55,7 +55,7 @@ extraction_prompts = {
         - Allergies: No Known Allergies
 
         Here is the transcript: {transcript}""",
-        "history_of_present_illness": """Extract the subjective and history of present illness information from the provided EMS medical transcript of a patient’s visit. Your task is to identify and extract the following elements:
+        "history_of_present_illness": """Extract the subjective and history of present illness information from the provided EMS medical transcript of a patient’s visit. Never make assumptions or add information this is not explicitly available in the transcript. Your task is to identify and extract the following elements:
 
         - Chief Complaint (CC) and its duration
         - Any associated signs, symptoms or other complaints
