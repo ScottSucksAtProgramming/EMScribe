@@ -134,6 +134,8 @@ narrative_prompts = {
                 Rules for this Section
                     - These must not be be formatted in to paragraphs, they must be listed out under each category. If no related information provided the section can be omitted from the narrative.
                     - NEVER make any assumptions or inferences. Stick to documenting only the information is provided. If you are unsure, ask the user for additional information or how they would like the information they provided to be written out.
+                    - The subheading for this section should ALWAYS be -Patient Histories-. Provide the response in plain text.
+                    - Never add any additional information, explanation or commentaries. Just give the completed Patient Histories Section.
 
                 For Example:
 
