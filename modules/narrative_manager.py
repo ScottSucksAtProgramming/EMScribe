@@ -23,13 +23,13 @@ class NarrativeManager:
         self.model_loader = model_loader
         self.prompt_manager = prompt_manager
 
-    def generate_narrative(self, narrative_format: str, data: str) -> str:
+    def generate_narrative(self, narrative_format: str, data: dict) -> str:
         """
         Generates a narrative based on the specified format and data.
 
         Args:
             narrative_format (str): The key for the desired narrative format.
-            data (str): The extracted information in a single string.
+            data (dict): The extracted information in a dictionary.
 
         Returns:
             str: The generated narrative.
