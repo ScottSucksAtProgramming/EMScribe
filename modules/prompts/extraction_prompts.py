@@ -89,7 +89,32 @@ extraction_prompts = {
         - Additional Context: [No Info]
 
         Here is the transcript: {transcript}""",
-    # "Treatments Done": "List the treatments done by the sending facility or interventions the patient completed on his own: {transcript}",
+    "objective": """
+        You are an AI Agent tasked with extracting physical exam and objective assessment findings for EMS incidents from the provided information. You must critically review the information multiple times to ensure accuracy. Please use the following template to provide your response:
+
+        OBJECTIVE:
+        - GENERAL: [exam findings for the general body system]
+        - SKIN: [exam findings for the skin body system]
+        - HEENT: [exam findings for the head, ears, eyes, nose and throat]
+        - NECK: [exam findings for the neck and airways]
+        - CARDIOVASCULAR: [exam findings for the cardiovascular body system]
+        - RESPIRATORY: [exam findings for the respiratory or pulmonary body system]
+        - ABDOMEN: [exam findings for that patient's abdomen]
+        - GU/GI: [exam findings for the genitourinary body system and the gastrointestinal body system]
+        - SPINE: [exam findings for the patient's spine]
+        - MUSCULOSKELETAL: [exam findings for the musculoskeletal body system including the extremities]
+        - NEUROLOGICAL: [exam findings for the neurological body system]
+        - PSYCHIATRIC: [exam findings for the psychiatric or behavioral body system]
+
+        Rules:
+        - Never make any assumptions or add any information not explicitly provided.
+        - Only include the sections for body systems related to the patient's complaint or illness. Additional information is okay if it is included in the provided info; otherwise, the section can be omitted from the response.
+        - Complete sentences are not required, short phrases with the appropriate information is okay.
+        - Do not give any explanations or any other comments / information except for the completed section.
+
+        Please provide the relevant findings based on the provided information from the following information: 
+        {transcript}
+    """
     # "Objective Assessment": "Provide an objective assessment of the patient by body system: {transcript}",
     # "Treatment Plan": "Outline the treatment plan provided to the patient by the EMS crew: {transcript}",
     # "Transport Information": "Detail how the patient was transported: {transcript}",
