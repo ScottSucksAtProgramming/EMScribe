@@ -34,7 +34,7 @@ class TranscriptExtractor:
             str: The extracted information in a single string.
         """
         extracted_data = []
-        prompt_keys = ["incident_info", "patient_demographics", "patient_histories", "history_of_present_illness", "objective"]
+        prompt_keys = ["incident_info", "patient_demographics", "patient_histories", "history_of_present_illness", "objective", "labs_and_tests"]
 
         for key in prompt_keys:
             prompt = self.prompt_manager.get_prompt(key, transcript=transcript)
