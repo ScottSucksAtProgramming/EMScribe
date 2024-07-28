@@ -74,5 +74,52 @@ narrative_prompts = {
 
             Use the following data:
             {data}""",
+
+        "history_of_present_illness": """
+            You will be generating the History of Present Illness subsection for an EMS narrative from provided data. This section contains information about story and events leading up to the patient's current illness.
+            
+            History of Present Illness Subsection
+            This subsection must include:
+                - The story of events which lead to the call for emergency medical services. This may be provided by the patient themselves, by bystanders or other first responders on scene, by witnesses or family, surmised or assumed by the responding EMS provider themselves. For transfer from one medical care center to another, (i.e. doctor's office to hospital, hospital to hospital) this information may also be obtained from medical staff, or patient documents.
+                - This section should start with an overview of the patient's pertinent medical history summed up in a single sentence.
+                - It may then continue to tell the patient's story. The treatments provided to the patient prior to ems arrival.
+                - The length time the situation has been going on for.
+                - The suspected conditions.
+                - As well as any further information that can be gathered from the patient or another third party. 
+                - This section is one of the most important and should be accurate. It should only contain information provided and no assumptions or inferences made by the EMS provider themselves.
+                - Any direct quotes should be inside of quotation marks and given attribution to where they came from.
+                - Other information in this section can vary from patient to patient as necessary but a common acronym to ensure a complete picture is presented in the narrative is OPQRSTI. 
+                    - Onset: Whether the illness began suddenly, or if it has come on gradually.
+                    - Provocation and Palliation: Anything which makes the condition worse, or better 
+                    - Quality: When applicable, how the patient would describe what they are feeling.
+                    - Radiation: Generally used for pain, but can be appropriate else where, if the symptoms start in one area and have radiated or moved to another area (such as chest pain which radiations to the left neck or left arm).
+                    - Severity: How severe the illnesses is for the patient. This will often be provided on a scale from 1 to 10,  but there are numerous other ways this can be described as well.
+                    - Time: How long this illness or issue has been going on for.
+                    - Interventions: Any treatments or attempts by the patient to relieve the illness including previous medical visits.
+                - This section should end with a sentence explaining if the patient has consented to treatment or transfer, or if they are unable to consent due to their illness, being a minor, or other conditions which prevent the patient from making clear decisions.
+
+
+            Rules for this Section
+                - Do not make any assumptions or inferences. Stick to documenting only the information is provided. If you are unsure, ask the user for additional information or how they would like the information they provided to be written out.
+                - Do not respond with anything except the completed section. No explanation, No notes. Just the completed History of Present Illness subjection.
+                - If the information is completely missing just respond with the -History of Present Illness- subheading.
+
+            For Example:
+                -History of Present Illness-
+                John has a known medical history of hypertension, hyperlipidemia, heart attack (2007) with two cardiac stents placed, and diabetes. He states that he often has chest pain which is relieved with his prescribed nitroglycerin. 
+
+                Today he has taken two nitro and the pain has not gone away. He states the pain started suddenly while he was sitting down watching television. It feels similar to the chest pain he experienced during his heart attack. He rates the pain currently as a constant 8/10 that feels like there is hand squeezing his heart. The pain radiates down his left arm and he has been profusely sweating. It started about 30 minutes prior to EMS arrival. 
+
+            A template for this section may look like:
+
+                -History of Present Illness-
+
+                    All of the above information written clearly and succinctly in paragraph format. 
+
+                    It is difficult to write a more specific template because this section will be different for most patients.
+
+                    Consider following the following flow: The description and story of their illness up to the 911 call. Including the reason for the 911 call if the symptoms have been. Followed by information related to the OPQRST acronym. And end with the patient's consent, or refusal to be transported to the hospital.
+            Use the following data:
+            {data}"""
     }
 }   
