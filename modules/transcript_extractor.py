@@ -33,12 +33,13 @@ class TranscriptExtractor:
         Returns:
             str: The extracted information in a single string.
         """
-        extracted_data = []
         prompt_keys = ["incident_info", "patient_demographics", "patient_histories", "history_of_present_illness", "objective", "labs_and_tests"]
+        extracted_data = []
 
         for key in prompt_keys:
             prompt = self.prompt_manager.get_prompt(key, transcript=transcript)
             response = self.model_loader.generate(prompt)
             extracted_data.append(response)
 
-        return "\n\n".join(extracted_data).strip()
+        combined_response = "\n\n".join(extracted_data).strip()
+        return combined_response
