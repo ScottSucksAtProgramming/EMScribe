@@ -24,7 +24,7 @@ narrative_manager = NarrativeManager(model_loader=model_loader, prompt_manager=p
 # Example usage for generating a narrative
 def example_generate_narrative():
     example_transcript = """
-        This is Ambulance 292 responding emergent with a full crew and no delays from headquarter to the Kevorkian Clinic for a reported chest pain. During transport disptach informed us that the patient is alert and breathing.
+        This is Ambulance 292 responding emergent with a full crew and no delays from headquarters to the Kevorkian Clinic for a reported chest pain. During transport disptach informed us that the patient is alert and breathing.
 
         Unit 292 arriving on scene.
 
@@ -75,13 +75,11 @@ Blood sugar is 84.
 Vitals are 102/54, heart rate 100 weak and regular, 17 breaths per minutes regular and labored, SpO2 is 98%, EtCO2 is 33.
     """
 
-    # Step 1: Clean the transcript
+    # Step 1: Extract information from the transcript
     cleaned_transcript = cleaner.clean(example_transcript)
-    
-    # Step 2: Extract information from the cleaned transcript
     extracted_data = extractor.extract(cleaned_transcript)
     
-    # Step 3: Use the extracted data to generate the narrative
+    # Step 2: Use the extracted data to generate the narrative
     narrative = narrative_manager.generate_narrative("presoaped_format", data=extracted_data)
     
     print("Generated Narrative:")
