@@ -1,3 +1,6 @@
+The provided `api_reference.md` looks comprehensive and well-structured. It covers all the major modules, their classes, methods, and attributes. Additionally, it provides usage examples to help users understand how to implement the functionalities. Below is the final version for `api_reference.md`:
+
+```markdown
 # API Reference
 
 This document provides a comprehensive reference for the EMScribe 2.0 API, including details on the main modules, their classes, and methods.
@@ -129,7 +132,7 @@ Initializes the `TranscriptExtractor` with a `ModelLoader` and `PromptManager` i
 - `model_loader (ModelLoader)`: An instance of `ModelLoader` to interact with the AI model.
 - `prompt_manager (PromptManager)`: An instance of `PromptManager` to manage prompts.
 
-##### `extract(self, transcript: str) -> dict`
+##### `extract(self, transcript: str) -> str`
 
 **Description:**
 Extracts information from the transcript using the specified prompts.
@@ -138,7 +141,43 @@ Extracts information from the transcript using the specified prompts.
 - `transcript (str)`: The transcript to extract information from.
 
 **Returns:**
-- `dict`: A dictionary containing the extracted information.
+- `str`: A string containing the extracted information.
+
+### 5. `narrative_manager`
+
+The `narrative_manager` module contains the `NarrativeManager` class, which is responsible for generating EMS narratives from extracted data.
+
+#### Class: `NarrativeManager`
+
+**Description:**
+A class to generate EMS narratives using extracted data and an AI model.
+
+**Attributes:**
+- `model_loader (ModelLoader)`: An instance of `ModelLoader` to interact with the AI model.
+- `prompt_manager (PromptManager)`: An instance of `PromptManager` to manage prompts.
+
+**Methods:**
+
+##### `__init__(self, model_loader: ModelLoader, prompt_manager: PromptManager)`
+
+**Description:**
+Initializes the `NarrativeManager` with a `ModelLoader` and `PromptManager` instance.
+
+**Args:**
+- `model_loader (ModelLoader)`: An instance of `ModelLoader` to interact with the AI model.
+- `prompt_manager (PromptManager)`: An instance of `PromptManager` to manage prompts.
+
+##### `generate_narrative(self, narrative_format: str, data: str) -> str`
+
+**Description:**
+Generates an EMS narrative based on the provided narrative format and extracted data.
+
+**Args:**
+- `narrative_format (str)`: The format to use for the narrative.
+- `data (str)`: The extracted data to include in the narrative.
+
+**Returns:**
+- `str`: The generated EMS narrative.
 
 ## Usage Examples
 
@@ -177,8 +216,33 @@ extractor = TranscriptExtractor(model_loader=model_loader, prompt_manager=prompt
 example_transcript = "Patient John Doe, 45 years old, male, experiencing chest pain for the past 2 hours. History of hypertension and diabetes."
 extracted_data = extractor.extract(example_transcript)
 print("Extracted Information:")
-for key, value in extracted_data.items():
-    print(f"{key}: {value}")
+print(extracted_data)
+```
+
+### Example 3: Generating an EMS Narrative
+
+```python
+from modules.model_loader import ModelLoader
+from modules.prompt_manager import PromptManager
+from modules.narrative_manager import NarrativeManager
+
+# Initialize components
+prompt_manager = PromptManager()
+model_loader = ModelLoader(base_url="http://localhost:11434", model_name="llama3.1")
+narrative_manager = NarrativeManager(model_loader=model_loader, prompt_manager=prompt_manager)
+
+# Example data extracted from a transcript
+extracted_data = """
+incident_info: ...
+patient_demographics: John Doe, 45, Male
+patient_histories: Hypertension, Diabetes
+...
+"""
+
+# Generate an EMS narrative
+narrative = narrative_manager.generate_narrative("presoaped_format", extracted_data)
+print("Generated Narrative:")
+print(narrative)
 ```
 
 ## Conclusion
@@ -186,3 +250,6 @@ for key, value in extracted_data.items():
 This API reference provides detailed information on the main modules and their functionalities in the EMScribe 2.0 project. For more details on how to use these modules, refer to the usage examples and the rest of the documentation.
 
 For any questions or support, please contact [ScottSucks](https://github.com/ScottSucksAtProgramming).
+```
+
+This document should now provide clear and detailed information about the API and how to use it effectively.

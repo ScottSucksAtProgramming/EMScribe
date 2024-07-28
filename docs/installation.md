@@ -62,13 +62,15 @@ emscribe/
 ├── modules/
 │   ├── __init__.py
 │   ├── model_loader.py
+│   ├── narrative_manager.py
 │   ├── prompt_manager.py
 │   ├── transcript_cleaner.py
 │   ├── transcript_extractor.py
 │   └── prompts/
 │       ├── __init__.py
 │       ├── extraction_prompts.py
-│       └── cleaning_prompts.py
+│       ├── cleaning_prompts.py
+│       └── narrative_prompts.py
 ├── scripts/
 │   ├── __init__.py
 │   ├── main.py
@@ -80,6 +82,8 @@ emscribe/
 │   ├── test_model_loader.py
 │   ├── test_transcript_cleaner.py
 │   ├── test_transcript_extractor.py
+├── assets/
+│   ├── emscribe_logo_small.jpg
 ├── README.md
 ├── requirements.txt
 └── venv/

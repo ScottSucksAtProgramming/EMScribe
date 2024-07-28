@@ -1,5 +1,9 @@
 # EMScribe 2.0 Documentation
 
+<div style="text-align: center;">
+    <img src="assets/emscribe_logo_small.jpg" alt="EMScribe Logo" width="300"/>
+</div>
+
 Welcome to the EMScribe 2.0 documentation. This documentation covers everything you need to know about installing, using, and contributing to EMScribe 2.0.
 
 ## Table of Contents
@@ -39,13 +43,15 @@ emscribe/
 ├── modules/
 │   ├── __init__.py
 │   ├── model_loader.py
+│   ├── narrative_manager.py
 │   ├── prompt_manager.py
 │   ├── transcript_cleaner.py
 │   ├── transcript_extractor.py
 │   └── prompts/
 │       ├── __init__.py
 │       ├── extraction_prompts.py
-│       └── cleaning_prompts.py
+│       ├── cleaning_prompts.py
+│       └── narrative_prompts.py
 ├── scripts/
 │   ├── __init__.py
 │   ├── main.py
