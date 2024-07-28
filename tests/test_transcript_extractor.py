@@ -16,29 +16,29 @@ def extracted_data(extractor):
     transcript = "Patient John Doe, 45 years old, male, experiencing chest pain for the past 2 hours. History of hypertension and diabetes."
     return extractor.extract(transcript)
 
-def test_extract_is_dict(extracted_data):
-    assert isinstance(extracted_data, dict)
+def test_extracted_data_is_string(extracted_data):
+    assert isinstance(extracted_data, str)
 
-def test_incident_info_key(extracted_data):
-    assert "incident_info" in extracted_data, "incident_info not found in extracted data"
+def test_extracted_data_contains_call_info(extracted_data):
+    assert "call information" in extracted_data.lower()
 
-def test_patient_demographics_key(extracted_data):
-    assert "patient_demographics" in extracted_data, "patient_demographics not found in extracted data"
+def test_extracted_data_contains_patient_demographics(extracted_data):
+    assert "patient demographics" in extracted_data.lower()
 
-def test_patient_histories_key(extracted_data):
-    assert "patient_histories" in extracted_data, "patient_histories not found in extracted data"
+def test_extracted_data_contains_patient_histories(extracted_data):
+    assert "patient histories" in extracted_data.lower()
 
 def test_patient_name(extracted_data):
-    assert "john doe" in extracted_data["patient_demographics"].lower()
+    assert "john doe" in extracted_data.lower()
 
 def test_patient_age(extracted_data):
-    assert "45" in extracted_data["patient_demographics"].lower()
+    assert "45" in extracted_data.lower()
 
 def test_patient_gender(extracted_data):
-    assert "male" in extracted_data["patient_demographics"].lower()
+    assert "male" in extracted_data.lower()
 
 def test_patient_hypertension(extracted_data):
-    assert "hypertension" in extracted_data["patient_histories"].lower()
+    assert "hypertension" in extracted_data.lower()
 
 def test_patient_diabetes(extracted_data):
-    assert "diabetes" in extracted_data["patient_histories"].lower()
+    assert "diabetes" in extracted_data.lower()
