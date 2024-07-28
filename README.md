@@ -1,7 +1,7 @@
 # EMScribe 2.0
 
 <p align="center">
-  <img src="images/emscribe_logo.png" alt="EMScribe Logo" width="300" />
+  <img src="images/emscribe_logo.png" alt="EMScribe Logo" width="500" />
 </p>
 
 ## Overview
@@ -31,7 +31,7 @@ EMScribe 2.0 is a project designed to create comprehensive EMS narratives in a u
 1. **Clone the Repository:**
 
    ```bash
-   git clone https://github.com/ScottSucksAtProgramming/EMScribe.git
+   git clone <repository_url>
    cd emscribe
    ```
 
@@ -87,6 +87,7 @@ emscribe/
 │       ├── narrative_prompts.py
 ├── scripts/
 │   ├── __init__.py
+│   ├── cli.py
 │   ├── extraction.py
 │   ├── preprocess.py
 │   ├── main.py
@@ -103,28 +104,26 @@ emscribe/
 
 ## Running the Scripts
 
-### Extraction Script
+### CLI Usage
 
-To run the extraction script and extract detailed patient information from a transcript, use the following command:
+The `emscribe` command can be used to clean transcripts, extract information, and generate narratives.
+
+#### Clean Transcript
 
 ```bash
-python -m scripts.extraction
+emscribe clean path/to/transcript.txt
 ```
 
-### Preprocess Script
-
-To clean a transcript by removing repeated words and lines, correcting basic errors, and ensuring meaningful information is preserved, use the following command:
+#### Extract Information
 
 ```bash
-python -m scripts.preprocess
+emscribe extract path/to/transcript.txt
 ```
 
-### Main Script
-
-To demonstrate cleaning, extracting, and generating narratives, use the following command:
+#### Generate Narrative
 
 ```bash
-python -m scripts.main
+emscribe generate path/to/transcript.txt --output path/to/output.txt
 ```
 
 ### Example Transcript Input
@@ -138,21 +137,6 @@ The chief complaint is chest pain that started two hours ago...
 ### Expected Output
 
 The script will output detailed information extracted from the transcript, formatted into comprehensive EMS narratives.
-
-## Running the Application with Your Own Transcript
-
-To run the application and provide your own transcript, follow these steps:
-
-1. Open your terminal or command prompt.
-2. Navigate to the project directory.
-3. Run the main script:
-
-    ```bash
-    python -m scripts.main
-    ```
-
-4. When prompted, enter your EMS transcript. The application will process the transcript and generate a comprehensive EMS narrative.
-
 
 ## Development
 
