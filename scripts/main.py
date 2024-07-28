@@ -24,7 +24,7 @@ narrative_manager = NarrativeManager(model_loader=model_loader, prompt_manager=p
 # Example usage for generating a narrative
 def example_generate_narrative():
     example_transcript = """
-        This is Ambulance 292 responding emergent with a full crew and no delays to the Kevorkian Clinic for a reported chest pain. During transport disptach informed us that the patient is alert and breathing.
+        This is Ambulance 292 responding emergent with a full crew and no delays from headquarter to the Kevorkian Clinic for a reported chest pain. During transport disptach informed us that the patient is alert and breathing.
 
         Unit 292 arriving on scene.
 
@@ -87,7 +87,7 @@ def example_clean_transcript():
 
 # Example usage for extracting information from a transcript
 def example_extract_information():
-    example_transcript = """"Patient John Doe, 45 years old, male, experiencing chest pain for the past 2 hours. History of hypertension and diabetes.""""
+    example_transcript = "Patient John Doe, 45 years old, male, experiencing chest pain for the past 2 hours. History of hypertension and diabetes."
     extracted_data = extractor.extract(example_transcript)
     print("Extracted Information:")
     print(extracted_data)
