@@ -189,34 +189,34 @@ narrative_prompts = {
 
                 Use the following data:
                 {data}""",
-        # "labs_and_tests": """
-        #     You will generate the Lab Values and Point of Care Test Results section for an EMS narrative from the provided data. 
+        "labs_and_tests": """
+            You will generate the Lab Values and Point of Care Test Results section for an EMS narrative from the provided data. 
 
-        #     Lab Values Sub-Section
-        #     This section contains the results of any available laboratory values, and Point of Care Testing. As in the previous sections this should be presented as a bulleted list with short and concise sentences, or values. Any items which have no information should be omitted from the narrative. Lab values may include: Metabolic, Hematology, Hepatic, Coagulation, Cardiac, Other (for any values not in the other categories), Infectious, and Arterial Blood Gases. Each Category is follow by the specific lab test, it's resulted value and where it falls within the range; (H) high, (N) normal, (L) low. if there are no lab results provided they can be omitted. Don't leave them empty. Following the lab values are point of care testing results, these include the patient's Vital Signs (Blood Pressure, Hear Rate (rhythm and quality), Respiration (rate and quality) SpO2 reading (on room air, or oxygen), The patient's EKG interpretation, the patient's blood glucose level, the patient's pain score, and the patients End Tidal CO2 (EtCO2) result. As before if any of this information is not provided you can omit it from the narrative. If no information applicable to this subsection is provided you can omit the entire section.
+            Lab Values Sub-Section
+            This section contains the results of any available laboratory values, and Point of Care Testing. As in the previous sections this should be presented as a bulleted list with short and concise sentences, or values. Any items which have no information should be omitted from the narrative. Lab values may include: Metabolic, Hematology, Hepatic, Coagulation, Cardiac, Other (for any values not in the other categories), Infectious, and Arterial Blood Gases. Each Category is follow by the specific lab test, it's resulted value and where it falls within the range; (H) high, (N) normal, (L) low. if there are no lab results provided they can be omitted. Don't leave them empty. Following the lab values are point of care testing results, these include the patient's Vital Signs (Blood Pressure, Hear Rate (rhythm and quality), Respiration (rate and quality) SpO2 reading (on room air, or oxygen), The patient's EKG interpretation, the patient's blood glucose level, the patient's pain score, and the patients End Tidal CO2 (EtCO2) result. As before if any of this information is not provided you can omit it from the narrative. If no information applicable to this subsection is provided you can omit the entire section.
             
-        #     Rules for this Section
-        #     - Do not make any assumptions or inferences. Stick to documenting only the information is provided. If you are unsure, ask the user for additional information or how they would like the information they provided to be written out.
-        #     - Never add any values which are not included in the provided data.
-        #     - Not all laboratory tests or point of care tests will be used on every patient. Skip them if the data does not provide them. 
-        #     - Do not provide and additional information, context, or explanations. Only provide the completed section in the proper format.
+            Rules for this Section
+            - Do not make any assumptions or inferences. Stick to documenting only the information is provided. If you are unsure, ask the user for additional information or how they would like the information they provided to be written out.
+            - Never add any values which are not included in the provided data.
+            - Not all laboratory tests or point of care tests will be used on every patient. Skip them if the data does not provide them. 
+            - Do not provide and additional information, context, or explanations. Only provide the completed section in the proper format.
 
 
-        #     For Example:
-        #         -Lab Values and Point of Care Testing-
-        #         - Metabolic: Na: 135 (N); K: 3.7 (N); Cl: 107 (H); CO2: 28 (N); BUN: 18 (N); Cr: 6.55 (H); Gluc: 140 (H); Ca: 9.7 (N); Mg: 2.1 (N); Phos: 4.3 (N);
-        #         - Hematology: WBC: 7.6 (N); Hgb: 15 (N); Hct: 22 (L); Plat: 236 (N); Blood Type: A Pos;
-        #         - Hepatic: Tot. Bilirubin: 0.6 (N); ALT: 22 (N); AST: 17 (N); ALP: 96 (N);
-        #         - Coagulation: PT: 10.1 (L); (a)PTT: 30 (N); INR: 1.0 (N);
-        #         - Cardiac: Troponin: < 0.364 (H); -> 0.199 (H); -> < 0.010 (N); CK: 60 (N); CK-MB: 12 (N); CPK: 87 (N); BNP: 35 (N);
-        #         - Other: Lactic: 2.2 (N);
-        #         - Infectious: Influenza A: Negative; Influenza B: Negative; RSV: Negative; SARs-COV-2: Negative;
-        #         - Arterial Blood Gas: pH: 7.35 (N); PaO2: 96 (N); PaCO2: 28 (N); HCO3: 12 (N); SaO2: 98% (N); Base Excess: -5; 
-        #         - Vital Signs - Blood Pressure: 110/86; Heart Rate: 82 Strong Regular; Respirations: 16; SpO2: 98% (Room Air);
-        #         - EKG: Sinus Rhythm 70-100. Occasional PVCs. ST segment elevation in leads II, III, and aVF with reciprocal changes in leads I and aVL.
-        #         - BGL: 98 mg/dl;
-        #         - Pain: 8/10;
-        #         - eTCO2: 37 mmHg;
-        # """
+            For Example:
+                -Lab Values and Point of Care Testing-
+                - Metabolic: Na: 135 (N); K: 3.7 (N); Cl: 107 (H); CO2: 28 (N); BUN: 18 (N); Cr: 6.55 (H); Gluc: 140 (H); Ca: 9.7 (N); Mg: 2.1 (N); Phos: 4.3 (N);
+                - Hematology: WBC: 7.6 (N); Hgb: 15 (N); Hct: 22 (L); Plat: 236 (N); Blood Type: A Pos;
+                - Hepatic: Tot. Bilirubin: 0.6 (N); ALT: 22 (N); AST: 17 (N); ALP: 96 (N);
+                - Coagulation: PT: 10.1 (L); (a)PTT: 30 (N); INR: 1.0 (N);
+                - Cardiac: Troponin: < 0.364 (H); -> 0.199 (H); -> < 0.010 (N); CK: 60 (N); CK-MB: 12 (N); CPK: 87 (N); BNP: 35 (N);
+                - Other: Lactic: 2.2 (N);
+                - Infectious: Influenza A: Negative; Influenza B: Negative; RSV: Negative; SARs-COV-2: Negative;
+                - Arterial Blood Gas: pH: 7.35 (N); PaO2: 96 (N); PaCO2: 28 (N); HCO3: 12 (N); SaO2: 98% (N); Base Excess: -5; 
+                - Vital Signs - Blood Pressure: 110/86; Heart Rate: 82 Strong Regular; Respirations: 16; SpO2: 98% (Room Air);
+                - EKG: Sinus Rhythm 70-100. Occasional PVCs. ST segment elevation in leads II, III, and aVF with reciprocal changes in leads I and aVL.
+                - BGL: 98 mg/dl;
+                - Pain: 8/10;
+                - eTCO2: 37 mmHg;
+        """
     }
 }   
