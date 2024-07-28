@@ -1,6 +1,3 @@
-The provided `api_reference.md` looks comprehensive and well-structured. It covers all the major modules, their classes, methods, and attributes. Additionally, it provides usage examples to help users understand how to implement the functionalities. Below is the final version for `api_reference.md`:
-
-```markdown
 # API Reference
 
 This document provides a comprehensive reference for the EMScribe 2.0 API, including details on the main modules, their classes, and methods.
@@ -250,6 +247,3 @@ print(narrative)
 This API reference provides detailed information on the main modules and their functionalities in the EMScribe 2.0 project. For more details on how to use these modules, refer to the usage examples and the rest of the documentation.
 
 For any questions or support, please contact [ScottSucks](https://github.com/ScottSucksAtProgramming).
-```
-
-This document should now provide clear and detailed information about the API and how to use it effectively.
