@@ -19,6 +19,8 @@ cleaning_prompts = {
 
     “The patient is experiencing shortness of breath. The patient is also complaining of chest pain.”
 
+    Do not provide anything other than the cleaned transcript. No comments, or explanations. Just the transcript.
+
     Please apply this process to the following transcript:
 
     {transcript}
