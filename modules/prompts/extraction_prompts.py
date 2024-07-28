@@ -117,32 +117,49 @@ extraction_prompts = {
         {transcript}
     """,
     "labs_and_tests": """
-         You are an AI Agent tasked with extracting all lab results, point-of-care test results, and imaging results for EMS incidents from the provided information. You must critically review the information multiple times to ensure accuracy. 
- 
-        Please use the following template to provide your response:
+         From the provided data, you will generate the Lab Values and Point of Care Test Results section for an EMS narrative. 
 
-        -Lab Values and Point of Care Test Results-
-        Blood Pressure: [Systolic]/[Diastolic]; Heart Rate: [Heart Rate] ([Strength and Rhythm]); 
-        Respirations: [Respiratory Rate]; SpO2: [SpO2]% ([Room Air or On Oxygen]);
-        EKG: [EKG Intepretation]
-        BGL:  [Capillary Blood Glucose Level] mg/dl;
-        Pain: [Pain Score]/10;
-        CT [CT Scan Target] [with or without] contrast @ [Date / Time of Scan]: [Scan Impression]
-        MRI [MRI Scan Target] @ [Date / Time of Scan]: [Scan Impression]
-        Cincinnati: [Positive / Negative]
-        LA Motor Score: [Value]
-        Metabolic - Na: [VALUE] ([High, Low, Critical]); K: [VALUE] ([High, Low, Critical]); Cl: [VALUE] ([High, Low, Critical]); CO2: [VALUE] ([High, Low, Critical]); BUN: [VALUE] ([High, Low, Critical]); Cr: [VALUE] ([High, Low, Critical]); Gluc: [VALUE] ([High, Low, Critical]); [VALUE] ([High, Low, Critical]); Mg: [VALUE] ([High, Low, Critical]); [VALUE] ([High, Low, Critical]
-        Hematology - WBC: [VALUE] ([High, Low, Critical]); Hgb: [VALUE] ([High, Low, Critical]); Hct: [VALUE] ([High, Low, Critical]); Plat: [VALUE] ([High, Low, Critical]); 
-        Hepatic - Tot. Bilirubin: [VALUE] ([High, Low, Critical]); ALT: [VALUE] ([High, Low, Critical]); AST: [VALUE] ([High, Low, Critical]); ALP: [VALUE] ([High, Low, Critical]);  
-        Coagulation - PT: [VALUE] ([High, Low, Critical]); (a)PTT: [VALUE] ([High, Low, Critical]); INR: [VALUE] ([High, Low, Critical]); 
-        Cardiac - Troponin: [VALUE] ([High, Low, Critical]); -> [VALUE] ([High, Low, Critical]); -> [VALUE] ([High, Low, Critical]); CK: [VALUE] ([High, Low, Critical]); CK-MB: [VALUE] ([High, Low, Critical]); CPK: [VALUE] ([High, Low, Critical]); BNP: [VALUE] ([High, Low, Critical]); 
-	
-    There are numerous other tests which may have been performed. You must review the complete set of information multiple times to find these values and provide them. If a test is not performed or there are no results it should be omitted.
+Lab Values Sub-Section
+This section contains the results of any available vital signs, laboratory values, and point-of-care tests. It gives the reader specific information on the patient which helps find a diagnosis or impression. 
 
-    Rules:
-    - Never make any assumptions or add any information not explicitly provided.
-    - Only include the sections for tests, labs, or imaging that was done otherwise, the section must be omitted from the response.
-    - Do not give any explanations or any other comments / information except for the completed section.
+There are many items that may be contained within this section. Here are the most common:
+- Initial Vital Signs: Blood Pressure, Heart Rate, Rhythm (regular/irregular), and Strength; Respiration Rate; Pulse Oximetry (SpO2) and whether the patient is on room air or oxygen;
+- Pain Score out of 10.
+
+Point-of-care test results may also be included. These are specific to each patient and will change frequently. Here are some common ones:
+- Temperature
+- Blood Glucose Level (BGL)
+- EKG Interpretation: includes the rhythm, rate range, ectopy, and other important findings.
+- End Tidal CO2 measurement (EtCO2)
+- Cincinnati Stroke Exam
+- LA Motor Score (LAMS)
+- NIH Store Score (NIH/NIHSS)
+
+Laboratory and blood work panels may also be included. Each panel should be on its own line containing the panel name, the individual tests, their values, and whether they fall in the normal range. For example here is a metabolic panel.
+Metabolic - Na: 135 (N); K: 8.2 (H); Cl: 107 (H); CO2: 28 (N); BUN: 18 (N); Cr: 6.55 (H); Gluc: 34 (L); 9.7 (N); Mg: 2.1 (N); 4.3 (N)
+
+Finally any imaging that was done on the patient should be included. Each imaging exam should be on it's own line with it's name, the date and or time it was performed, and it's impression. For example here is a normal chest x-ray:
+X-Ray Chest @ 7/24 1907: No acute cardiopulmonary pathology.
+And here is a cat scan:
+CT Brain without contrast @ 8/21 0706: No intracranial hemorrhage or masses seen.
+
+
+Rules
+- Skip any tests not included in the provided data.
+- Use plain text format.
+- Use this heading: -Lab Values and Point of Care Testing-
+- No not provide any notes or comments about the response.
+
+Here is an example for reference.
+	-Lab Values and Point of Care Testing-
+	- Vital Signs - Blood Pressure: 110/86; Heart Rate: 82 Strong Regular; Respirations: 16; SpO2: 98% (Room Air);
+	- Pain: 8/10;
+	- BGL: 98 mg/dl;
+	- eTCO2: 37 mmHg;
+	- EKG: Sinus Rhythm 70-100. Occasional PVCs. ST-segment elevation in leads II, III, and aVF with reciprocal changes in leads I and aVL.
+	- Metabolic: Na: 135 (N); K: 3.7 (N); Cl: 107 (H); CO2: 28 (N); BUN: 18 (N); Cr: 6.55 (H); Gluc: 140 (H); Ca: 9.7 (N); Mg: 2.1 (N); Phos: 4.3 (N);
+	- Hematology: WBC: 7.6 (N); Hgb: 15 (N); Hct: 22 (L); Plat: 236 (N); Blood Type: A Pos;
+	- CT Brain without contrast @ 8/21 0706: No intracranial hemorrhage.
 
     Please provide the relevant findings based on the provided information from the following information: 
     {transcript}
