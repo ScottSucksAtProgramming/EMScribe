@@ -1,8 +1,7 @@
-
 # EMScribe 2.0
 
 <p align="center">
-  <img src="images/emscribe_logo.png" alt="EMScribe Logo" width="500" />
+  <img src="images/emscribe_logo.png" alt="EMScribe Logo" width="300" />
 </p>
 
 ## Overview
@@ -53,25 +52,50 @@ EMScribe 2.0 is a project designed to create comprehensive EMS narratives in a u
 
    Ensure Ollama is running locally and accessible at `http://localhost:11434`.
 
+### Verify the Installation
+
+To verify that everything is set up correctly, run the tests:
+
+```bash
+pytest
+```
+
+If all tests pass, your installation is successful and you are ready to use EMScribe 2.0.
+
 ## Directory Structure
 
 ```plaintext
 emscribe/
+├── docs/
+│   ├── index.md
+│   ├── installation.md
+│   ├── usage.md
+│   ├── development.md
+│   ├── api_reference.md
+│   ├── contributing.md
 ├── modules/
 │   ├── __init__.py
 │   ├── model_loader.py
 │   ├── prompt_manager.py
 │   ├── transcript_cleaner.py
 │   ├── transcript_extractor.py
+│   ├── narrative_manager.py
 │   ├── prompts/
 │       ├── __init__.py
 │       ├── extraction_prompts.py
 │       ├── cleaning_prompts.py
+│       ├── narrative_prompts.py
 ├── scripts/
 │   ├── __init__.py
 │   ├── extraction.py
 │   ├── preprocess.py
 │   ├── main.py
+├── tests/
+│   ├── __init__.py
+│   ├── conftest.py
+│   ├── test_model_loader.py
+│   ├── test_transcript_cleaner.py
+│   ├── test_transcript_extractor.py
 ├── README.md
 ├── requirements.txt
 ├── venv/
@@ -93,6 +117,14 @@ To run the preprocess script, use the following command:
 
 ```bash
 python -m scripts.preprocess
+```
+
+### Main Script
+
+To run the main script which demonstrates cleaning, extracting, and generating narratives, use the following command:
+
+```bash
+python -m scripts.main
 ```
 
 ### Example Transcript Input
@@ -123,7 +155,7 @@ To add new features or enhance existing ones, follow these steps:
 
    ```bash
    git add .
-   git commit -m "Adds new feature"
+   git commit -m "Add new feature"
    ```
 
 3. **Push the Branch and Create a Pull Request:**
@@ -146,3 +178,13 @@ There is currently no license for this project.
 ## Contact
 
 For any questions or support, please contact [ScottSucks](https://github.com/ScottSucksAtProgramming).
+
+## Documentation
+
+For detailed documentation, refer to the following:
+
+- [Installation Guide](docs/installation.md)
+- [Usage Guide](docs/usage.md)
+- [Development Guide](docs/development.md)
+- [API Reference](docs/api_reference.md)
+- [Contributing Guidelines](docs/contributing.md)
