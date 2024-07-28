@@ -154,7 +154,40 @@ narrative_prompts = {
                     - Family History: [Status of parents, and siblings (alive or deceased, and any notable medical history they have.]
                     - Medications: [List of the medications the patient is prescribed, separated by commas.
                     - Allergies: [List of and food, drug, or environmental allergies the patient has, separated by commas.]
-        Use the following data:
-            {data}"""
+
+                Use the following data:
+                    {data}""",
+            "objective": """
+                You will generate the Objective section for an EMS narrative from the provided data. 
+
+                Patient Histories Sub-Section
+                    This section provides a list of objective physical exam finding broken down by the body systems: general, skin, heent (head ears eyes nose throat), neck, cardiovascular, respiratory, abdomen, genitourinary and gastrointestinal, spine, musculoskeletal, neurological, and psychiatric.
+
+                Rules for this Section
+                - Never make assumptions or add any information that is not explicitly provided in the data.
+                - If no information is provided for a specific body system omit it from the response.
+                - complete sentences are not needed, just include the information in short phrases separated by commas.
+                - NEVER make any assumptions or inferences.
+                - The heading for this section should ALWAYS be OBJECTIVE:. Provide the response in plain text.
+                - Never provide any additional information, explanation or commentaries. Just give the completed Objective section.
+
+                Here is an example Objective for a healthy patient:
+
+                    OBJECTIVE:
+                    - GENERAL: Awake and appropriately oriented to person, place, time, and event. Well appearing with no evidence of acute distress. Dressed appropriately. Well groomed.
+                    - SKIN: Pink, warm, dry, and intact without rashes or lesions. Nail beds pink with no cyanosis. General coloration is appropriate.
+                    - HEENT: The head is atraumatic without tenderness, visible or palpable masses, depressions, or scarring. Pupils are round, equal, and reactive to light. No nystagmus noted. Nares are patent bilaterally.
+                    - NECK: Airways are patent. The patient speaks in full sentences. No stridor. No cough. The neck is supple. The trachea is midline. No jugular venous distention is noted.
+                    - CARDIOVASCULAR: The external chest is normal in appearance without signs of trauma. No implanted devices were noted. Heart rate and rhythm are regular. Distal pulses are strong and regular. Capillary refill is less than 2 seconds. No edema noted.
+                    - RESPIRATORY: The chest wall is symmetric and without deformity. No signs of trauma. The chest wall is non-tender. No signs of respiratory distress. Lung sounds are clear in all fields bilaterally without rales, rhonchi, or wheezes. Chest expansion is adequate and equal.
+                    - ABDOMEN: The abdomen is soft, symmetric, and non-tender without distention. There are no visible lesions or scars. Umbilicus is midline without herniation.
+                    - GU/GI: No external masses or lesions. External genitalia is normal in appearance without lesions, swelling, masses, or tenderness.
+                    - SPINE: Neck and back are without deformity, external skin changes, or signs of trauma. Bony features of the shoulders and hips are of equal height bilaterally. Posture is upright; gait is smooth and steady. No tenderness was noted on palpation of the spinous processes. Spinous processes are midline. Cervical, thoracic, and lumbar paraspinal muscles are not tender and are without spasm. Full range of motion is noted
+                    - MUSCULOSKELETAL: Upper and lower extremities are atraumatic in appearance without tenderness or deformity: no swelling or erythema. Full range of motion is noted in all joints. Muscle strength is equal bilaterally. Pulses palpable. Steady gait noted.
+                    - NEUROLOGICAL: The patient is awake, alert, and oriented to person, place, and time with normal speech. Motor function is normal, with equal muscle strength bilaterally in the upper and lower extremities. Sensation is intact bilaterally. Memory is normal, and the thought process is intact. No gait abnormalities are appreciated.
+                    - PSYCHIATRIC: Behavior and affect are appropriate to the situation.
+
+                Use the following data:
+                {data}"""
     }
 }   
