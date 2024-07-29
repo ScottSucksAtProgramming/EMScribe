@@ -102,6 +102,7 @@ def test_generate_narrative(tmp_path):
 def test_display_help():
     result = run_subprocess_with_env(["python3", script_path, "--help"], os.path.dirname(script_path))
     assert result.returncode == 0
-    assert "Usage:" in result.stdout
-    assert "Options:" in result.stdout
-    assert "Commands:" in result.stdout
+    assert "usage:" in result.stdout
+    assert "options:" in result.stdout
+    assert "positional arguments:" in result.stdout
+    assert "{clean,extract,generate}" in result.stdout  # Ensure the commands are listed
