@@ -104,26 +104,28 @@ emscribe/
 
 ## Running the Scripts
 
-### CLI Usage
+### Cleaning a Transcript
 
-The `emscribe` command can be used to clean transcripts, extract information, and generate narratives.
-
-#### Clean Transcript
+To clean a transcript, use the following command:
 
 ```bash
-emscribe clean path/to/transcript.txt
+python -m scripts.cli clean path_to_transcript.txt
 ```
 
-#### Extract Information
+### Extracting Information from a Transcript
+
+To extract information from a transcript, use the following command:
 
 ```bash
-emscribe extract path/to/transcript.txt
+python -m scripts.cli extract path_to_transcript.txt
 ```
 
-#### Generate Narrative
+### Generating a Narrative from Extracted Data
+
+To generate a narrative from extracted data, use the following command:
 
 ```bash
-emscribe generate path/to/transcript.txt --output path/to/output.txt
+python -m scripts.cli generate path_to_extracted_data.txt --output path_to_output.txt
 ```
 
 ### Example Transcript Input
