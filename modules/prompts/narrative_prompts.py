@@ -274,6 +274,7 @@ Please provide the relevant findings based on the provided information from the 
 
 This section contains:
 - A list of treatments provided by the EMS providers to the patient.
+- Medications and fluids given, procedures performed, splinting, positioning, airway management, IV or IO access, etc.
 - Any treatments were considered but unable to be completed for whatever reason. The reasons should be noted. This is uncommon.
 - Full treatment details, such as route, time of administration, dose, or other details, do not need to be included. This should only be a brief list.
 - A note at the end stating the full treatment details are documented elsewhere.
@@ -294,9 +295,11 @@ Here is an example of a patient who refused care:
 
 Rules
 - Use this heading: PLAN:
-- Never add any information that was not provided in the data
+- Never add any information that was not provided in the data.
+- Do not make assumptions. Only list treatments explicitly mentioned in the provided data.
 - Use plain text format.
 - Do not provide any notes or comments about the response.
+- Think critically and review the provided information multiple times to ensure you find all the treatments provided to the patient.
 
 Please provide the relevant findings based on the provided information from the following information: 
 ({data})"""
