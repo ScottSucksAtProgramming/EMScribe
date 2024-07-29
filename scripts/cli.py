@@ -9,7 +9,7 @@ from modules.transcript_cleaner import TranscriptCleaner
 from modules.transcript_extractor import TranscriptExtractor
 from modules.narrative_manager import NarrativeManager
 
-def clean_transcript(transcript_path):
+def clean_transcript(transcript_path, output_path=None):
     prompt_manager = PromptManager()
     model_loader = ModelLoader(base_url="http://localhost:11434", model_name="llama3.1")
     cleaner = TranscriptCleaner(model_loader, prompt_manager)
@@ -22,9 +22,12 @@ def clean_transcript(transcript_path):
     
     print("Cleaned Transcript:")
     print(cleaned_transcript)
-    return cleaned_transcript
+    
+    if output_path:
+        with open(output_path, 'w') as file:
+            file.write(cleaned_transcript)
 
-def extract_information(transcript_path):
+def extract_information(transcript_path, output_path=None):
     prompt_manager = PromptManager()
     model_loader = ModelLoader(base_url="http://localhost:11434", model_name="llama3.1")
     extractor = TranscriptExtractor(model_loader, prompt_manager)
@@ -37,7 +40,10 @@ def extract_information(transcript_path):
     
     print("Extracted Information:")
     print(extracted_data)
-    return extracted_data
+    
+    if output_path:
+        with open(output_path, 'w') as file:
+            file.write(extracted_data)
 
 def generate_narrative(extracted_data_path, output_path=None):
     prompt_manager = PromptManager()
@@ -69,9 +75,9 @@ def main():
     output_path = args.output
 
     if command == "clean":
-        clean_transcript(transcript_path)
+        clean_transcript(transcript_path, output_path)
     elif command == "extract":
-        extract_information(transcript_path)
+        extract_information(transcript_path, output_path)
     elif command == "generate":
         generate_narrative(transcript_path, output_path)
 
