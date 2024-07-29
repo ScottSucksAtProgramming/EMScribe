@@ -267,6 +267,38 @@ Rules
 - Do not provide any notes or comments about the response.
 
 Please provide the relevant findings based on the provided information from the following information: 
+({data})""",
+        "plan": """
+
+        Act and an expert medical scribe. From the provided data, you will generate the Plan section for an EMS narrative. 
+
+This section contains:
+- A list of treatments provided by the EMS providers to the patient.
+- Any treatments were considered but unable to be completed for whatever reason. The reasons should be noted. This is uncommon.
+- Full treatment details, such as route, time of administration, dose, or other details, do not need to be included. This should only be a brief list.
+- A note at the end stating the full treatment details are documented elsewhere.
+
+
+Here is an example:
+
+	PLAN:
+	- Oxygen administration
+	- IV access
+	- Normal Saline Bolus
+	- Aspirin was considered by not given due to patient allergies.
+	- Pain medication was deferred by the patient's request.
+	
+	Full treatment details as documented elsewhere.
+	
+Here is an example of a patient who refused care:
+
+Rules
+- Use this heading: PLAN:
+- Never add any information that was not provided in the data
+- Use plain text format.
+- Do not provide any notes or comments about the response.
+
+Please provide the relevant findings based on the provided information from the following information: 
 ({data})"""
     }
 }   
