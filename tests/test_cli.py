@@ -53,12 +53,14 @@ def test_generate_narrative(tmp_path):
 
     result = run_subprocess_with_env(["python3", script_path, "generate", str(extracted_data_path), "--output", str(output_path)], os.path.dirname(script_path))
     assert result.returncode == 0
-    assert "Generated Narrative:" in result.stdout
-    assert "PRE-ARRIVAL" in result.stdout
-    assert "SUBJECTIVE" in result.stdout
-    assert "HISTORY OF PRESENT ILLNESS" in result.stdout
-    assert "OBJECTIVE" in result.stdout
-    assert "LABS AND TESTS" in result.stdout
+
+    with open(output_path, "r") as file:
+        output_content = file.read()
+        assert "PRE-ARRIVAL" in output_content
+        assert "SUBJECTIVE" in output_content
+        assert "HISTORY OF PRESENT ILLNESS" in output_content
+        assert "OBJECTIVE" in output_content
+        assert "LABS AND TESTS" in output_content
 
 def test_display_help():
     result = run_subprocess_with_env(["python3", script_path, "--help"], os.path.dirname(script_path))
