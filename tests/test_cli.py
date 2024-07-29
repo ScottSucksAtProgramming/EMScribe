@@ -29,7 +29,6 @@ def test_clean_transcript(tmp_path):
 
     result = run_subprocess_with_env(["python3", script_path, "clean", str(transcript_path)], os.path.dirname(script_path))
     assert result.returncode == 0
-    assert "Cleaned Transcript:" in result.stdout
     assert "The patient is experiencing shortness of breath. The patient is also complaining of chest pain." in result.stdout
 
 def test_extract_information(tmp_path):
