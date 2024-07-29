@@ -1,5 +1,6 @@
 import sys
 import argparse
+import pyperclip
 from modules.model_loader import ModelLoader
 from modules.prompt_manager import PromptManager
 from modules.transcript_cleaner import TranscriptCleaner
@@ -50,6 +51,10 @@ def main():
             file.write(output)
     else:
         print(output)
+
+    # Copy to clipboard
+    pyperclip.copy(output)
+    print("Output has been copied to the clipboard.")
 
 if __name__ == "__main__":
     main()
