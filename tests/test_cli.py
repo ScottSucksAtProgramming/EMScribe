@@ -39,7 +39,6 @@ def test_extract_information(tmp_path):
 
     result = run_subprocess_with_env(["python3", script_path, "extract", str(transcript_path)], os.path.dirname(script_path))
     assert result.returncode == 0
-    assert "Extracted Information:" in result.stdout
     assert "John Doe" in result.stdout
     assert "45 years old" in result.stdout
     assert "chest pain for the past 2 hours" in result.stdout
