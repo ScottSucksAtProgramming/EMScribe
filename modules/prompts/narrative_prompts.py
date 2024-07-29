@@ -1,7 +1,7 @@
 narrative_prompts = {
     "presoaped_format": {
         "prearrival": """
-            You will be generating the first section of an EMS narrative from provided data. This section is called the Pre-Arrival and it contains information about the ambulance response to an EMS incident before it arrives at the scene of the emergency.
+            Act and an expert medical scribe. You will be generating the first section of an EMS narrative from provided data. This section is called the Pre-Arrival and it contains information about the ambulance response to an EMS incident before it arrives at the scene of the emergency.
 
             This section should include:
                 - The Unit's identifier or ambulance number.
@@ -11,11 +11,7 @@ narrative_prompts = {
                 - Any delays experienced during the response to the scene.
                 - The location of the scene.
                 - The dispatch complaint.
-                - The Pre-Arrival section should also include any additional information which s provided that occurred before the unit got to the emergency scene. This can include but is not limited to a change in response mode, change in location or patient status, updated information about the location the unit is responding to, and other information provided to the crew.
-
-            Rules for this section:
-                - Do not make any assumptions.
-                - Do not respond with anything except the completed section. No explanation, No notes. Just the completed Pre-Arrival.
+                - Any additional information related to the unit's response, such as other units responding, change in response mode, pre-arrival instructions. This section is commonly left empty.
 
             For Example:
 
@@ -41,7 +37,10 @@ narrative_prompts = {
             Unit [unit] responded [response_mode] from [starting_location], with a [crew_type] and [delays], to [incident_location] for a [dispatch_complaint]. [additional_information].
 
             Rules for This Section
+                - Use the heading 'PRE-ARRIVAL:'
+                - Do not make any assumptions.
                 - Ensure all information is factual and based on the pre-arrival scene without assumptions.
+                - Do not respond with anything except the completed section. No explanation, No notes. Just the completed Pre-Arrival.
 
             Use the following data:
             {data}
