@@ -1,8 +1,15 @@
-# tests/test_cli.py
-
 import subprocess
 import pytest
 import os
+
+# Get the absolute path to the cli.py script
+script_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../scripts/cli.py'))
+
+# Function to run a subprocess with the correct working directory and environment
+def run_subprocess_with_env(args, working_dir):
+    env = os.environ.copy()
+    env["PYTHONPATH"] = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+    return subprocess.run(args, capture_output=True, text=True, cwd=working_dir, env=env)
 
 # Test for cleaning a transcript
 def test_clean_transcript(tmp_path):
@@ -11,7 +18,7 @@ def test_clean_transcript(tmp_path):
     with open(transcript_path, "w") as file:
         file.write(transcript_text)
 
-    result = subprocess.run(["./emscribe", "clean", str(transcript_path)], capture_output=True, text=True)
+    result = run_subprocess_with_env(["python3", script_path, "clean", str(transcript_path)], os.path.dirname(script_path))
     assert result.returncode == 0
     assert "Cleaned Transcript:" in result.stdout
 
@@ -22,7 +29,7 @@ def test_extract_information(tmp_path):
     with open(transcript_path, "w") as file:
         file.write(transcript_text)
 
-    result = subprocess.run(["./emscribe", "extract", str(transcript_path)], capture_output=True, text=True)
+    result = run_subprocess_with_env(["python3", script_path, "extract", str(transcript_path)], os.path.dirname(script_path))
     assert result.returncode == 0
     assert "Extracted Information:" in result.stdout
 
@@ -37,9 +44,9 @@ def test_generate_narrative(tmp_path):
 
     Frederich can you tell me what's going on today?
 
-    About two hours ago I was sitting and watching TV in my living room and I began to feel a sudden crushing pressure in my chest. 
+    About two hours ago I was sitting and watching TV in my living room and I began to feel a sudden crushing pressure in my chest.
 
-    Do you have any shortness of breath? 
+    Do you have any shortness of breath?
 
     No, but I do feel nauseous and dizzy. I've also been sweating a lot. I took one of my nitro tabs but it didn't help. Any time I stand up or try to do any activity the pain gets worse. I feel a little better when I'm laying down.
 
@@ -47,11 +54,11 @@ def test_generate_narrative(tmp_path):
 
     I also have pain to my jaw and down my left arm.
 
-    On a scale of 1 to 10, with 10 being the worst pain you've ever felt in your life and 1 being almost no pain what is it right now. 
+    On a scale of 1 to 10, with 10 being the worst pain you've ever felt in your life and 1 being almost no pain what is it right now.
 
     It's a 10. It's really bad.
 
-    According to the paperwork provided by the doctor here Frederich has a known medical history of coronary artery disease, hypertension, high cholesterol, type 2 diabetes, BPH, GERD and a previous MI in 2018 with two cardiac stents placed. 
+    According to the paperwork provided by the doctor here Frederich has a known medical history of coronary artery disease, hypertension, high cholesterol, type 2 diabetes, BPH, GERD and a previous MI in 2018 with two cardiac stents placed.
 
     The doctor has placed an IV in the patients right arm, and gave them another dose of sublingual nitro. He also did an EKG which show ST Elevations in leads II, III, and aVF with a reciprocal ST Depression in aVL.
 
@@ -84,7 +91,7 @@ def test_generate_narrative(tmp_path):
     with open(transcript_path, "w") as file:
         file.write(transcript_text)
 
-    result = subprocess.run(["./emscribe", "generate", str(transcript_path), "--output", str(output_path)], capture_output=True, text=True)
+    result = run_subprocess_with_env(["python3", script_path, "generate", str(transcript_path), "--output", str(output_path)], os.path.dirname(script_path))
     assert result.returncode == 0
     assert os.path.exists(output_path)
     with open(output_path, "r") as file:
@@ -93,7 +100,7 @@ def test_generate_narrative(tmp_path):
 
 # Test for displaying help
 def test_display_help():
-    result = subprocess.run(["./emscribe", "--help"], capture_output=True, text=True)
+    result = run_subprocess_with_env(["python3", script_path, "--help"], os.path.dirname(script_path))
     assert result.returncode == 0
     assert "Usage:" in result.stdout
     assert "Options:" in result.stdout
