@@ -43,7 +43,7 @@ narrative_prompts = {
                 - Do not respond with anything except the completed section. No explanation, No notes. Just the completed Pre-Arrival.
 
             Use the following data:
-            {data}
+            ({data})
             """,
         "subjective": """
             You will be generating the second section of an EMS narrative from provided data. This section is called the Subjective and it contains information about the patient's initial situation during a medical emergency.
@@ -71,7 +71,7 @@ narrative_prompts = {
                 [Patient Name] is a(n) [Age and Unit] old [Sex] found [how the patient was found]. [Medical Equipment in use by the patient]. He/She complains of [Patient's Complaint].
 
             Use the following data:
-            {data}""",
+            ({data})""",
         "history_of_present_illness": """
             You will be generating the History of Present Illness subsection for an EMS narrative from provided data. This section contains information about story and events leading up to the patient's current illness.
             
@@ -117,7 +117,7 @@ narrative_prompts = {
 
                     Consider following the following flow: The description and story of their illness up to the 911 call. Including the reason for the 911 call if the symptoms have been. Followed by information related to the OPQRST acronym. And end with the patient's consent, or refusal to be transported to the hospital.
             Use the following data:
-            {data}""",
+            ({data})""",
         "patient_histories": """
             You will be generating the Patient Histories subsection for an EMS narrative from provided data. This section contains a bulleted list of the patient's medical history, surgical history, social history, family history, sexual history, prescribed medications and allergies.
 
@@ -155,7 +155,7 @@ narrative_prompts = {
                     - Allergies: [List of and food, drug, or environmental allergies the patient has, separated by commas.]
 
                 Use the following data:
-                    {data}""",
+                    ({data})""",
         "objective": """
                 You will generate the Objective section for an EMS narrative from the provided data. 
 
@@ -187,7 +187,7 @@ narrative_prompts = {
                     - PSYCHIATRIC: Behavior and affect are appropriate to the situation.
 
                 Use the following data:
-                {data}""",
+                ({data})""",
         "labs_and_tests": """
             Act and an expert medical scribe. From the provided data, you will generate the Lab Values and Point of Care Test Results section for an EMS narrative. 
 
@@ -233,7 +233,7 @@ Here is an example for reference:
 	
 Rules
 - Use this heading: -Lab Values and Point of Care Testing-
-- Skip any tests not included in the provided data. 
+- Skip any items if no information is provided for them.
 - Never add any values that were not present in the provided data.
 - Use plain text format.
 - Do not provide any notes or comments about the response.
