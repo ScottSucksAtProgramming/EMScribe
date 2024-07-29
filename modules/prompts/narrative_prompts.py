@@ -239,6 +239,34 @@ Rules
 - Do not provide any notes or comments about the response.
 
 Please provide the relevant findings based on the provided information from the following information: 
+({data})""",
+        "assessment": """
+
+        Act and an expert medical scribe. From the provided data, you will generate the Assessment section for an EMS narrative. 
+
+This section contains:
+- The provider's primary and secondary (if applicable) impression of the patient's illness.
+- The destination the patient is being transported to.
+- The transport mode (emergent/non-emergent) for the ride to the destination.
+- The patient is not always transported and is sometimes left on scene after refusing care, or if they have died. This should be included here as well.
+
+Here is an example of a patient who was transported:
+
+	ASSESSMENT:
+	John was treated and transported, non-emergent, to St. John's Hospital with a primary impression of asthma exacerbation.
+
+Here is an example of a patient who refused care:
+
+	ASSESSMENT:
+	Susan was assessed and refused further EMS care and transport to the emergency department.
+
+Rules
+- Use this heading: ASSESSMENT:
+- Never add any information that was not provided in the data
+- Use plain text format.
+- Do not provide any notes or comments about the response.
+
+Please provide the relevant findings based on the provided information from the following information: 
 ({data})"""
     }
 }   
