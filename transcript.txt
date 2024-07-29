@@ -68,4 +68,4 @@ Alright, lets get you into the ambulance. Take a seat here on the stretcher. We'
 
 Hey Siri set from scene time. 
 
-Patient was treated is a 20 gauge IV in his right forearm. 325mg of chewable aspirin administered. Patient was given 100mcg of Fentanyl IV which reduced his pain to 3. A liter bag of normal saline was hung but not administered. Serial 12-lead EKGs were performed with no changes. Oxygen administration was withheld as patient's oxygen saturation stated above 94% throughout transport.   
+Patient was treated with a 20 gauge IV in his right forearm. 325mg of chewable aspirin administered. Patient was given 100mcg of Fentanyl IV which reduced his pain to 3. A liter bag of normal saline was hung but not administered. Serial 12-lead EKGs were performed with no changes. Oxygen administration was withheld as patient's oxygen saturation stated above 94% throughout transport.   
