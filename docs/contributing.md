@@ -4,7 +4,7 @@ This guide provides instructions for contributing to EMScribe 2.0, including set
 
 ## Setting Up the Development Environment
 
-Follow the steps in the [Development Guide](development.md) to set up your development environment.
+Follow the steps in the [Development Guide](development.md) to set up your development environment. Ensure you are familiar with the new CLI module and understand the piping feature for chaining commands.
 
 ## Adding New Features
 
@@ -18,11 +18,11 @@ git checkout -b feature/your-feature-name
 
 ### Make Changes
 
-Implement your feature in the appropriate module or create new modules as needed. Ensure your code follows the project's coding standards.
+Implement your feature in the appropriate module or create new modules as needed. Ensure your code follows the project's coding standards. If your feature involves the CLI, update the CLI module and add new commands or options as necessary.
 
 ### Write Tests
 
-Write tests for your new feature in the `tests` directory. Ensure each test covers different scenarios and edge cases. Use `pytest` for testing.
+Write tests for your new feature in the `tests` directory. Ensure each test covers different scenarios and edge cases. Use `pytest` for testing. If your feature involves the CLI, include tests that verify the new commands or options.
 
 ### Commit Changes
 
@@ -64,7 +64,7 @@ git push origin feature/your-feature-name
 
 ## Documentation
 
-Ensure your new features are well-documented. Update or add new documentation files in the `docs` directory as needed. Follow the existing documentation structure and style.
+Ensure your new features are well-documented. Update or add new documentation files in the `docs` directory as needed. Follow the existing documentation structure and style. If your feature involves the CLI, update the CLI documentation to include new commands or options.
 
 ## Conclusion
 

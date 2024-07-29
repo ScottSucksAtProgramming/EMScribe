@@ -2,7 +2,7 @@
 # EMScribe 2.0 Documentation
 
 <div style="text-align: center;">
-    <img src="imiages/emscribe_logo.jpg" alt="EMScribe Logo" width="300"/>
+    <img src="images/emscribe_logo.png" alt="EMScribe Logo" width="300"/>
 </div>
 
 Welcome to the EMScribe 2.0 documentation. This documentation covers everything you need to know about installing, using, and contributing to EMScribe 2.0.
@@ -27,6 +27,7 @@ EMScribe 2.0 is a project designed to create comprehensive EMS narratives in a u
 - Reviews narratives for missing information or incongruencies.
 - Provides medical-legal review and suggests changes to protect the user.
 - Outputs the final narrative in plain text.
+- CLI support for cleaning, extracting, and generating narratives.
 
 ### Directory Structure
 
@@ -58,12 +59,16 @@ emscribe/
 │   ├── main.py
 │   ├── extraction.py
 │   ├── preprocess.py
+│   ├── cli.py
 ├── tests/
 │   ├── __init__.py
 │   ├── conftest.py
 │   ├── test_model_loader.py
 │   ├── test_transcript_cleaner.py
 │   ├── test_transcript_extractor.py
+│   ├── test_cli.py
+├── images/
+│   ├── emscribe_logo_small.jpg
 ├── README.md
 ├── requirements.txt
 └── venv/

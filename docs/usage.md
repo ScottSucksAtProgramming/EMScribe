@@ -1,3 +1,4 @@
+
 # Usage
 
 This guide will show you how to use EMScribe 2.0 for extracting and cleaning EMS transcripts and generating narratives.
@@ -11,7 +12,7 @@ The `emscribe` command can be used to clean transcripts, extract information, an
 To clean a transcript, use the following command:
 
 ```bash
-emscribe clean path/to/transcript.txt
+emscribe clean path/to/transcript.txt --output path/to/cleaned_transcript.txt
 ```
 
 ### Extract Information
@@ -19,15 +20,23 @@ emscribe clean path/to/transcript.txt
 To extract information from a transcript, use the following command:
 
 ```bash
-emscribe extract path/to/transcript.txt
+emscribe extract path/to/cleaned_transcript.txt --output path/to/extracted_info.txt
 ```
 
 ### Generate Narrative
 
-To generate a narrative from a transcript, use the following command:
+To generate a narrative from extracted information, use the following command:
 
 ```bash
-emscribe generate path/to/transcript.txt --output path/to/output.txt
+emscribe generate path/to/extracted_info.txt --output path/to/narrative.txt
+```
+
+### Using Pipes
+
+You can also use pipes to streamline the process. Here’s an example of cleaning a transcript and generating a narrative in one command:
+
+```bash
+emscribe clean path/to/transcript.txt | emscribe generate - --output path/to/narrative.txt
 ```
 
 ### Example Transcript Input
@@ -95,8 +104,7 @@ extractor = TranscriptExtractor(model_loader=model_loader, prompt_manager=prompt
 example_transcript = "Patient John Doe, 45 years old, male, experiencing chest pain for the past 2 hours. History of hypertension and diabetes."
 extracted_data = extractor.extract(example_transcript)
 print("Extracted Information:")
-for key, value in extracted_data.items():
-    print(f"{key}: {value}")
+print(extracted_data)
 ```
 
 ## Conclusion

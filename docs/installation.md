@@ -76,13 +76,15 @@ emscribe/
 │   ├── main.py
 │   ├── extraction.py
 │   ├── preprocess.py
+│   ├── cli.py
 ├── tests/
 │   ├── __init__.py
 │   ├── conftest.py
 │   ├── test_model_loader.py
 │   ├── test_transcript_cleaner.py
 │   ├── test_transcript_extractor.py
-├── assets/
+│   ├── test_cli.py
+├── images/
 │   ├── emscribe_logo_small.jpg
 ├── README.md
 ├── requirements.txt

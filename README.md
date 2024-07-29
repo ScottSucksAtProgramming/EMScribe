@@ -15,6 +15,7 @@ EMScribe 2.0 is a project designed to create comprehensive EMS narratives in a u
 - Reviews narratives for missing information or incongruencies.
 - Provides medical-legal review and suggests changes to protect the user.
 - Outputs the final narrative in plain text.
+- CLI for easy interaction with the tool.
 
 ## Setup
 
@@ -97,6 +98,7 @@ emscribe/
 │   ├── test_model_loader.py
 │   ├── test_transcript_cleaner.py
 │   ├── test_transcript_extractor.py
+│   ├── test_cli.py
 ├── README.md
 ├── requirements.txt
 ├── venv/
@@ -109,7 +111,7 @@ emscribe/
 To clean a transcript, use the following command:
 
 ```bash
-python -m scripts.cli clean path_to_transcript.txt
+emscribe clean path_to_transcript.txt --output path_to_cleaned_transcript.txt
 ```
 
 ### Extracting Information from a Transcript
@@ -117,7 +119,7 @@ python -m scripts.cli clean path_to_transcript.txt
 To extract information from a transcript, use the following command:
 
 ```bash
-python -m scripts.cli extract path_to_transcript.txt
+emscribe extract path_to_transcript.txt --output path_to_extracted_data.txt
 ```
 
 ### Generating a Narrative from Extracted Data
@@ -125,7 +127,7 @@ python -m scripts.cli extract path_to_transcript.txt
 To generate a narrative from extracted data, use the following command:
 
 ```bash
-python -m scripts.cli generate path_to_extracted_data.txt --output path_to_output.txt
+emscribe generate path_to_extracted_data.txt --output path_to_output.txt
 ```
 
 ### Example Transcript Input

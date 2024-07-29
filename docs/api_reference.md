@@ -176,6 +176,70 @@ Generates an EMS narrative based on the provided narrative format and extracted 
 **Returns:**
 - `str`: The generated EMS narrative.
 
+### 6. `refiner`
+
+The `refiner` module contains the `Refiner` class, which is responsible for refining extracted data before narrative generation.
+
+#### Class: `Refiner`
+
+**Description:**
+A class to refine the extracted data before generating the EMS narrative.
+
+**Attributes:**
+- `data (dict)`: The extracted data to be refined.
+
+**Methods:**
+
+##### `__init__(self)`
+
+**Description:**
+Initializes the `Refiner`.
+
+##### `refine(self) -> dict`
+
+**Description:**
+Allows the user to modify the extracted data.
+
+**Args:**
+- `None`
+
+**Returns:**
+- `dict`: The refined data.
+
+## CLI
+
+EMScribe 2.0 also includes a CLI tool to interact with the application.
+
+### Commands:
+
+1. `clean`
+   - Cleans the provided transcript.
+   - Usage: `emscribe clean <transcript_path> [--output <output_path>]`
+
+2. `extract`
+   - Extracts information from the provided transcript.
+   - Usage: `emscribe extract <transcript_path> [--output <output_path>]`
+
+3. `generate`
+   - Generates a narrative from the extracted data.
+   - Usage: `emscribe generate <transcript_path> [--output <output_path>]`
+
+### Example Usage:
+
+```sh
+# Clean a transcript
+emscribe clean ./transcript.txt --output ./cleaned_transcript.txt
+
+# Extract information from a transcript
+emscribe extract ./transcript.txt --output ./extracted_data.txt
+
+# Generate a narrative from the extracted data
+emscribe generate ./extracted_data.txt --output ./narrative.txt
+
+# Using piping to combine commands
+emscribe clean ./transcript.txt | emscribe extract - | emscribe generate - --output ./narrative.txt
+```
+
 ## Usage Examples
 
 ### Example 1: Cleaning a Transcript
@@ -225,7 +289,9 @@ from modules.narrative_manager import NarrativeManager
 
 # Initialize components
 prompt_manager = PromptManager()
-model_loader = ModelLoader(base_url="http://localhost:11434", model_name="llama3.1")
+model_loader = ModelLoader(base_url="http://localhost:11434", model_name="ll
+
+ama3.1")
 narrative_manager = NarrativeManager(model_loader=model_loader, prompt_manager=prompt_manager)
 
 # Example data extracted from a transcript

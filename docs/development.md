@@ -63,6 +63,7 @@ emscribe/
 │   ├── narrative_manager.py
 ├── scripts/
 │   ├── __init__.py
+│   ├── cli.py
 │   ├── extraction.py
 │   ├── main.py
 │   ├── preprocess.py
@@ -72,6 +73,7 @@ emscribe/
 │   ├── test_model_loader.py
 │   ├── test_transcript_cleaner.py
 │   ├── test_transcript_extractor.py
+│   ├── test_cli.py
 ├── README.md
 ├── requirements.txt
 ├── setup.py
