@@ -21,7 +21,7 @@ extracted_data = """
 }
 """
 
-def test_clean_transcript_return_code(tmp_path):
+def test_clean_transcript(tmp_path):
     transcript_text = "The patient is experiencing experiencing shortness of breath. The patient is The patient is also complaining of chest pain."
     transcript_path = tmp_path / "transcript.txt"
     with open(transcript_path, "w") as file:
@@ -29,26 +29,10 @@ def test_clean_transcript_return_code(tmp_path):
 
     result = run_subprocess_with_env(["python3", script_path, "clean", str(transcript_path)], os.path.dirname(script_path))
     assert result.returncode == 0
-
-def test_clean_transcript_output_header(tmp_path):
-    transcript_text = "The patient is experiencing experiencing shortness of breath. The patient is The patient is also complaining of chest pain."
-    transcript_path = tmp_path / "transcript.txt"
-    with open(transcript_path, "w") as file:
-        file.write(transcript_text)
-
-    result = run_subprocess_with_env(["python3", script_path, "clean", str(transcript_path)], os.path.dirname(script_path))
     assert "Cleaned Transcript:" in result.stdout
-
-def test_clean_transcript_output_content(tmp_path):
-    transcript_text = "The patient is experiencing experiencing shortness of breath. The patient is The patient is also complaining of chest pain."
-    transcript_path = tmp_path / "transcript.txt"
-    with open(transcript_path, "w") as file:
-        file.write(transcript_text)
-
-    result = run_subprocess_with_env(["python3", script_path, "clean", str(transcript_path)], os.path.dirname(script_path))
     assert "The patient is experiencing shortness of breath. The patient is also complaining of chest pain." in result.stdout
 
-def test_extract_information_return_code(tmp_path):
+def test_extract_information(tmp_path):
     transcript_text = "Patient John Doe, 45 years old, male, experiencing chest pain for the past 2 hours. History of hypertension and diabetes."
     transcript_path = tmp_path / "transcript.txt"
     with open(transcript_path, "w") as file:
@@ -56,62 +40,14 @@ def test_extract_information_return_code(tmp_path):
 
     result = run_subprocess_with_env(["python3", script_path, "extract", str(transcript_path)], os.path.dirname(script_path))
     assert result.returncode == 0
-
-def test_extract_information_output_header(tmp_path):
-    transcript_text = "Patient John Doe, 45 years old, male, experiencing chest pain for the past 2 hours. History of hypertension and diabetes."
-    transcript_path = tmp_path / "transcript.txt"
-    with open(transcript_path, "w") as file:
-        file.write(transcript_text)
-
-    result = run_subprocess_with_env(["python3", script_path, "extract", str(transcript_path)], os.path.dirname(script_path))
     assert "Extracted Information:" in result.stdout
-
-def test_extract_information_output_name(tmp_path):
-    transcript_text = "Patient John Doe, 45 years old, male, experiencing chest pain for the past 2 hours. History of hypertension and diabetes."
-    transcript_path = tmp_path / "transcript.txt"
-    with open(transcript_path, "w") as file:
-        file.write(transcript_text)
-
-    result = run_subprocess_with_env(["python3", script_path, "extract", str(transcript_path)], os.path.dirname(script_path))
     assert "John Doe" in result.stdout
-
-def test_extract_information_output_age(tmp_path):
-    transcript_text = "Patient John Doe, 45 years old, male, experiencing chest pain for the past 2 hours. History of hypertension and diabetes."
-    transcript_path = tmp_path / "transcript.txt"
-    with open(transcript_path, "w") as file:
-        file.write(transcript_text)
-
-    result = run_subprocess_with_env(["python3", script_path, "extract", str(transcript_path)], os.path.dirname(script_path))
     assert "45 years old" in result.stdout
-
-def test_extract_information_output_chest_pain(tmp_path):
-    transcript_text = "Patient John Doe, 45 years old, male, experiencing chest pain for the past 2 hours. History of hypertension and diabetes."
-    transcript_path = tmp_path / "transcript.txt"
-    with open(transcript_path, "w") as file:
-        file.write(transcript_text)
-
-    result = run_subprocess_with_env(["python3", script_path, "extract", str(transcript_path)], os.path.dirname(script_path))
     assert "chest pain for the past 2 hours" in result.stdout
-
-def test_extract_information_output_hypertension(tmp_path):
-    transcript_text = "Patient John Doe, 45 years old, male, experiencing chest pain for the past 2 hours. History of hypertension and diabetes."
-    transcript_path = tmp_path / "transcript.txt"
-    with open(transcript_path, "w") as file:
-        file.write(transcript_text)
-
-    result = run_subprocess_with_env(["python3", script_path, "extract", str(transcript_path)], os.path.dirname(script_path))
     assert "hypertension" in result.stdout
-
-def test_extract_information_output_diabetes(tmp_path):
-    transcript_text = "Patient John Doe, 45 years old, male, experiencing chest pain for the past 2 hours. History of hypertension and diabetes."
-    transcript_path = tmp_path / "transcript.txt"
-    with open(transcript_path, "w") as file:
-        file.write(transcript_text)
-
-    result = run_subprocess_with_env(["python3", script_path, "extract", str(transcript_path)], os.path.dirname(script_path))
     assert "diabetes" in result.stdout
 
-def test_generate_narrative_return_code(tmp_path):
+def test_generate_narrative(tmp_path):
     extracted_data_path = tmp_path / "extracted_data.txt"
     output_path = tmp_path / "output.txt"
     with open(extracted_data_path, "w") as file:
@@ -119,73 +55,16 @@ def test_generate_narrative_return_code(tmp_path):
 
     result = run_subprocess_with_env(["python3", script_path, "generate", str(extracted_data_path), "--output", str(output_path)], os.path.dirname(script_path))
     assert result.returncode == 0
-
-def test_generate_narrative_output_header(tmp_path):
-    extracted_data_path = tmp_path / "extracted_data.txt"
-    output_path = tmp_path / "output.txt"
-    with open(extracted_data_path, "w") as file:
-        file.write(extracted_data)
-
-    result = run_subprocess_with_env(["python3", script_path, "generate", str(extracted_data_path), "--output", str(output_path)], os.path.dirname(script_path))
     assert "Generated Narrative:" in result.stdout
-
-def test_generate_narrative_output_prearrival(tmp_path):
-    extracted_data_path = tmp_path / "extracted_data.txt"
-    output_path = tmp_path / "output.txt"
-    with open(extracted_data_path, "w") as file:
-        file.write(extracted_data)
-
-    result = run_subprocess_with_env(["python3", script_path, "generate", str(extracted_data_path), "--output", str(output_path)], os.path.dirname(script_path))
     assert "PRE-ARRIVAL" in result.stdout
-
-def test_generate_narrative_output_subjective(tmp_path):
-    extracted_data_path = tmp_path / "extracted_data.txt"
-    output_path = tmp_path / "output.txt"
-    with open(extracted_data_path, "w") as file:
-        file.write(extracted_data)
-
-    result = run_subprocess_with_env(["python3", script_path, "generate", str(extracted_data_path), "--output", str(output_path)], os.path.dirname(script_path))
     assert "SUBJECTIVE" in result.stdout
-
-def test_generate_narrative_output_hpi(tmp_path):
-    extracted_data_path = tmp_path / "extracted_data.txt"
-    output_path = tmp_path / "output.txt"
-    with open(extracted_data_path, "w") as file:
-        file.write(extracted_data)
-
-    result = run_subprocess_with_env(["python3", script_path, "generate", str(extracted_data_path), "--output", str(output_path)], os.path.dirname(script_path))
     assert "HISTORY OF PRESENT ILLNESS" in result.stdout
-
-def test_generate_narrative_output_objective(tmp_path):
-    extracted_data_path = tmp_path / "extracted_data.txt"
-    output_path = tmp_path / "output.txt"
-    with open(extracted_data_path, "w") as file:
-        file.write(extracted_data)
-
-    result = run_subprocess_with_env(["python3", script_path, "generate", str(extracted_data_path), "--output", str(output_path)], os.path.dirname(script_path))
     assert "OBJECTIVE" in result.stdout
-
-def test_generate_narrative_output_labs_and_tests(tmp_path):
-    extracted_data_path = tmp_path / "extracted_data.txt"
-    output_path = tmp_path / "output.txt"
-    with open(extracted_data_path, "w") as file:
-        file.write(extracted_data)
-
-    result = run_subprocess_with_env(["python3", script_path, "generate", str(extracted_data_path), "--output", str(output_path)], os.path.dirname(script_path))
     assert "LABS AND TESTS" in result.stdout
 
-def test_display_help_return_code():
+def test_display_help():
     result = run_subprocess_with_env(["python3", script_path, "--help"], os.path.dirname(script_path))
     assert result.returncode == 0
-
-def test_display_help_usage():
-    result = run_subprocess_with_env(["python3", script_path, "--help"], os.path.dirname(script_path))
     assert "usage:" in result.stdout
-
-def test_display_help_options():
-    result = run_subprocess_with_env(["python3", script_path, "--help"], os.path.dirname(script_path))
     assert "options:" in result.stdout
-
-def test_display_help_commands():
-    result = run_subprocess_with_env(["python3", script_path, "--help"], os.path.dirname(script_path))
     assert "Commands:" in result.stdout
