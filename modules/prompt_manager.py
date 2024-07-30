@@ -3,6 +3,7 @@
 from modules.prompts.extraction_prompts import extraction_prompts
 from modules.prompts.cleaning_prompts import cleaning_prompts
 from modules.prompts.narrative_prompts import narrative_prompts
+from modules.prompts.quality_controller_prompts import quality_controller_prompts
 
 class PromptManager:
     """
@@ -20,6 +21,7 @@ class PromptManager:
             **extraction_prompts,
             **cleaning_prompts,
             **narrative_prompts,
+            **quality_controller_prompts
             # Add other prompt modules as needed...
         }
 
