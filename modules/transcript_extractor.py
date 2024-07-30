@@ -50,7 +50,7 @@ class TranscriptExtractor:
             "treatments",
             "packaging",
             "transport",
-            "transfer of care",
+            "transfer_of_care",
         ]
         extracted_data = []
 
