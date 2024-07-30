@@ -3,6 +3,7 @@
 from modules.model_loader import ModelLoader
 from modules.prompt_manager import PromptManager
 
+
 class TranscriptCleaner:
     """
     A class to clean up an EMS transcript using an AI model.
@@ -33,7 +34,9 @@ class TranscriptCleaner:
         Returns:
             str: The cleaned transcript.
         """
-        prompt = self.prompt_manager.get_prompt("clean_transcript", transcript=transcript)
+        prompt = self.prompt_manager.get_prompt(
+            "clean_transcript", transcript=transcript
+        )
         response = self.model_loader.generate(prompt)
         cleaned_transcript = response
         return cleaned_transcript.strip()

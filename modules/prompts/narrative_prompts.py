@@ -371,6 +371,6 @@ Rules
 - Do not provide any notes or comments about the response. Just respond with the completed section.
 
 Please provide the relevant findings based on the following information: 
-({data})"""
+({data})""",
     }
-}   
+}

@@ -6,24 +6,30 @@ from modules.prompt_manager import PromptManager
 # Initialize PromptManager
 prompt_manager = PromptManager()
 
+
 # Function to extract information from the transcript
 def extract_information(transcript):
     # Initialize ModelLoader
     model_loader = ModelLoader(base_url="http://localhost:11434", model_name="llama3.1")
-    
+
     # Initialize TranscriptCleaner with ModelLoader and PromptManager
-    cleaner = TranscriptCleaner(model_loader=model_loader, prompt_manager=prompt_manager)
-    
+    cleaner = TranscriptCleaner(
+        model_loader=model_loader, prompt_manager=prompt_manager
+    )
+
     # Initialize TranscriptExtractor with ModelLoader and PromptManager
-    extractor = TranscriptExtractor(model_loader=model_loader, prompt_manager=prompt_manager)
-    
+    extractor = TranscriptExtractor(
+        model_loader=model_loader, prompt_manager=prompt_manager
+    )
+
     # Clean the transcript
     cleaned_transcript = cleaner.clean(transcript)
-    
+
     # Extract information from the cleaned transcript
     extracted_data = extractor.extract(cleaned_transcript)
-    
+
     return extracted_data
+
 
 # Example usage
 if __name__ == "__main__":

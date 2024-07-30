@@ -1,5 +1,6 @@
 from langchain_community.llms import Ollama
 
+
 class ModelLoader:
     """
     A class to load and interact with AI models.
@@ -8,6 +9,7 @@ class ModelLoader:
         model_name (str): The name of the model to use.
         base_url (str): The base URL of the model API.
     """
+
     def __init__(self, model_name, base_url="http://localhost:11434"):
         """
         Initializes the ModelLoader with the specified model name and base URL.
@@ -31,8 +33,5 @@ class ModelLoader:
         Returns:
             str: The generated response from the model.
         """
-        response = self.client.generate(
-            model=self.model_name,
-            prompts=[prompt]
-        )
+        response = self.client.generate(model=self.model_name, prompts=[prompt])
         return response.generations[0][0].text.strip()

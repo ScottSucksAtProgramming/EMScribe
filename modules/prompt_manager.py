@@ -1,12 +1,18 @@
 # modules/prompt_manager.py
 
-from modules.prompts import cleaning_prompts, extraction_prompts, narrative_prompts, quality_controller_prompts
+from modules.prompts import (
+    cleaning_prompts,
+    extraction_prompts,
+    narrative_prompts,
+    quality_controller_prompts,
+)
+
 
 class PromptManager:
     """
     Manages prompts for various tasks such as extraction, cleaning, narrative generation, and quality control.
     """
-    
+
     def __init__(self):
         """
         Initializes the PromptManager with a dictionary of prompts.
@@ -15,7 +21,7 @@ class PromptManager:
             **extraction_prompts.extraction_prompts,
             **cleaning_prompts.cleaning_prompts,
             **narrative_prompts.narrative_prompts,
-            **quality_controller_prompts.quality_controller_prompts
+            **quality_controller_prompts.quality_controller_prompts,
         }
 
     def get_prompt(self, key: str, **kwargs) -> str:

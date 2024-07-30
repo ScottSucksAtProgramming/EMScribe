@@ -4,11 +4,13 @@ import pytest
 
 script_path = os.path.join(os.path.dirname(__file__), "..", "scripts", "cli.py")
 
+
 def run_subprocess_with_env(args, cwd):
     env = os.environ.copy()
     env["PYTHONPATH"] = os.getcwd()
     result = subprocess.run(args, cwd=cwd, env=env, capture_output=True, text=True)
     return result
+
 
 extracted_data = """
 {
@@ -21,15 +23,23 @@ extracted_data = """
 }
 """
 
+
 def test_clean_transcript(tmp_path):
     transcript_text = "The patient is experiencing experiencing shortness of breath. The patient is The patient is also complaining of chest pain."
     transcript_path = tmp_path / "transcript.txt"
     with open(transcript_path, "w") as file:
         file.write(transcript_text)
 
-    result = run_subprocess_with_env(["python3", script_path, "clean", str(transcript_path)], os.path.dirname(script_path))
+    result = run_subprocess_with_env(
+        ["python3", script_path, "clean", str(transcript_path)],
+        os.path.dirname(script_path),
+    )
     assert result.returncode == 0
-    assert "The patient is experiencing shortness of breath. The patient is also complaining of chest pain." in result.stdout
+    assert (
+        "The patient is experiencing shortness of breath. The patient is also complaining of chest pain."
+        in result.stdout
+    )
+
 
 def test_extract_information(tmp_path):
     transcript_text = "Patient John Doe, 45 years old, male, experiencing chest pain for the past 2 hours. History of hypertension and diabetes."
@@ -37,12 +47,16 @@ def test_extract_information(tmp_path):
     with open(transcript_path, "w") as file:
         file.write(transcript_text)
 
-    result = run_subprocess_with_env(["python3", script_path, "extract", str(transcript_path)], os.path.dirname(script_path))
+    result = run_subprocess_with_env(
+        ["python3", script_path, "extract", str(transcript_path)],
+        os.path.dirname(script_path),
+    )
     assert result.returncode == 0
     assert "John" in result.stdout
     assert "45" in result.stdout
     assert "hypertension" in result.stdout
     assert "diabetes" in result.stdout
+
 
 def test_generate_narrative(tmp_path):
     extracted_data_path = tmp_path / "extracted_data.txt"
@@ -50,19 +64,36 @@ def test_generate_narrative(tmp_path):
     with open(extracted_data_path, "w") as file:
         file.write(extracted_data)
 
-    result = run_subprocess_with_env(["python3", script_path, "generate", str(extracted_data_path), "--output", str(output_path)], os.path.dirname(script_path))
+    result = run_subprocess_with_env(
+        [
+            "python3",
+            script_path,
+            "generate",
+            str(extracted_data_path),
+            "--output",
+            str(output_path),
+        ],
+        os.path.dirname(script_path),
+    )
     assert result.returncode == 0
 
     with open(output_path, "r") as file:
         output_content = file.read()
         assert "PRE-ARRIVAL" in output_content
         assert "SUBJECTIVE" in output_content
-        assert "OBJECTIVE" in output_content  # Check for key content instead of exact wording
+        assert (
+            "OBJECTIVE" in output_content
+        )  # Check for key content instead of exact wording
+
 
 def test_display_help():
-    result = run_subprocess_with_env(["python3", script_path, "--help"], os.path.dirname(script_path))
+    result = run_subprocess_with_env(
+        ["python3", script_path, "--help"], os.path.dirname(script_path)
+    )
     assert result.returncode == 0
     assert "usage:" in result.stdout
     assert "options:" in result.stdout
-    assert "positional arguments:" in result.stdout  # Adjust to check for the correct section header
+    assert (
+        "positional arguments:" in result.stdout
+    )  # Adjust to check for the correct section header
     assert "{clean,extract,generate}" in result.stdout  # Ensure the commands are listed

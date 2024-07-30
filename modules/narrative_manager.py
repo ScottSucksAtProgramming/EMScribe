@@ -3,6 +3,7 @@
 from modules.model_loader import ModelLoader
 from modules.prompt_manager import PromptManager
 
+
 class NarrativeManager:
     """
     A class to generate EMS narratives using an AI model.

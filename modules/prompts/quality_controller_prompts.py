@@ -12,7 +12,6 @@ quality_controller_prompts = {
 
     Improved Narrative:
     """,
-
     "check_missing_information": """
     Compare the provided narrative against a list of required information for each section based on the narrative format. Identify any missing sections or details and return a list of the missing elements.
 
@@ -23,5 +22,5 @@ quality_controller_prompts = {
     {required_info}
 
     Missing Elements:
-    """
+    """,
 }
