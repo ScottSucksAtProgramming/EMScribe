@@ -321,12 +321,13 @@ Here is an example:
 	A notification was given to St. Michael's Hospital with a request to activate the cath lab team. During transport John's clinical status remained unchanged. His pain stayed around a 4/10. He denied any worsening complaints or new symptoms. On-going reassessments were unremarkable from previous. Serial 12-Lead EKGs were performed with no changes.
 
 Template:
-    DELTA
+    DELTA:
     [Paragraph discussing events on the scene, including how the patient was moved to the stretcher/ambulance. How the patient was secured to the stretcher.]
 
     [Paragraph discussing events during transport, including patient response to the treatments, any new complaints, clinical changes, findings from further assessments or point of care testing.]
 	
 Rules
+- Thinking critically and review the information multiple times to provide the most accurate response.
 - Use this heading: DELTA:
 - Never add any information that was not provided in the data.
 - Do not make any assumptions.
