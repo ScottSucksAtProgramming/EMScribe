@@ -118,8 +118,6 @@ def main():
         extract_information(args.transcript_path, args.output)
     elif args.command == "generate":
         generate_narrative(args.transcript_path, args.output)
-    elif args.command == "quality":
-        quality_control(args.transcript_path, args.narrative_path, args.output)
 
 
 if __name__ == "__main__":
