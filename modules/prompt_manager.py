@@ -21,7 +21,7 @@ class PromptManager:
             **extraction_prompts.extraction_prompts,
             **cleaning_prompts.cleaning_prompts,
             **narrative_prompts.narrative_prompts,
-            **review_prompts
+            **review_prompts.review_prompts
         }
 
     def get_prompt(self, key: str, **kwargs) -> str:

@@ -1,7 +1,6 @@
 review_prompts = {
     "review_section": (
-        "Review the following section of the EMS data. If any information is incorrect or missing, "
-        "provide the necessary changes: {section_data}"
+        "Please make the following changes to this section: {section_data}"
     ),
     "final_review": (
         "Here is the updated section after making changes: {updated_section}. "

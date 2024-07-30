@@ -34,8 +34,8 @@ def review_extracted_data(extracted_data_path, output_path):
                 reviewed_sections.append(section)
                 break
             else:
-                section = user_input
-                final_response = reviewer.final_review(section)
+                prompt = reviewer.final_review(f"Original Section: {section}\nUser Changes: {user_input}")
+                final_response = reviewer.final_review(prompt)
                 print(f"Final AI Response: {final_response}")
                 user_input = input("Is this correct? (yes/no): ").strip()
                 if user_input.lower() == 'yes':
@@ -133,20 +133,11 @@ def main():
         "--output", help="Path to save the generated narrative"
     )
 
-    quality_parser = subparsers.add_parser(
-        "quality", help="Perform quality control on the narrative"
-    )
-    quality_parser.add_argument("transcript_path", help="Path to the transcript file")
-    quality_parser.add_argument(
-        "--narrative_path", help="Path to the narrative file", required=True
-    )
-    quality_parser.add_argument("--output", help="Path to save the improved narrative")
-
     review_parser = subparsers.add_parser(
-        "review", help="Review and modify extracted data"
+        "review", help="Review extracted data section by section"
     )
     review_parser.add_argument("extracted_data_path", help="Path to the extracted data file")
-    review_parser.add_argument("--output", help="Path to save the reviewed data")
+    review_parser.add_argument("--output", help="Path to save the reviewed data", required=True)
 
     args = parser.parse_args()
 
@@ -158,6 +149,7 @@ def main():
         generate_narrative(args.transcript_path, args.output)
     elif args.command == "review":
         review_extracted_data(args.extracted_data_path, args.output)
+
 
 if __name__ == "__main__":
     main()
