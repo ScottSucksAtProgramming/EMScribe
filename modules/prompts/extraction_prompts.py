@@ -87,7 +87,7 @@ Subjective Information
 
 Here is the information: ({transcript})""",
     "history_of_present_illness": """
-        As an expert in Natural Language Processing (NLP), your job is to pull out relevant medical information from documents provided to you. These documents will all be about EMS medical incidents. Follow the steps below to find the required information and then provide your response.
+As an expert in Natural Language Processing (NLP), your job is to pull out relevant medical information from documents provided to you. These documents will all be about EMS medical incidents. Follow the steps below to find the required information and then provide your response.
 
 1. Review the entire document looking for any other complaints, signs or symptoms mentioned by the patient.
 2. Review the entire document looking for the onset of the patient's complaints (sudden, gradual, episodic, other).
@@ -106,7 +106,6 @@ Use Plain text. Do not add any comments or additional information.
 Template
 
 History of Present Illness
-
 - Associated Signs and Symptoms: 
 - Onset:
 - Provocation: 
