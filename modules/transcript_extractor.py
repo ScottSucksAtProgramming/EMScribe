@@ -33,7 +33,7 @@ class TranscriptExtractor:
         Returns:
             str: The extracted information in a single string.
         """
-        prompt_keys = ["incident_info", "patient_demographics", "subjective_info", "history_of_present_illness", "patient_histories", "objective_1", "objective_2", "vitals", "poc_tests", "labs", "imaging"]
+        prompt_keys = ["incident_info", "patient_demographics", "subjective_info", "history_of_present_illness", "patient_histories", "objective_1", "objective_2", "vitals", "poc_tests", "labs", "imaging", "impressions", "treatments", "packaging", "transport", "transfer of care"]
         extracted_data = []
 
         for key in prompt_keys:

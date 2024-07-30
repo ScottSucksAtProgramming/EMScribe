@@ -156,7 +156,7 @@ narrative_prompts = {
 
                 Use the following data:
                     ({data})""",
-        "objective": """
+        "objective_1": """
                 You will generate the Objective section for an EMS narrative from the provided data. 
 
                 Patient Histories Sub-Section
@@ -301,8 +301,7 @@ Rules
 
 Please provide the relevant findings based on the provided information from the following information: 
 ({data})""",
-
-"delta": """
+        "delta": """
 Act and an expert medical scribe. From the provided data, you will generate the Delta section of an EMS narrative. Delta stands for change. It is a section where the rest of the emergency call is discussed. It should be written in a paragraph format and should include the following.
 
 This section contains:
@@ -336,8 +335,7 @@ Rules
 
 Please provide the relevant findings based on the following information: 
 ({data})""",
-
-"hand_off": """
+        "hand_off": """
 Act and an expert medical scribe. From the provided data, you will generate the Hand Off subsection of an EMS narrative.
 
 This section contains:

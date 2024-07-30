@@ -119,7 +119,7 @@ History of Present Illness
 - Additional History of Present Illness: 
 
 Here is the information: ({transcript})""",
-"patient_histories": """
+    "patient_histories": """
 As an expert in Natural Language Processing (NLP), your job is to pull out relevant medical information from documents provided to you. These documents will all be about EMS medical incidents. Follow the steps below to find the required information and then provide your response.
 
 1. Review the entire document looking for the patient's medical history.
@@ -158,10 +158,11 @@ As an expert in Natural Language Processing (NLP), your job is to pull out relev
 7. Review the entire document looking for objective exam findings related to the patient's throat.
 8. Review the entire document looking for objective exam findings related to the patient's neck, including the status of the patient's airways.
 
+Once you have obtained all the information give your response using the following template. Use Plain text. Do not add any comments or additional information.
+
 Template
 
 Objective Assessment
-
 - GENERAL: 
 - SKIN: 
 - HEAD: 
@@ -290,6 +291,120 @@ Imaging Reports
 [List all Ultrasound results using this format: Ultrasound (Target)  @ (Date / Time): (Impression)]
 [List all other imaging reports]
 
-Here is the information: ({transcript})
-"""
+Here is the information: ({transcript})""",
+    "impressions": """
+As an expert in Natural Language Processing (NLP), your job is to pull out relevant medical information from documents provided to you. These documents will all be about EMS medical incidents. This information will not always be provided. If no information is provided for a section, answer '[No Info]'. If so each one should be listed individually. Follow the steps below to find the required information and respond.
+
+1. Review the entire document for the EMS provider's primary impression or diagnosis.
+2. Review the entire document for the EMS provider's secondary impressions or diagnoses.
+3. Review the entire document for the destination the patient was transferred to.
+4. Review the entire document for the transport mode (emergent/non-emergent) used to get to the destination.
+5. Review the entire document to see if the patient refused further care or transport (yes/no).
+
+Once you have obtained all the information, give your response using the following template. Use Plain text. Do not add any comments or additional information.
+
+Template
+
+Impression Information
+- Primary Impression:
+- Secondary Impressions:
+- Destination Name: 
+- Transport Mode to Destination: 
+- Patient Refusal: 
+
+Here is the information: ({transcript})""",
+    "treatments": """
+As an expert in Natural Language Processing (NLP), your job is to pull out relevant medical information from documents provided to you. These documents will all be about EMS medical incidents. This information will not always be provided. If no information is provided for a section, answer '[No Info]'. If so each one should be listed individually. Follow the steps below to find the required information and respond.
+
+1. Review the entire document for the medications given to the patient by the EMS provider.
+2. Review the entire document for the procedures performed on the patient by the EMS provider.
+3. Review the entire document for the IVs or IOs started on the patient.
+4. Review the entire document for the point-of-care tests performed by the EMS provider.
+5. Review the entire document for any treatments that were unsuccessful.
+6. Review the entire document for any treatments that were considered but not given and the reasons why.
+
+
+Once you have obtained all the information, give your response using the following template. Use Plain text. Do not add any comments or additional information.
+
+Template
+
+Treatments
+- Medications Given to Patient:
+- Procedures Performed on Patient:
+- IV or IO Access: 
+- Point-of-Care Testing Performed on Patient: 
+- Unsuccessful Treatments: 
+- Deferred Treatments: 
+
+Here is the information: ({transcript})""",
+    "packaging": """
+As an expert in Natural Language Processing (NLP), your job is to extract relevant medical information from documents provided to you. These documents will all be about EMS medical incidents. This information will not always be provided. If no information is provided for a section, answer '[No Info]'. If so, each one should be listed individually. Follow the steps below to find the required information and respond.
+
+1. Review the entire document for any important events that happened before the patient was transported to the destination.
+2. Review the entire document for any events that delayed transport to the destination.
+3. Review the entire document for information on how the patient was moved to the transport stretcher.
+4. Review the entire document for the safety equipment used to secure the patient to the transport stretcher.
+5. Review the entire document for the monitoring equipment that was connected to the patient.
+
+Once you have obtained all the information, give your response using the following template. Use Plain text. Do not add any comments or additional information.
+
+Template
+
+Patient Packaging
+- On-Scene Events:
+- Scene Delays:
+- Patient Movement to Stretcher: 
+- Safety Equipment Used: 
+
+Here is the information: ({transcript})""",
+    "transport": """
+As an expert in Natural Language Processing (NLP), your job is to extract relevant medical information from documents provided to you. These documents will all be about EMS medical incidents. This information will not always be provided. If no information is provided for a section, answer '[No Info]'. If so, each one should be listed individually. Follow the steps below to find the required information and respond.
+
+1. Review the entire document for any notifications made to the destination.
+2. Review the entire document for any events that occurred during transport.
+3. Review the entire document for any delays which occurred during transport.
+4. Review the entire document for changes to the patient's clinical condition.
+5. Review the entire document for changes to the patient's vital signs or monitoring status.
+
+
+
+Once you have obtained all the information, give your response using the following template. Use Plain text. Do not add any comments or additional information.
+
+Template
+
+Transport Info
+- Hospital Notifications: 
+- Transport Events:
+- Transport Delays:
+- Clinical Changes: 
+- Vitals and Monitoring Changes: 
+
+Here is the information: ({transcript})""",
+    "transfer_of_care": """
+As an expert in Natural Language Processing (NLP), your job is to extract relevant medical information from documents provided to you. These documents will all be about EMS medical incidents. This information will not always be provided. If no information is provided for a section, answer '[No Info]'. If so, each one should be listed individually. Follow the steps below to find the required information and respond.
+
+1. Review the entire document for the name and medical license of the person who received a report at the destination.
+2. Review the entire document for the specific room, bed, unit, or department where the patient was transferred to at the destination.
+3. Review the entire document to see how the patient was moved off the transport stretcher and into the destination's bed or chair.
+4. Review the entire document for the safety measures used to protect the patient at the destination's bed or chair.
+5. Review the entire document for any delays in the transfer of care.
+6. Review the entire document for delays in the unit returning to service.
+7. Review the entire document for any actions taken by the crew or events after the transfer of care and before the unit returned to service.
+
+
+
+Once you have obtained all the information, give your response using the following template. Use Plain text. Do not add any comments or additional information.
+
+Template
+
+Transfer of Care
+- Transfer of Care Personnel: 
+- Bed or Room Patient Transferred to:
+- How the Patient was Moved to the Destination Bed:
+- Safety Measures Used: 
+- Transfer of Care Delays: 
+- Turn Around Delays: 
+- Events Prior to Returning to Service: 
+
+Here is the information: ({transcript})"""
 }
