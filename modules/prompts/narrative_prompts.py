@@ -300,6 +300,47 @@ Rules
 - Think critically and review the provided information multiple times to ensure you find all the treatments provided to the patient.
 
 Please provide the relevant findings based on the provided information from the following information: 
+({data})""",
+
+"delta": """
+
+Act and an expert medical scribe. From the provided data, you will generate the Delta section of an EMS narrative. Delta stands for change. It is a section where the rest of the emergency call is discussed. It should be written in a paragraph format and should include the following.
+
+This section contains:
+- How the patient was moved to the ambulance stretcher.
+- How the patient was secured to the ambulance stretcher.
+- What monitoring equipment (if any) the patient was connected to during transport.
+- Whether or not there were any delays prior to beginning transport.
+- Whether or not any of the patient's belongings were transported with the patient.
+- If someone aside from the EMS crew accompanies the patient they should be noted as well as there they sat during transport and how they were secured in the ambulance.
+- Any changes to the treatments.
+- Any notifications made to the hospital.
+- Any Changes to the patient's clinical status, including any responses (positive or negative) to the treatments. Any new complaints, worsening symptoms or new findings occurred during the transport.
+- If any deviation from the expected transport, such as being redirected to a different hospital, being delayed by traffic, accident, or other reason, or other unusual incidents during transport, should be noted here.
+
+
+
+Here is an example:
+
+	DELTA:
+	Following assessment and 12-lead EKG John was given aspirin, and an IV was established and fluids were begun. John was given fentanyl for his pain which reduced it from an 8/10 to a 4/10. He also stated relief of his nausea. John was transferred to the transport stretcher via pull-sheet and was secured with three straps. Transport was begun without delay.  John's wife, Abagail accompanied him during transport in the patient compartment secured to the bench seat with the harness.
+	
+	A notification was given to St. Michael's Hospital with a request to activate the cath lab team. During transport John's clinical status remained unchanged. His pain stayed around a 4/10. He denied any worsening complaints or new symptoms. On-going reassessments were unremarkable from previous. Serial 12-Lead EKGs were performed with no changes.
+
+Template:
+DELTA
+[Paragraph discussing events on the scene, including how the patient was moved to the stretcher/ambulance. How the patient was secured to the stretcher.]
+
+[Paragraph discussing events during transport, including patient response to the treatments, any new complaints, clinical changes, findings from further assessments or point of care testing.]
+	
+Rules
+- Use this heading: DELTA:
+- Do not make any assumptions
+- Never add any information that was not provided in the data.
+- Use plain text format.
+- Do not provide any notes or comments about the response. Just respond with the completed section.
+
+Please provide the relevant findings based on the provided information from the following information: 
 ({data})"""
     }
 }   
