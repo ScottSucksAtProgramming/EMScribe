@@ -4,7 +4,6 @@ from modules.prompts import (
     cleaning_prompts,
     extraction_prompts,
     narrative_prompts,
-    quality_controller_prompts,
 )
 
 
