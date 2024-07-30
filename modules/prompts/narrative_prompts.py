@@ -290,8 +290,6 @@ Here is an example:
 	- Pain medication was deferred by the patient's request.
 	
 	Full treatment details as documented elsewhere.
-	
-Here is an example of a patient who refused care:
 
 Rules
 - Use this heading: PLAN:
