@@ -83,7 +83,3 @@ the patient was transferred to: emergency department bed 3 via draw-sheet and le
 Crew delayed at receiving facility due to crew delayed while waiting for bed to be cleaned.
 
 292 was cleaned, restocked and returned to service.
-
-
-
-
