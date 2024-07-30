@@ -5,7 +5,6 @@ from modules.model_loader import ModelLoader
 from modules.transcript_cleaner import TranscriptCleaner
 from modules.transcript_extractor import TranscriptExtractor
 from modules.narrative_manager import NarrativeManager
-from modules.quality_controller import QualityController
 
 # Initialize PromptManager and ModelLoader
 prompt_manager = PromptManager()
@@ -15,7 +14,6 @@ model_loader = ModelLoader(base_url="http://localhost:11434", model_name="llama3
 cleaner = TranscriptCleaner(model_loader, prompt_manager)
 extractor = TranscriptExtractor(model_loader, prompt_manager)
 narrative_manager = NarrativeManager(model_loader, prompt_manager)
-quality_controller = QualityController(model_loader, prompt_manager)
 
 
 def clean_transcript(transcript_path, output_path):
@@ -75,28 +73,6 @@ def generate_narrative(extracted_data_path, output_path):
         import pyperclip
 
         pyperclip.copy(narrative)
-
-
-def quality_control(transcript_path, narrative_path, output_path):
-    with open(transcript_path, "r") as file:
-        transcript = file.read()
-
-    with open(narrative_path, "r") as file:
-        narrative = file.read()
-
-    improved_narrative = quality_controller.review_narrative(transcript, narrative)
-    checked_narrative = quality_controller.check_required_info(
-        improved_narrative, format="presoaped_format"
-    )
-
-    if output_path:
-        with open(output_path, "w") as file:
-            file.write(checked_narrative)
-    else:
-        print(checked_narrative)
-        import pyperclip
-
-        pyperclip.copy(checked_narrative)
 
 
 def main():
