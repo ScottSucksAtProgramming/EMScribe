@@ -1,40 +1,36 @@
 # modules/prompt_manager.py
 
-from modules.prompts.extraction_prompts import extraction_prompts
-from modules.prompts.cleaning_prompts import cleaning_prompts
-from modules.prompts.narrative_prompts import narrative_prompts
-from modules.prompts.quality_controller_prompts import quality_controller_prompts
+from modules.prompts import cleaning_prompts, extraction_prompts, narrative_prompts, quality_controller_prompts
 
 class PromptManager:
     """
-    A class to manage and format prompts for various tasks.
-
-    Attributes:
-        prompts (dict): A dictionary of predefined prompts.
+    Manages prompts for various tasks such as extraction, cleaning, narrative generation, and quality control.
     """
-
+    
     def __init__(self):
         """
         Initializes the PromptManager with a dictionary of prompts.
         """
         self.prompts = {
-            **extraction_prompts,
-            **cleaning_prompts,
-            **narrative_prompts,
-            **quality_controller_prompts
-            # Add other prompt modules as needed...
+            **extraction_prompts.extraction_prompts,
+            **cleaning_prompts.cleaning_prompts,
+            **narrative_prompts.narrative_prompts,
+            **quality_controller_prompts.quality_controller_prompts
         }
 
-    def get_prompt(self, key, **kwargs):
+    def get_prompt(self, key: str, **kwargs) -> str:
         """
-        Returns a formatted prompt based on the key and provided keyword arguments.
+        Retrieves a prompt template and formats it with the provided keyword arguments.
 
         Args:
-            key (str): The key for the desired prompt.
-            **kwargs: Keyword arguments to format the prompt.
+            key (str): The key for the prompt template.
+            **kwargs: Keyword arguments to format the template.
 
         Returns:
-            str or dict: The formatted prompt or dictionary of prompts.
+            str: The formatted prompt.
+
+        Raises:
+            KeyError: If no prompt is found for the given key.
         """
         prompt_template = self.prompts.get(key)
         if prompt_template:

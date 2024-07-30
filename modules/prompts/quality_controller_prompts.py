@@ -1,26 +1,27 @@
 # modules/prompts/quality_controller_prompts.py
 
 quality_controller_prompts = {
-    "review_and_improve_narrative": """
-        Compare the following EMS narrative with the provided transcript. Identify any discrepancies or missing information and provide an improved narrative.
+    "compare_narrative_to_transcript": """
+    Review the following narrative in the context of the provided transcript. Identify any discrepancies or missing information and return an improved narrative. Ensure the narrative is accurate and complete.
 
-        Narrative:
-        {narrative}
+    Transcript:
+    {transcript}
 
-        Transcript:
-        {transcript}
+    Narrative:
+    {narrative}
 
-        Improved Narrative:
+    Improved Narrative:
     """,
-    "check_required_information": """
-        Compare the following EMS narrative with the required information list for each section based on the narrative format. Identify any missing sections or details.
 
-        Narrative:
-        {narrative}
+    "check_missing_information": """
+    Compare the provided narrative against a list of required information for each section based on the narrative format. Identify any missing sections or details and return a list of the missing elements.
 
-        Required Information:
-        {required_information_list}
+    Narrative:
+    {narrative}
 
-        Missing Information:
+    Required Information:
+    {required_info}
+
+    Missing Elements:
     """
 }

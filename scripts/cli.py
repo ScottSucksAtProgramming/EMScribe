@@ -57,7 +57,7 @@ def quality_control(transcript_path, narrative_path, output_path=None):
         transcript = file.read()
     with open(narrative_path, 'r') as file:
         narrative = file.read()
-    improved_narrative = quality_controller.improve_narrative(transcript, narrative)
+    improved_narrative = quality_controller.review_narrative(transcript, narrative)
     checked_narrative = quality_controller.check_required_info(improved_narrative, format="presoaped_format")
     pyperclip.copy(checked_narrative)
     print("Quality Controlled Narrative:")

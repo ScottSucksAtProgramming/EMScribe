@@ -1,0 +1,91 @@
+Here is a rewritten version of the text with improved narrative flow:
+
+**Patient Information**
+
+Frederich Neizche is a patient who has been transported emergently from the field to St. Nicholas Medical Center for further evaluation and treatment.
+
+**Vital Signs and General Impression**
+
+Upon arrival, Frederich's vital signs were as follows: Blood Pressure 102/54; Heart Rate 100 (tachycardic); Respirations not measured; SpO2 98% on room air. His primary impression was that of an inferior wall STEMI (Myocardial Infarction).
+
+**Physical Examination**
+
+The patient's head, neck, and spine are all atraumatic without tenderness or deformity. Pupils are round, equal, and reactive to light. Airways are patent without stridor. The trachea is midline. The chest wall is symmetric with no signs of trauma or deformity.
+
+**Cardiovascular Examination**
+
+The patient's heart rate is tachycardic at 100 beats per minute with PVCs (premature ventricular contractions). ST elevations are present in leads II, III, and aVF with reciprocal ST depression in aVL. Capillary refill is less than 2 seconds.
+
+**Respiratory Examination**
+
+The patient's lung sounds are clear in all fields bilaterally without rales, rhonchi, or wheezes. Chest expansion is adequate and equal.
+
+**Abdominal and Genitourinary Examinations**
+
+The patient's abdomen is soft, symmetric, and non-tender without distention. External genitalia is normal in appearance without lesions, swelling, masses, or tenderness.
+
+**Musculoskeletal Examination**
+
+Upper and lower extremities are atraumatic in appearance without tenderness or deformity. Full range of motion is noted in all joints.
+
+**Neurological and Psychiatric Examinations**
+
+The patient is awake, alert, and oriented to person, place, time with normal speech. Motor function is normal with equal muscle strength bilaterally in the upper and lower extremities.
+
+**Lab Values and Point of Care Testing**
+
+Vital signs, EKG results (sinus tachycardia at 100s with PVCs and ST elevations in leads II, III, aVF), and other lab values are documented as follows:
+
+* Vital Signs: Blood Pressure: 102/54; Heart Rate: 100 Strong Regular; Respirations: ?; SpO2: 98% (Room Air)
+* EKG: Sinus Tachycardia at 90s to 120s with PVCs. ST Elevations in Leads II, III, aVF with reciprocal ST Depression in aVR.
+
+**Treatment and Plan**
+
+Frederich was administered oxygen via nasal cannula at 6L/min with a non-rebreather mask. He received an IV of normal saline with a liter bag to hydrate him. Medication administered included sublingual nitro, but there was no notable response to the treatment.
+
+**Transport and Hand-Off**
+
+Frederich was transferred to the transport stretcher via pull-sheet and secured with three straps. His wife accompanied him during transport in the patient compartment secured to the bench seat with the harness. A notification was given to St. Nicholas Medical Center with a request to activate the cath lab team.
+
+Upon arrival at St. Nicholas Medical Center, a full report and paperwork were given to Dr. Smith, cardiologist. The patient was moved into the cath lab where a report was also given to the cath lab team, with all questions answered. Transfer of care was completed.
+
+Based on the provided narrative and required information, here is a list of missing elements:
+
+1. **Pre-arrival information**:
+	* Unit number (not mentioned in the narrative)
+	* Response priority (not mentioned in the narrative)
+	* Crew details (e.g., names, roles) (only "a crew" is mentioned)
+	* Dispatch information (not mentioned in the narrative)
+2. **Subjective information**:
+	* Chief complaint (not explicitly stated; only a rewritten version of the text is provided)
+	* Onset (not mentioned)
+	* Provocation/Palliation (not mentioned)
+	* Quality, Radiation, Severity, and Time (these aspects are not described in the narrative)
+3. **Transport information**:
+	* Mode of transport (only "transported emergently" is mentioned; no specifics on transportation mode)
+	* Changes en route (not mentioned)
+4. **Handover details**:
+	* Specific handover information to Dr. Smith, cardiologist, upon arrival at St. Nicholas Medical Center (only a general report and paperwork are mentioned)
+
+These missing elements should be addressed in the narrative to ensure completeness and adherence to the required information format.
+
+Based on the provided narrative and required information, here is a list of missing elements:
+
+1. **Pre-arrival information**:
+	* Unit number (not mentioned in the narrative)
+	* Response priority (not mentioned in the narrative)
+	* Crew details (e.g., names, roles) (only "a crew" is mentioned)
+	* Dispatch information (not mentioned in the narrative)
+
+2. **Subjective information**:
+	* Chief complaint (not explicitly stated; only a rewritten version of the text is provided)
+	* Onset (not mentioned)
+	* Provocation/Palliation (not mentioned)
+	* Quality, Radiation, Severity, and Time (these aspects are not described in the narrative)
+
+3. **Transport information**:
+	* Mode of transport (only "transported emergently" is mentioned; no specifics on transportation mode)
+	* Changes en route (not mentioned)
+
+4. **Handover details**:
+	* Specific handover information to Dr. Smith, cardiologist, upon arrival at St. Nicholas Medical Center (only a general report and paperwork are mentioned)
