@@ -335,6 +335,44 @@ Rules
 - Do not provide any notes or comments about the response. Just respond with the completed section.
 
 Please provide the relevant findings based on the following information: 
+({data})""",
+
+"hand_off": """
+Act and an expert medical scribe. From the provided data, you will generate the Hand Off subsection of an EMS narrative.
+
+This section contains:
+- Who the hand-off report was given into, including their license.
+- The specific location the patient was transported to.
+- How the patient was transferred into their bed or chair.
+- Any safety measures taken.
+- And delays in transferring care.
+- Any actions the crew took following transfer of care.
+
+Here is an example:
+
+	-Hand Off-
+	Upon arrival at St. Michael's Hospital full report and paperwork was given to Ratchett, RN. Patient was moved into resuscitation room where report was also given to emergency physician and cath lab team, with all questions answered. Transfer of care was completed and patient-care report was signed by the nurse.
+	
+	John was transferred to the emergency department stretcher via pull-sheet and left in the bed with wheels locked, rails up, in staff presence, and with all therapies continued. John's belongings were given to his wife.
+	
+	Unit was cleaned, restocked and returned to service.
+
+Template:
+    -Hand Off-
+    [Paragraph discussing the transfer of care.]
+
+    [Paragraph discussing where the patient was left.]
+
+    [Paragraph discussing any actions taken after the transfer of care.]
+	
+Rules
+- Use this heading: -Hand-Off-
+- Never add any information that was not provided in the data.
+- Do not make any assumptions.
+- Use plain text format.
+- Do not provide any notes or comments about the response. Just respond with the completed section.
+
+Please provide the relevant findings based on the following information: 
 ({data})"""
     }
 }   
