@@ -70,3 +70,9 @@ Hey Siri set from scene time.
 
 List of treatments provided by EMS: Patient was treated with a 20 gauge IV in his right forearm. 325mg of chewable aspirin administered. Patient was given 100mcg of Fentanyl IV which reduced his pain to 3. A liter bag of normal saline was hung but not administered. Serial 12-lead EKGs were performed with no changes. Oxygen administration was withheld as patient's oxygen saturation stated above 94% throughout transport.   
 
+Patient was assisted to stretcher
+Patient secured with three straps
+Monitoring: Transport Monitor, Cardiac Monitoring, End Tidal CO2 Monitor
+Belongings transported with patient in care of family member.
+Clinical Status / changes: Transport was begun without delays. During transport Frederiche's stated a reduction in pain to 3. His color improved and heart rate slowed  to the 80s. 
+
