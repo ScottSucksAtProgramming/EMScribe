@@ -5,6 +5,7 @@ from modules.model_loader import ModelLoader
 from modules.transcript_cleaner import TranscriptCleaner
 from modules.transcript_extractor import TranscriptExtractor
 from modules.narrative_manager import NarrativeManager
+from modules.reviewer import Reviewer
 
 # Initialize PromptManager and ModelLoader
 prompt_manager = PromptManager()
@@ -14,7 +15,38 @@ model_loader = ModelLoader(base_url="http://localhost:11434", model_name="llama3
 cleaner = TranscriptCleaner(model_loader, prompt_manager)
 extractor = TranscriptExtractor(model_loader, prompt_manager)
 narrative_manager = NarrativeManager(model_loader, prompt_manager)
+reviewer = Reviewer(model_loader, prompt_manager)
 
+def review_extracted_data(extracted_data_path, output_path):
+    with open(extracted_data_path, 'r') as file:
+        extracted_data = file.read()
+
+    sections = extracted_data.split('\n\n')
+    reviewed_sections = []
+
+    for section in sections:
+        while True:
+            response = reviewer.review_section(section)
+            print(f"Current Section: {section}")
+            print(f"AI Response: {response}")
+            user_input = input("Enter changes or type 'skip' to move to the next section: ").strip()
+            if user_input.lower() == 'skip':
+                reviewed_sections.append(section)
+                break
+            else:
+                section = user_input
+                final_response = reviewer.final_review(section)
+                print(f"Final AI Response: {final_response}")
+                user_input = input("Is this correct? (yes/no): ").strip()
+                if user_input.lower() == 'yes':
+                    reviewed_sections.append(final_response)
+                    break
+
+    reviewed_data = '\n\n'.join(reviewed_sections)
+
+    with open(output_path, 'w') as file:
+        file.write(reviewed_data)
+    print(f"Reviewed data saved to {output_path}")
 
 def clean_transcript(transcript_path, output_path):
     if transcript_path == "-":
@@ -110,6 +142,12 @@ def main():
     )
     quality_parser.add_argument("--output", help="Path to save the improved narrative")
 
+    review_parser = subparsers.add_parser(
+        "review", help="Review and modify extracted data"
+    )
+    review_parser.add_argument("extracted_data_path", help="Path to the extracted data file")
+    review_parser.add_argument("--output", help="Path to save the reviewed data")
+
     args = parser.parse_args()
 
     if args.command == "clean":
@@ -118,7 +156,8 @@ def main():
         extract_information(args.transcript_path, args.output)
     elif args.command == "generate":
         generate_narrative(args.transcript_path, args.output)
-
+    elif args.command == "review":
+        review_extracted_data(args.extracted_data_path, args.output)
 
 if __name__ == "__main__":
     main()
