@@ -98,7 +98,6 @@ As an expert in Natural Language Processing (NLP), your job is to pull out relev
 10. Review the entire document looking for any further information on the history of the patient's present illness.
 
 Once you have obtained all the information give your response using the following template. This information will not always be provided. If no information is provided for a section, answer '[No Info]'.
-Use Plain text. Do not add any comments or additional information.
 
 Template
 
@@ -113,6 +112,8 @@ History of Present Illness
 - Time: 
 - Interventions: 
 - Additional History of Present Illness: 
+
+Once you have obtained all the information give your response using the following template. Use Plain text. Do not add any comments or additional information.
 
 Here is the information: ({transcript})""",
     "patient_histories": """
@@ -317,9 +318,6 @@ As an expert in Natural Language Processing (NLP), your job is to pull out relev
 5. Review the entire document for any treatments that were unsuccessful.
 6. Review the entire document for any treatments that were considered but not given and the reasons why.
 
-
-Once you have obtained all the information, give your response using the following template. Use Plain text. Do not add any comments or additional information.
-
 Template
 
 Treatments
@@ -329,6 +327,8 @@ Treatments
 - Point-of-Care Testing Performed on Patient: 
 - Unsuccessful Treatments: 
 - Deferred Treatments: 
+
+Once you have obtained all the information, give your response using the following template. Use Plain text. Do not add any comments or additional information.
 
 Here is the information: ({transcript})""",
     "packaging": """
