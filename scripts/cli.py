@@ -6,6 +6,7 @@ from modules.transcript_cleaner import TranscriptCleaner
 from modules.transcript_extractor import TranscriptExtractor
 from modules.narrative_manager import NarrativeManager
 from modules.reviewer import Reviewer
+import os
 
 # Initialize PromptManager and ModelLoader
 prompt_manager = PromptManager()
@@ -34,8 +35,7 @@ def review_extracted_data(extracted_data_path, output_path):
                 reviewed_sections.append(section)
                 break
             else:
-                prompt = reviewer.final_review(f"Original Section: {section}\nUser Changes: {user_input}")
-                final_response = reviewer.final_review(prompt)
+                final_response = reviewer.final_review(updated_section=user_input)
                 print(f"Final AI Response: {final_response}")
                 user_input = input("Is this correct? (yes/no): ").strip()
                 if user_input.lower() == 'yes':
@@ -44,6 +44,7 @@ def review_extracted_data(extracted_data_path, output_path):
 
     reviewed_data = '\n\n'.join(reviewed_sections)
 
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
     with open(output_path, 'w') as file:
         file.write(reviewed_data)
     print(f"Reviewed data saved to {output_path}")
@@ -66,7 +67,6 @@ def clean_transcript(transcript_path, output_path):
 
         pyperclip.copy(cleaned_transcript)
 
-
 def extract_information(transcript_path, output_path):
     if transcript_path == "-":
         transcript = sys.stdin.read()
@@ -84,7 +84,6 @@ def extract_information(transcript_path, output_path):
         import pyperclip
 
         pyperclip.copy(extracted_data)
-
 
 def generate_narrative(extracted_data_path, output_path):
     if extracted_data_path == "-":
@@ -105,7 +104,6 @@ def generate_narrative(extracted_data_path, output_path):
         import pyperclip
 
         pyperclip.copy(narrative)
-
 
 def main():
     parser = argparse.ArgumentParser(description="EMScribe CLI tool")
@@ -137,7 +135,7 @@ def main():
         "review", help="Review extracted data section by section"
     )
     review_parser.add_argument("extracted_data_path", help="Path to the extracted data file")
-    review_parser.add_argument("--output", help="Path to save the reviewed data", required=True)
+    review_parser.add_argument("--output", help="Path to save the reviewed data", default="data/reviewed_extract.txt")
 
     args = parser.parse_args()
 
@@ -149,7 +147,6 @@ def main():
         generate_narrative(args.transcript_path, args.output)
     elif args.command == "review":
         review_extracted_data(args.extracted_data_path, args.output)
-
 
 if __name__ == "__main__":
     main()
