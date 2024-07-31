@@ -1,8 +1,7 @@
-
 # EMScribe 2.0
 
 <p align="center">
-  <img src="images/emscribe_logo.png" alt="EMScribe Logo" width="300" />
+  <img src="images/emscribe_logo.png" alt="EMScribe Logo" width="500" />
 </p>
 
 ## Overview
@@ -83,61 +82,77 @@ source ~/.bashrc  # or source ~/.zshrc or source ~/.profile
 
 ### Running the `emscribe` Command
 
-You can now use the `emscribe` command to clean transcripts, extract information, and generate narratives.
+You can now use the `emscribe` command to clean transcripts, extract information, review, and generate narratives.
 
 ```bash
 emscribe clean ./transcript.txt
 emscribe extract ./transcript.txt
-emscribe generate ./extracted_data.txt --output ./narrative.txt
+emscribe review ./extract.txt
+emscribe generate ./reviewed_extract.txt --output ./narrative.txt
 ```
 
 You can also pipe the output from one command to another:
 
 ```bash
-emscribe clean ./transcript.txt | emscribe extract - | emscribe generate - --output ./narrative.txt
+emscribe clean ./transcript.txt | emscribe extract - | emscribe review - | emscribe generate - --output ./narrative.txt
 ```
 
 ## Directory Structure
 
 ```plaintext
-emscribe/
-├── bin/
-│   └── emscribe
-├── docs/
-│   ├── index.md
-│   ├── installation.md
-│   ├── usage.md
-│   ├── development.md
-│   ├── api_reference.md
-│   ├── contributing.md
-├── modules/
-│   ├── __init__.py
-│   ├── model_loader.py
-│   ├── prompt_manager.py
-│   ├── transcript_cleaner.py
-│   ├── transcript_extractor.py
-│   ├── narrative_manager.py
-│   ├── prompts/
-│       ├── __init__.py
-│       ├── extraction_prompts.py
-│       ├── cleaning_prompts.py
-│       ├── narrative_prompts.py
-├── scripts/
-│   ├── __init__.py
-│   ├── extraction.py
-│   ├── preprocess.py
-│   ├── main.py
-│   ├── cli.py
-├── tests/
-│   ├── __init__.py
-│   ├── conftest.py
-│   ├── test_model_loader.py
-│   ├── test_transcript_cleaner.py
-│   ├── test_transcript_extractor.py
-│   ├── test_cli.py
-├── README.md
-├── requirements.txt
-├── venv/
+.
+|-- README.md
+|-- bin
+|   `-- emscribe
+|-- commands
+|   |-- clean_command.py
+|   |-- extract_command.py
+|   |-- generate_command.py
+|   `-- review_command.py
+|-- data
+|   |-- cleaned_transcript.txt
+|   |-- extract.txt
+|   |-- narrative.txt
+|   `-- reviewed_extract.txt
+|-- docs
+|   |-- api_reference.md
+|   |-- contributing.md
+|   |-- development.md
+|   |-- index.md
+|   |-- installation.md
+|   `-- usage.md
+|-- images
+|   `-- emscribe_logo.png
+|-- modules
+|   |-- extract_reviewer.py
+|   |-- model_loader.py
+|   |-- narrative_manager.py
+|   |-- prompt_manager.py
+|   |-- prompts
+|   |   |-- cleaning_prompts.py
+|   |   |-- extraction_prompts.py
+|   |   |-- narrative_prompts.py
+|   |   `-- review_prompts.py
+|   |-- transcript_cleaner.py
+|   `-- transcript_extractor.py
+|-- requirements.txt
+|-- scripts
+|   |-- cli.py
+|   |-- data
+|   |   |-- cleaned_transcript.txt
+|   |   `-- extract.txt
+|   |-- extraction.py
+|   |-- main.py
+|   `-- preprocess.py
+|-- tests
+|   |-- conftest.py
+|   |-- test_cli.py
+|   |-- test_model_loader.py
+|   |-- test_review_command.py
+|   |-- test_transcript_cleaner.py
+|   `-- test_transcript_extractor.py
+|-- transcript.txt
+`-- venv
 ```
 
 ## Running the Scripts
