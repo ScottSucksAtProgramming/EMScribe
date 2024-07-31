@@ -53,6 +53,5 @@ def main():
     elif args.command == "review":
         ReviewCommand(extract_reviewer).execute(args.extracted_data_path, args.output)
 
-
 if __name__ == "__main__":
     main()
