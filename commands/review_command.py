@@ -14,18 +14,25 @@ class ReviewCommand:
         for section in sections:
             while True:
                 os.system('clear')  # Clears the screen for a clean prompt
-                print(f"Current Section:\n{section}")
-                user_input = input("Enter changes or type 'skip' or 's' to move to the next section: ").strip()
+                print("="*50)
+                print(f"Current Section:\n\n{section}\n\n")
+                print("="*50)
+                user_input = input("\nEnter changes or type 'skip' or 's' to move to the next section: ").strip()
                 if user_input.lower() in ['skip', 's']:
                     reviewed_sections.append(section)
                     break
                 else:
                     response = self.reviewer.review_section(section, user_input)
                     os.system('clear')
-                    print(f"\nAI Response:\n{response}")
+                    print("="*50)
+                    print(f"Current Section:\n{section}\n")
+                    print(f"User Input: {user_input}\n")
+                    print(f"AI Response:\n{response}\n")
+                    print("="*50)
                     final_response = self.reviewer.final_review(response)
-                    print(f"\nFinal AI Response:\n{final_response}")
-                    user_input = input("Is this correct? (yes/no): ").strip()
+                    print(f"Final AI Response:\n{final_response}\n")
+                    print("="*50)
+                    user_input = input("\nIs this correct? (yes/no): ").strip()
                     if user_input.lower() == 'yes':
                         reviewed_sections.append(final_response)
                         break
