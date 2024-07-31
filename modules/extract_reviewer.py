@@ -1,4 +1,4 @@
-class Reviewer:
+class ExtractReviewer:
     def __init__(self, model_loader, prompt_manager):
         self.model_loader = model_loader
         self.prompt_manager = prompt_manager

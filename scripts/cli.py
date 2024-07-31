@@ -7,7 +7,7 @@ from modules.model_loader import ModelLoader
 from modules.transcript_cleaner import TranscriptCleaner
 from modules.transcript_extractor import TranscriptExtractor
 from modules.narrative_manager import NarrativeManager
-from modules.reviewer import Reviewer
+from modules.extract_reviewer import ExtractReviewer
 
 # Initialize PromptManager and ModelLoader
 prompt_manager = PromptManager()
@@ -17,7 +17,7 @@ model_loader = ModelLoader(base_url="http://localhost:11434", model_name="llama3
 cleaner = TranscriptCleaner(model_loader, prompt_manager)
 extractor = TranscriptExtractor(model_loader, prompt_manager)
 narrative_manager = NarrativeManager(model_loader, prompt_manager)
-reviewer = Reviewer(model_loader, prompt_manager)
+reviewer = ExtractReviewer(model_loader, prompt_manager)
 
 def clear_screen():
     if os.name == 'nt':  # For Windows
