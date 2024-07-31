@@ -16,7 +16,6 @@ Use Plain text. Do not add any comments or additional information.
 Template
 
 Incident Information
-
 - Unit: 
 - Response Mode: 
 - Crew Type: 
@@ -48,7 +47,6 @@ Use Plain text. Do not add any comments or additional information.
 Template
 
 Patient Demographics
-
 - Name: 
 - Date of Birth: 
 - Age:
@@ -78,7 +76,6 @@ Use Plain text. Do not add any comments or additional information.
 Template
 
 Subjective Information
-
 - Address or Facility Name: 
 - Patient Location and Position: 
 - Patient Appearance: 
@@ -135,7 +132,6 @@ Use Plain text. Do not add any comments or additional information.
 Template
 
 Patient Histories
-
 - Medical History:  
 - Surgical History: 
 - Social History: 
@@ -216,7 +212,6 @@ Once you have obtained all the information give your response using the followin
 Template
 
 Vital Signs
-
 - Blood Pressure: 
 - Heart Rate: 
 - Respiratory Rate: 
