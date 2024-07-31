@@ -25,13 +25,10 @@ class ReviewCommand:
                     response = self.reviewer.review_section(section, user_input)
                     os.system('clear')
                     print("="*50)
-                    print(f"Current Section:\n{section}\n")
-                    print(f"User Input: {user_input}\n")
-                    print("="*50)
                     print(f"AI Response:\n{response}\n\n")
                     print("="*50)
-                    user_input = input("Is this correct? (yes/no): ").strip().lower()
-                    if user_input in ['yes', 'y']:
+                    user_input_confirm = input("Is this correct? (yes/no): ").strip().lower()
+                    if user_input_confirm in ['yes', 'y']:
                         reviewed_sections.append(response)
                         break
 
