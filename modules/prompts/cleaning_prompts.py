@@ -10,7 +10,7 @@ Your task includes:
 1. Removing filler words, false starts, irrelevant conversations, background noise transcriptions, and repeating words or phrases.
 8. Comparing the cleaned transcript with the original version to ensure no important information has been left out.
 
-When you provide your response only provide the cleaned transcript and nothing more.
+When you provide your response only provide the cleaned transcript and nothing more. Do not summarize. 
 
 Here is a the transcript for you to clean:
 {transcript}
