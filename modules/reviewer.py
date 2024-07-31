@@ -35,15 +35,16 @@ class Reviewer:
         prompt = self.prompt_manager.get_prompt("review_section", section=section)
         return self.model_loader.generate(prompt)
 
-    def final_review(self, section: str) -> str:
+    def final_review(self, updated_section):
         """
-        Conducts a final review of the section after user feedback.
-
+        Performs a final review of a section after changes have been made.
+        
         Args:
-            section (str): The section of extracted data after user feedback.
-
+            updated_section (str): The section of data after user modifications.
+        
         Returns:
-            str: The AI model's final response.
+            str: The AI model's response after final review.
         """
-        prompt = self.prompt_manager.get_prompt("final_review", section=section)
-        return self.model_loader.generate(prompt)
+        prompt = self.prompt_manager.get_prompt("final_review", updated_section=updated_section)
+        response = self.model_loader.generate(prompt)
+        return response
