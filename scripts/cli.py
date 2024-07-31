@@ -26,6 +26,7 @@ def review_extracted_data(extracted_data_path, output_path):
     reviewed_sections = []
 
     for section in sections:
+        print(f"Current Section: {section}")
         while True:
             user_input = input("Enter changes or type 'skip' to move to the next section: ").strip()
             if user_input.lower() == 'skip':
