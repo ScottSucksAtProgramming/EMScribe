@@ -17,7 +17,7 @@ extractor = TranscriptExtractor(model_loader, prompt_manager)
 narrative_manager = NarrativeManager(model_loader, prompt_manager)
 reviewer = Reviewer(model_loader, prompt_manager)
 
-def review_extracted_data(extracted_data_path, output_path):
+def review_extracted_data(extracted_data_path, output_path=None):
     with open(extracted_data_path, 'r') as file:
         extracted_data = file.read()
 
@@ -26,11 +26,11 @@ def review_extracted_data(extracted_data_path, output_path):
 
     for section in sections:
         print("\n" + "="*50)
-        print(f"Current Section:\n{section}")
+        print(f"Current Section:\n\n{section}")
         print("="*50)
         while True:
-            user_input = input("\nEnter changes or type 'skip' to move to the next section: ").strip()
-            if user_input.lower() == 'skip':
+            user_input = input("\nEnter changes or type 'skip' or 's' to move to the next section: ").strip().lower()
+            if user_input == 'skip' or user_input == 's':
                 reviewed_sections.append(section)
                 break
             else:
@@ -38,14 +38,17 @@ def review_extracted_data(extracted_data_path, output_path):
                 print("\n" + "-"*50)
                 print(f"AI Response:\n{response}")
                 print("-"*50)
-                final_user_input = input("\nIs this correct? (yes/no): ").strip()
-                if final_user_input.lower() == 'yes':
+                final_user_input = input("\nIs this correct? (yes/no): ").strip().lower()
+                if final_user_input == 'yes':
                     reviewed_sections.append(response)
                     break
                 else:
                     section = response
 
     reviewed_data = '\n\n'.join(reviewed_sections)
+
+    if not output_path:
+        output_path = "data/reviewed_extract.txt"
 
     if output_path:
         with open(output_path, 'w') as file:
