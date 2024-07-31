@@ -147,7 +147,7 @@ def main():
     )
     review_parser.add_argument("extracted_data_path", help="Path to the extracted data file")
     review_parser.add_argument(
-        "--output", help="Path to save the reviewed extracted data", default="/data/reviewed_extract.txt"
+        "--output", help="Path to save the reviewed extracted data", default="data/reviewed_extract.txt"
     )
 
     args = parser.parse_args()
