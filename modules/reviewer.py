@@ -1,39 +1,25 @@
-# modules/reviewer.py
-from .model_loader import ModelLoader
-from .prompt_manager import PromptManager
-
 class Reviewer:
-    """
-    A class to review sections of extracted data using an AI model.
-
-    Attributes:
-        model_loader (ModelLoader): An instance of ModelLoader to interact with the AI model.
-        prompt_manager (PromptManager): An instance of PromptManager to manage prompts.
-    """
-
-    def __init__(self, model_loader: ModelLoader, prompt_manager: PromptManager):
-        """
-        Initializes the Reviewer with a ModelLoader and PromptManager instance.
-
-        Args:
-            model_loader (ModelLoader): An instance of ModelLoader to interact with the AI model.
-            prompt_manager (PromptManager): An instance of PromptManager to manage prompts.
-        """
+    def __init__(self, model_loader, prompt_manager):
         self.model_loader = model_loader
         self.prompt_manager = prompt_manager
 
-    def review_section(self, section: str) -> str:
+    def review_section(self, section, user_input=None):
         """
-        Reviews a section of the extracted data.
-
+        Reviews a section of extracted data using the AI model.
+        
         Args:
             section (str): The section of extracted data to review.
-
+            user_input (str): The user's input for modifications.
+        
         Returns:
-            str: The AI model's response to the review prompt.
+            str: The AI model's response.
         """
-        prompt = self.prompt_manager.get_prompt("review_section", section=section)
-        return self.model_loader.generate(prompt)
+        if user_input:
+            prompt = self.prompt_manager.get_prompt("review_section", section_data=section, user_input=user_input)
+        else:
+            prompt = self.prompt_manager.get_prompt("review_section", section_data=section)
+        response = self.model_loader.generate(prompt)
+        return response
 
     def final_review(self, updated_section):
         """
