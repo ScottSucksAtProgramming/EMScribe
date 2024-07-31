@@ -1,6 +1,6 @@
 review_prompts = {
     "review_section": (
-        "Please make the following changes to this section: {section_data}"
+        "Please make the following changes to this section: {section}"
     ),
     "final_review": (
         "Here is the updated section after making changes: {updated_section}. "
