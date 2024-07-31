@@ -27,20 +27,25 @@ def review_extracted_data(extracted_data_path, output_path):
 
     for section in sections:
         while True:
-            response = reviewer.review_section(section)
             print(f"Current Section: {section}")
-            print(f"AI Response: {response}")
             user_input = input("Enter changes or type 'skip' to move to the next section: ").strip()
             if user_input.lower() == 'skip':
                 reviewed_sections.append(section)
                 break
             else:
-                final_response = reviewer.final_review(updated_section=user_input)
-                print(f"Final AI Response: {final_response}")
-                user_input = input("Is this correct? (yes/no): ").strip()
-                if user_input.lower() == 'yes':
-                    reviewed_sections.append(final_response)
+                response = reviewer.review_section(section)
+                print(f"AI Response: {response}")
+                user_input = input("Enter changes or type 'skip' to move to the next section: ").strip()
+                if user_input.lower() == 'skip':
+                    reviewed_sections.append(response)
                     break
+                else:
+                    final_response = reviewer.final_review(updated_section=user_input)
+                    print(f"Final AI Response: {final_response}")
+                    user_input = input("Is this correct? (yes/no): ").strip()
+                    if user_input.lower() == 'yes':
+                        reviewed_sections.append(final_response)
+                        break
 
     reviewed_data = '\n\n'.join(reviewed_sections)
 
