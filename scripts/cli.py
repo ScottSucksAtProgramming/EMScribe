@@ -1,5 +1,7 @@
 import argparse
 import sys
+import os
+import subprocess
 from modules.prompt_manager import PromptManager
 from modules.model_loader import ModelLoader
 from modules.transcript_cleaner import TranscriptCleaner
@@ -17,6 +19,12 @@ extractor = TranscriptExtractor(model_loader, prompt_manager)
 narrative_manager = NarrativeManager(model_loader, prompt_manager)
 reviewer = Reviewer(model_loader, prompt_manager)
 
+def clear_screen():
+    if os.name == 'nt':  # For Windows
+        _ = subprocess.call('cls', shell=True)
+    else:  # For macOS and Linux
+        _ = subprocess.call('clear', shell=True)
+
 def review_extracted_data(extracted_data_path, output_path=None):
     with open(extracted_data_path, 'r') as file:
         extracted_data = file.read()
@@ -25,8 +33,9 @@ def review_extracted_data(extracted_data_path, output_path=None):
     reviewed_sections = []
 
     for section in sections:
+        clear_screen()
         print("\n" + "="*50)
-        print(f"Current Section:\n\n{section}")
+        print(f"Current Section:\n{section}")
         print("="*50)
         while True:
             user_input = input("\nEnter changes or type 'skip' or 's' to move to the next section: ").strip().lower()
@@ -35,6 +44,7 @@ def review_extracted_data(extracted_data_path, output_path=None):
                 break
             else:
                 response = reviewer.review_section(section, user_input)
+                clear_screen()
                 print("\n" + "-"*50)
                 print(f"AI Response:\n{response}")
                 print("-"*50)
@@ -50,17 +60,14 @@ def review_extracted_data(extracted_data_path, output_path=None):
     if not output_path:
         output_path = "data/reviewed_extract.txt"
 
-    if output_path:
-        with open(output_path, 'w') as file:
-            file.write(reviewed_data)
-        print(f"\nReviewed data saved to {output_path}")
-    else:
-        default_output_path = "data/reviewed_extract.txt"
-        with open(default_output_path, 'w') as file:
-            file.write(reviewed_data)
-        print(f"\nReviewed data saved to {default_output_path}")
+    # Ensure the directory exists
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
 
-def clean_transcript(transcript_path, output_path):
+    with open(output_path, 'w') as file:
+        file.write(reviewed_data)
+    print(f"\nReviewed data saved to {output_path}")
+
+def clean_transcript(transcript_path, output_path=None):
     if transcript_path == "-":
         transcript = sys.stdin.read()
     else:
@@ -69,17 +76,18 @@ def clean_transcript(transcript_path, output_path):
 
     cleaned_transcript = cleaner.clean(transcript)
 
-    if output_path:
-        with open(output_path, "w") as file:
-            file.write(cleaned_transcript)
-    else:
-        print(cleaned_transcript)
-        import pyperclip
+    if not output_path:
+        output_path = "data/cleaned_transcript.txt"
 
-        pyperclip.copy(cleaned_transcript)
+    # Ensure the directory exists
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+
+    with open(output_path, "w") as file:
+        file.write(cleaned_transcript)
+    print(f"Cleaned transcript saved to {output_path}")
 
 
-def extract_information(transcript_path, output_path):
+def extract_information(transcript_path, output_path=None):
     if transcript_path == "-":
         transcript = sys.stdin.read()
     else:
@@ -88,17 +96,18 @@ def extract_information(transcript_path, output_path):
 
     extracted_data = extractor.extract(transcript)
 
-    if output_path:
-        with open(output_path, "w") as file:
-            file.write(extracted_data)
-    else:
-        print(extracted_data)
-        import pyperclip
+    if not output_path:
+        output_path = "data/extracted_data.txt"
 
-        pyperclip.copy(extracted_data)
+    # Ensure the directory exists
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+
+    with open(output_path, "w") as file:
+        file.write(extracted_data)
+    print(f"Extracted information saved to {output_path}")
 
 
-def generate_narrative(extracted_data_path, output_path):
+def generate_narrative(extracted_data_path, output_path=None):
     if extracted_data_path == "-":
         extracted_data = sys.stdin.read()
     else:
@@ -109,14 +118,15 @@ def generate_narrative(extracted_data_path, output_path):
         "presoaped_format", data=extracted_data
     )
 
-    if output_path:
-        with open(output_path, "w") as file:
-            file.write(narrative)
-    else:
-        print(narrative)
-        import pyperclip
+    if not output_path:
+        output_path = "data/narrative.txt"
 
-        pyperclip.copy(narrative)
+    # Ensure the directory exists
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+
+    with open(output_path, "w") as file:
+        file.write(narrative)
+    print(f"Narrative saved to {output_path}")
 
 
 def main():
@@ -150,7 +160,7 @@ def main():
     )
     review_parser.add_argument("extracted_data_path", help="Path to the extracted data file")
     review_parser.add_argument(
-        "--output", help="Path to save the reviewed extracted data", default="data/reviewed_extract.txt"
+        "--output", help="Path to save the reviewed extracted data"
     )
 
     args = parser.parse_args()
