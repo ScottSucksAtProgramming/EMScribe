@@ -25,7 +25,10 @@ def clear_screen():
     else:  # For macOS and Linux
         _ = subprocess.call('clear', shell=True)
 
-def review_extracted_data(extracted_data_path, output_path=None):
+def review_extracted_data(extracted_data_path=None, output_path=None):
+    if not extracted_data_path:
+        extracted_data_path = "data/extract.txt"
+
     with open(extracted_data_path, 'r') as file:
         extracted_data = file.read()
 
@@ -87,17 +90,17 @@ def clean_transcript(transcript_path, output_path=None):
     print(f"Cleaned transcript saved to {output_path}")
 
 
-def extract_information(transcript_path, output_path=None):
-    if transcript_path == "-":
-        transcript = sys.stdin.read()
-    else:
-        with open(transcript_path, "r") as file:
-            transcript = file.read()
+def extract_information(transcript_path=None, output_path=None):
+    if not transcript_path:
+        transcript_path = "data/cleaned_transcript.txt"
+
+    with open(transcript_path, "r") as file:
+        transcript = file.read()
 
     extracted_data = extractor.extract(transcript)
 
     if not output_path:
-        output_path = "data/extracted_data.txt"
+        output_path = "data/extract.txt"
 
     # Ensure the directory exists
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
@@ -107,12 +110,12 @@ def extract_information(transcript_path, output_path=None):
     print(f"Extracted information saved to {output_path}")
 
 
-def generate_narrative(extracted_data_path, output_path=None):
-    if extracted_data_path == "-":
-        extracted_data = sys.stdin.read()
-    else:
-        with open(extracted_data_path, "r") as file:
-            extracted_data = file.read()
+def generate_narrative(extracted_data_path=None, output_path=None):
+    if not extracted_data_path:
+        extracted_data_path = "data/reviewed_extract.txt"
+
+    with open(extracted_data_path, "r") as file:
+        extracted_data = file.read()
 
     narrative = narrative_manager.generate_narrative(
         "presoaped_format", data=extracted_data
@@ -140,7 +143,7 @@ def main():
     extract_parser = subparsers.add_parser(
         "extract", help="Extract information from the transcript"
     )
-    extract_parser.add_argument("transcript_path", help="Path to the transcript file")
+    extract_parser.add_argument("transcript_path", nargs='?', help="Path to the transcript file")
     extract_parser.add_argument(
         "--output", help="Path to save the extracted information"
     )
@@ -149,7 +152,7 @@ def main():
         "generate", help="Generate a narrative from the extracted information"
     )
     generate_parser.add_argument(
-        "transcript_path", help="Path to the extracted data file"
+        "extracted_data_path", nargs='?', help="Path to the extracted data file"
     )
     generate_parser.add_argument(
         "--output", help="Path to save the generated narrative"
@@ -158,7 +161,7 @@ def main():
     review_parser = subparsers.add_parser(
         "review", help="Review and modify extracted data"
     )
-    review_parser.add_argument("extracted_data_path", help="Path to the extracted data file")
+    review_parser.add_argument("extracted_data_path", nargs='?', help="Path to the extracted data file")
     review_parser.add_argument(
         "--output", help="Path to save the reviewed extracted data"
     )
@@ -170,7 +173,7 @@ def main():
     elif args.command == "extract":
         extract_information(args.transcript_path, args.output)
     elif args.command == "generate":
-        generate_narrative(args.transcript_path, args.output)
+        generate_narrative(args.extracted_data_path, args.output)
     elif args.command == "review":
         review_extracted_data(args.extracted_data_path, args.output)
 
