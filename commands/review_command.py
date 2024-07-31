@@ -15,9 +15,9 @@ class ReviewCommand:
             while True:
                 os.system('clear')  # Clears the screen for a clean prompt
                 print("="*50)
-                print(f"Current Section:\n\n{section}\n\n")
+                print(f"Current Section:\n{section}\n\n")
                 print("="*50)
-                user_input = input("\nEnter changes or type 'skip' or 's' to move to the next section: ").strip()
+                user_input = input("Enter changes or type 'skip' or 's' to move to the next section: ").strip()
                 if user_input.lower() in ['skip', 's']:
                     reviewed_sections.append(section)
                     break
@@ -27,14 +27,12 @@ class ReviewCommand:
                     print("="*50)
                     print(f"Current Section:\n{section}\n")
                     print(f"User Input: {user_input}\n")
-                    print(f"AI Response:\n{response}\n")
                     print("="*50)
-                    final_response = self.reviewer.final_review(response)
-                    print(f"Final AI Response:\n{final_response}\n")
+                    print(f"AI Response:\n{response}\n\n")
                     print("="*50)
-                    user_input = input("\nIs this correct? (yes/no): ").strip()
-                    if user_input.lower() == 'yes':
-                        reviewed_sections.append(final_response)
+                    user_input = input("Is this correct? (yes/no): ").strip().lower()
+                    if user_input in ['yes', 'y']:
+                        reviewed_sections.append(response)
                         break
 
         reviewed_data = '\n\n'.join(reviewed_sections)
@@ -42,4 +40,4 @@ class ReviewCommand:
         os.makedirs(os.path.dirname(output_path), exist_ok=True)
         with open(output_path, 'w') as file:
             file.write(reviewed_data)
-        print(f"\nReviewed data saved to {output_path}")
+        print(f"\n\nReviewed data saved to {output_path}")
