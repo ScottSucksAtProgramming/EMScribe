@@ -176,35 +176,52 @@ Generates an EMS narrative based on the provided narrative format and extracted 
 **Returns:**
 - `str`: The generated EMS narrative.
 
-### 6. `refiner`
+### 6. `extract_reviewer`
 
-The `refiner` module contains the `Refiner` class, which is responsible for refining extracted data before narrative generation.
+The `extract_reviewer` module contains the `ExtractReviewer` class, which is responsible for reviewing and refining extracted information.
 
-#### Class: `Refiner`
+#### Class: `ExtractReviewer`
 
 **Description:**
-A class to refine the extracted data before generating the EMS narrative.
+A class to review and refine the extracted data.
 
 **Attributes:**
-- `data (dict)`: The extracted data to be refined.
+- `model_loader (ModelLoader)`: An instance of `ModelLoader` to interact with the AI model.
+- `prompt_manager (PromptManager)`: An instance of `PromptManager` to manage prompts.
 
 **Methods:**
 
-##### `__init__(self)`
+##### `__init__(self, model_loader: ModelLoader, prompt_manager: PromptManager)`
 
 **Description:**
-Initializes the `Refiner`.
-
-##### `refine(self) -> dict`
-
-**Description:**
-Allows the user to modify the extracted data.
+Initializes the `ExtractReviewer` with a `ModelLoader` and `PromptManager` instance.
 
 **Args:**
-- `None`
+- `model_loader (ModelLoader)`: An instance of `ModelLoader` to interact with the AI model.
+- `prompt_manager (PromptManager)`: An instance of `PromptManager` to manage prompts.
+
+##### `review_section(self, section: str, user_input: str = None) -> str`
+
+**Description:**
+Reviews a section of extracted data using the AI model.
+
+**Args:**
+- `section (str)`: The section of extracted data to review.
+- `user_input (str)`: The user's input for modifications (optional).
 
 **Returns:**
-- `dict`: The refined data.
+- `str`: The AI model's response.
+
+##### `final_review(self, updated_section: str) -> str`
+
+**Description:**
+Performs a final review of a section after changes have been made.
+
+**Args:**
+- `updated_section (str)`: The section of data after user modifications.
+
+**Returns:**
+- `str`: The AI model's response after final review.
 
 ## CLI
 
@@ -215,14 +232,25 @@ EMScribe 2.0 also includes a CLI tool to interact with the application.
 1. `clean`
    - Cleans the provided transcript.
    - Usage: `emscribe clean <transcript_path> [--output <output_path>]`
+   - Default output: `data/cleaned_transcript.txt`
 
 2. `extract`
    - Extracts information from the provided transcript.
    - Usage: `emscribe extract <transcript_path> [--output <output_path>]`
+   - Default input: `data/cleaned_transcript.txt`
+   - Default output: `data/extract.txt`
 
 3. `generate`
    - Generates a narrative from the extracted data.
    - Usage: `emscribe generate <transcript_path> [--output <output_path>]`
+   - Default input: `data/reviewed_extract.txt`
+   - Default output: `data/narrative.txt`
+
+4. `review`
+   - Reviews the extracted information.
+   - Usage: `emscribe review <extracted_data_path> [--output <output_path>]`
+   - Default input: `data/extract.txt`
+   - Default output: `data/reviewed_extract.txt`
 
 ### Example Usage:
 
@@ -236,6 +264,9 @@ emscribe extract ./transcript.txt --output ./extracted_data.txt
 # Generate a narrative from the extracted data
 emscribe generate ./extracted_data.txt --output ./narrative.txt
 
+# Review extracted information
+emscribe review ./extracted_data.txt --output ./reviewed_extract.txt
+
 # Using piping to combine commands
 emscribe clean ./transcript.txt | emscribe extract - | emscribe generate - --output ./narrative.txt
 ```
@@ -246,7 +277,9 @@ emscribe clean ./transcript.txt | emscribe extract - | emscribe generate - --out
 
 ```python
 from modules.model_loader import ModelLoader
-from modules.transcript_cleaner import TranscriptCleaner
+from modules.transcript
+
+_cleaner import TranscriptCleaner
 from modules.prompt_manager import PromptManager
 
 # Initialize components
@@ -289,9 +322,7 @@ from modules.narrative_manager import NarrativeManager
 
 # Initialize components
 prompt_manager = PromptManager()
-model_loader = ModelLoader(base_url="http://localhost:11434", model_name="ll
-
-ama3.1")
+model_loader = ModelLoader(base_url="http://localhost:11434", model_name="llama3.1")
 narrative_manager = NarrativeManager(model_loader=model_loader, prompt_manager=prompt_manager)
 
 # Example data extracted from a transcript

@@ -41,43 +41,59 @@ This guide provides an overview of the development process for EMScribe 2.0, inc
 ## Project Structure
 
 ```plaintext
-emscribe/
-├── docs/
-│   ├── api_reference.md
-│   ├── contributing.md
-│   ├── development.md
-│   ├── index.md
-│   ├── installation.md
-│   └── usage.md
-├── modules/
-│   ├── __init__.py
-│   ├── model_loader.py
-│   ├── prompt_manager.py
-│   ├── prompts/
-│   │   ├── __init__.py
-│   │   ├── cleaning_prompts.py
-│   │   ├── extraction_prompts.py
-│   │   ├── narrative_prompts.py
-│   ├── transcript_cleaner.py
-│   ├── transcript_extractor.py
-│   ├── narrative_manager.py
-├── scripts/
-│   ├── __init__.py
-│   ├── cli.py
-│   ├── extraction.py
-│   ├── main.py
-│   ├── preprocess.py
-├── tests/
-│   ├── __init__.py
-│   ├── conftest.py
-│   ├── test_model_loader.py
-│   ├── test_transcript_cleaner.py
-│   ├── test_transcript_extractor.py
-│   ├── test_cli.py
-├── README.md
-├── requirements.txt
-├── setup.py
-└── venv/
+.
+|-- README.md
+|-- bin
+|   `-- emscribe
+|-- commands
+|   |-- clean_command.py
+|   |-- extract_command.py
+|   |-- generate_command.py
+|   `-- review_command.py
+|-- data
+|   |-- cleaned_transcript.txt
+|   |-- extract.txt
+|   |-- narrative.txt
+|   `-- reviewed_extract.txt
+|-- docs
+|   |-- api_reference.md
+|   |-- contributing.md
+|   |-- development.md
+|   |-- index.md
+|   |-- installation.md
+|   `-- usage.md
+|-- images
+|   `-- emscribe_logo.png
+|-- modules
+|   |-- extract_reviewer.py
+|   |-- model_loader.py
+|   |-- narrative_manager.py
+|   |-- prompt_manager.py
+|   |-- prompts
+|   |   |-- cleaning_prompts.py
+|   |   |-- extraction_prompts.py
+|   |   |-- narrative_prompts.py
+|   |   `-- review_prompts.py
+|   |-- transcript_cleaner.py
+|   `-- transcript_extractor.py
+|-- requirements.txt
+|-- scripts
+|   |-- cli.py
+|   |-- data
+|   |   |-- cleaned_transcript.txt
+|   |   `-- extract.txt
+|   |-- extraction.py
+|   |-- main.py
+|   `-- preprocess.py
+|-- tests
+|   |-- conftest.py
+|   |-- test_cli.py
+|   |-- test_model_loader.py
+|   |-- test_review_command.py
+|   |-- test_transcript_cleaner.py
+|   `-- test_transcript_extractor.py
+|-- transcript.txt
+`-- venv
 ```
 
 ## Adding New Features

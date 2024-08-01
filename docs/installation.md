@@ -51,44 +51,59 @@ Refer to Ollama's documentation to start the server locally. Ensure it is runnin
 Here is an overview of the EMScribe 2.0 directory structure after installation:
 
 ```plaintext
-emscribe/
-├── docs/
-│   ├── index.md
-│   ├── installation.md
-│   ├── usage.md
-│   ├── development.md
-│   ├── api_reference.md
-│   ├── contributing.md
-├── modules/
-│   ├── __init__.py
-│   ├── model_loader.py
-│   ├── narrative_manager.py
-│   ├── prompt_manager.py
-│   ├── transcript_cleaner.py
-│   ├── transcript_extractor.py
-│   └── prompts/
-│       ├── __init__.py
-│       ├── extraction_prompts.py
-│       ├── cleaning_prompts.py
-│       └── narrative_prompts.py
-├── scripts/
-│   ├── __init__.py
-│   ├── main.py
-│   ├── extraction.py
-│   ├── preprocess.py
-│   ├── cli.py
-├── tests/
-│   ├── __init__.py
-│   ├── conftest.py
-│   ├── test_model_loader.py
-│   ├── test_transcript_cleaner.py
-│   ├── test_transcript_extractor.py
-│   ├── test_cli.py
-├── images/
-│   ├── emscribe_logo_small.jpg
-├── README.md
-├── requirements.txt
-└── venv/
+.
+|-- README.md
+|-- bin
+|   `-- emscribe
+|-- commands
+|   |-- clean_command.py
+|   |-- extract_command.py
+|   |-- generate_command.py
+|   `-- review_command.py
+|-- data
+|   |-- cleaned_transcript.txt
+|   |-- extract.txt
+|   |-- narrative.txt
+|   `-- reviewed_extract.txt
+|-- docs
+|   |-- api_reference.md
+|   |-- contributing.md
+|   |-- development.md
+|   |-- index.md
+|   |-- installation.md
+|   `-- usage.md
+|-- images
+|   `-- emscribe_logo.png
+|-- modules
+|   |-- extract_reviewer.py
+|   |-- model_loader.py
+|   |-- narrative_manager.py
+|   |-- prompt_manager.py
+|   |-- prompts
+|   |   |-- cleaning_prompts.py
+|   |   |-- extraction_prompts.py
+|   |   |-- narrative_prompts.py
+|   |   `-- review_prompts.py
+|   |-- transcript_cleaner.py
+|   `-- transcript_extractor.py
+|-- requirements.txt
+|-- scripts
+|   |-- cli.py
+|   |-- data
+|   |   |-- cleaned_transcript.txt
+|   |   `-- extract.txt
+|   |-- extraction.py
+|   |-- main.py
+|   `-- preprocess.py
+|-- tests
+|   |-- conftest.py
+|   |-- test_cli.py
+|   |-- test_model_loader.py
+|   |-- test_review_command.py
+|   |-- test_transcript_cleaner.py
+|   `-- test_transcript_extractor.py
+|-- transcript.txt
+`-- venv
 ```
 
 ## Verify the Installation

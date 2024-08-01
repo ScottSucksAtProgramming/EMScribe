@@ -6,6 +6,71 @@ This guide provides instructions for contributing to EMScribe 2.0, including set
 
 Follow the steps in the [Development Guide](development.md) to set up your development environment. Ensure you are familiar with the new CLI module and understand the piping feature for chaining commands.
 
+### Dependencies
+- Ensure you have Python 3.12.1 installed.
+- Install the required dependencies:
+  ```bash
+  pip install -r requirements.txt
+  ```
+
+### Directory Structure
+Ensure you are familiar with the updated project directory structure:
+```
+.
+|-- README.md
+|-- bin
+|   `-- emscribe
+|-- commands
+|   |-- clean_command.py
+|   |-- extract_command.py
+|   |-- generate_command.py
+|   `-- review_command.py
+|-- data
+|   |-- cleaned_transcript.txt
+|   |-- extract.txt
+|   |-- narrative.txt
+|   `-- reviewed_extract.txt
+|-- docs
+|   |-- api_reference.md
+|   |-- contributing.md
+|   |-- development.md
+|   |-- index.md
+|   |-- installation.md
+|   `-- usage.md
+|-- images
+|   `-- emscribe_logo.png
+|-- modules
+|   |-- extract_reviewer.py
+|   |-- model_loader.py
+|   |-- narrative_manager.py
+|   |-- prompt_manager.py
+|   |-- prompts
+|   |   |-- cleaning_prompts.py
+|   |   |-- extraction_prompts.py
+|   |   |-- narrative_prompts.py
+|   |   `-- review_prompts.py
+|   |-- transcript_cleaner.py
+|   `-- transcript_extractor.py
+|-- requirements.txt
+|-- scripts
+|   |-- cli.py
+|   |-- data
+|   |   |-- cleaned_transcript.txt
+|   |   `-- extract.txt
+|   |-- extraction.py
+|   |-- main.py
+|   `-- preprocess.py
+|-- tests
+|   |-- conftest.py
+|   |-- test_cli.py
+|   |-- test_model_loader.py
+|   |-- test_review_command.py
+|   |-- test_transcript_cleaner.py
+|   `-- test_transcript_extractor.py
+|-- transcript.txt
+`-- venv
+```
+
 ## Adding New Features
 
 ### Create a New Branch

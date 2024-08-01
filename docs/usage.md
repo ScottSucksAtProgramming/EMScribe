@@ -1,11 +1,10 @@
-
 # Usage
 
-This guide will show you how to use EMScribe 2.0 for extracting and cleaning EMS transcripts and generating narratives.
+This guide will show you how to use EMScribe 2.0 for extracting and cleaning EMS transcripts, reviewing extracted information, and generating narratives.
 
 ## CLI Usage
 
-The `emscribe` command can be used to clean transcripts, extract information, and generate narratives.
+The `emscribe` command can be used to clean transcripts, extract information, review extracted information, and generate narratives.
 
 ### Clean Transcript
 
@@ -20,15 +19,23 @@ emscribe clean path/to/transcript.txt --output path/to/cleaned_transcript.txt
 To extract information from a transcript, use the following command:
 
 ```bash
-emscribe extract path/to/cleaned_transcript.txt --output path/to/extracted_info.txt
+emscribe extract path/to/cleaned_transcript.txt --output path/to/extract.txt
+```
+
+### Review Extracted Information
+
+To review and make changes to the extracted information, use the following command:
+
+```bash
+emscribe review path/to/extract.txt --output path/to/reviewed_extract.txt
 ```
 
 ### Generate Narrative
 
-To generate a narrative from extracted information, use the following command:
+To generate a narrative from the reviewed extracted information, use the following command:
 
 ```bash
-emscribe generate path/to/extracted_info.txt --output path/to/narrative.txt
+emscribe generate path/to/reviewed_extract.txt --output path/to/narrative.txt
 ```
 
 ### Using Pipes
@@ -36,7 +43,7 @@ emscribe generate path/to/extracted_info.txt --output path/to/narrative.txt
 You can also use pipes to streamline the process. Here’s an example of cleaning a transcript and generating a narrative in one command:
 
 ```bash
-emscribe clean path/to/transcript.txt | emscribe generate - --output path/to/narrative.txt
+emscribe clean path/to/transcript.txt | emscribe extract - | emscribe review - | emscribe generate - --output path/to/narrative.txt
 ```
 
 ### Example Transcript Input
@@ -107,6 +114,52 @@ print("Extracted Information:")
 print(extracted_data)
 ```
 
+#### Reviewing Extracted Information
+
+The `ExtractReviewer` class can be used to review and modify the extracted information using an AI model.
+
+#### Code Example
+
+```python
+from modules.model_loader import ModelLoader
+from modules.prompt_manager import PromptManager
+from modules.extract_reviewer import ExtractReviewer
+
+# Initialize components
+prompt_manager = PromptManager()
+model_loader = ModelLoader(base_url="http://localhost:11434", model_name="llama3.1")
+reviewer = ExtractReviewer(model_loader=model_loader, prompt_manager=prompt_manager)
+
+# Review extracted information
+extracted_data = "Incident Information\n- Unit: [No Info]\n- Response Mode: emergent\n..."
+reviewed_data = reviewer.review_section(extracted_data)
+print("Reviewed Information:")
+print(reviewed_data)
+```
+
+#### Generating a Narrative
+
+The `NarrativeManager` class can be used to generate a narrative from the reviewed extracted information.
+
+#### Code Example
+
+```python
+from modules.model_loader import ModelLoader
+from modules.prompt_manager import PromptManager
+from modules.narrative_manager import NarrativeManager
+
+# Initialize components
+prompt_manager = PromptManager()
+model_loader = ModelLoader(base_url="http://localhost:11434", model_name="llama3.1")
+narrative_manager = NarrativeManager(model_loader=model_loader, prompt_manager=prompt_manager)
+
+# Generate a narrative
+reviewed_data = "Incident Information\n- Unit: 292\n- Response Mode: emergent\n..."
+narrative = narrative_manager.generate_narrative(reviewed_data)
+print("Generated Narrative:")
+print(narrative)
+```
+
 ## Conclusion
 
-EMScribe 2.0 provides powerful tools for extracting and cleaning EMS transcripts using AI models. By following the examples and commands provided, you can effectively utilize these tools to process your own transcripts. For more advanced usage and customization, refer to the [Development](development.md) and [API Reference](api_reference.md) sections of the documentation.
+EMScribe 2.0 provides powerful tools for extracting, cleaning, reviewing, and generating EMS transcripts using AI models. By following the examples and commands provided, you can effectively utilize these tools to process your own transcripts. For more advanced usage and customization, refer to the [Development](development.md) and [API Reference](api_reference.md) sections of the documentation.
