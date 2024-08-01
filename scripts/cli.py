@@ -14,7 +14,9 @@ from commands.generate_command import GenerateCommand
 
 # Initialize PromptManager and ModelLoader
 prompt_manager = PromptManager()
-model_loader = ModelLoader(base_url="http://localhost:11434", model_name="llama3.1")
+model_loader = ModelLoader(
+    base_url="http://localhost:11434", model_name="llama3.1", context_window=32000
+)
 
 # Initialize other modules
 cleaner = TranscriptCleaner(model_loader, prompt_manager)
