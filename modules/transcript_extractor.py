@@ -61,3 +61,23 @@ class TranscriptExtractor:
 
         combined_response = "\n\n".join(extracted_data).strip()
         return combined_response
+
+    def split_transcript(self, transcript, max_chunk_size):
+        words = transcript.split()
+        chunks = []
+        current_chunk = []
+        current_length = 0
+        
+        for word in words:
+            current_length += len(word) + 1  # +1 for the space
+            if current_length > max_chunk_size:
+                chunks.append(" ".join(current_chunk))
+                current_chunk = [word]
+                current_length = len(word) + 1
+            else:
+                current_chunk.append(word)
+        
+        if current_chunk:
+            chunks.append(" ".join(current_chunk))
+        
+        return chunks

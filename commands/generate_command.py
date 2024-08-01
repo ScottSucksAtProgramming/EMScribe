@@ -1,8 +1,6 @@
 import os
 from modules.narrative_manager import NarrativeManager
 from modules.utils import sliding_window_transcript
-from modules.model_loader import ModelLoader
-from modules.prompt_manager import PromptManager
 
 class GenerateCommand:
     def __init__(self, manager=None):
@@ -14,11 +12,11 @@ class GenerateCommand:
         with open(input_path, 'r') as file:
             extracted_data = file.read()
 
-        max_tokens = 1024  # Example token limit for the model
-        overlap_tokens = 100  # Example overlap
+        max_tokens = 4096  # Example token limit for the model
+        overlap_tokens = 250  # Example overlap
 
         chunks = sliding_window_transcript(extracted_data, max_tokens, overlap_tokens)
-        generated_chunks = [self.manager.generate(chunk) for chunk in chunks]
+        generated_chunks = [self.manager.generate_narrative(chunk) for chunk in chunks]
 
         narrative = ' '.join(generated_chunks)
 

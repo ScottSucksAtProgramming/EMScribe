@@ -49,7 +49,18 @@ def main():
     elif args.command == "extract":
         ExtractCommand(extractor).execute(args.transcript_path, args.output)
     elif args.command == "generate":
-        GenerateCommand(narrative_manager).execute(args.transcript_path, args.output)
+        # Split the transcript into manageable chunks
+        with open(args.transcript_path, 'r') as file:
+            transcript = file.read()
+        
+        chunks = extractor.split_transcript(transcript, max_chunk_size=1500)
+        narrative = narrative_manager.generate_narrative_from_chunks(chunks)
+        
+        if args.output:
+            with open(args.output, 'w') as file:
+                file.write(narrative)
+        else:
+            print(narrative)
     elif args.command == "review":
         ReviewCommand(extract_reviewer).execute(args.extracted_data_path, args.output)
 

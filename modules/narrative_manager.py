@@ -1,3 +1,4 @@
+from modules.prompts.narrative_prompts import narrative_prompts
 class NarrativeManager:
     """
     Manages the generation of narratives from extracted data using a language model.
@@ -32,3 +33,15 @@ class NarrativeManager:
         prompt = self.prompt_manager.create_narrative_prompt(data)
         response = self.model_loader.generate(prompt, max_tokens=max_tokens)
         return response
+
+    def generate_narrative_from_chunks(self, chunks):
+        complete_narrative = ""
+        
+        for chunk in chunks:
+            for section in narrative_prompts["presoaped_format"]:
+                prompt_template = narrative_prompts["presoaped_format"][section]
+                prompt = prompt_template.format(data=chunk)
+                narrative_section = self.model_loader.generate(prompt)
+                complete_narrative += narrative_section + "\n\n"
+        
+        return complete_narrative
