@@ -1,4 +1,3 @@
-# modules/transcript_cleaner.py
 from modules.model_loader import ModelLoader
 from modules.prompt_manager import PromptManager
 
@@ -36,13 +35,17 @@ class TranscriptCleaner:
         prompt = self.prompt_manager.get_prompt(
             "clean_transcript", transcript=transcript
         )
-        context_window_size = 32000  # Adjusting to use the new context window size
 
-        if len(prompt) > context_window_size:
-            # Split the prompt if it exceeds the context window size
+        # Calculate the optimal context window size based on the length of the prompt
+        optimal_context_window = self.model_loader.calculate_optimal_context_window(len(prompt))
+
+        # Update the context window of the model loader
+        self.model_loader.context_window = optimal_context_window
+
+        if isinstance(prompt, list):
+            # If prompt is a list of chunks
             cleaned_parts = []
-            for i in range(0, len(prompt), context_window_size):
-                sub_prompt = prompt[i : i + context_window_size]
+            for sub_prompt in prompt:
                 response = self.model_loader.generate(sub_prompt)
                 cleaned_parts.append(response)
             cleaned_transcript = " ".join(cleaned_parts)
