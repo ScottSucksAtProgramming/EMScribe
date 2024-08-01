@@ -1,24 +1,27 @@
-import sys
 import os
+from modules.transcript_extractor import TranscriptExtractor
+from modules.utils import sliding_window_transcript
 
 class ExtractCommand:
-    def __init__(self, extractor):
+    def __init__(self, extractor=None):
+        if extractor is None:
+            extractor = TranscriptExtractor()
         self.extractor = extractor
 
-    def execute(self, transcript_path, output_path):
-        if transcript_path == "-":
-            transcript = sys.stdin.read()
-        else:
-            with open(transcript_path, "r") as file:
-                transcript = file.read()
+    def execute(self, input_path="data/cleaned_transcript.txt", output_path="data/extract.txt"):
+        with open(input_path, 'r') as file:
+            transcript = file.read()
 
-        extracted_data = self.extractor.extract(transcript)
+        max_tokens = 4096  # Example token limit for the model
+        overlap_tokens = 250  # Example overlap
 
-        if output_path:
-            os.makedirs(os.path.dirname(output_path), exist_ok=True)
-            with open(output_path, "w") as file:
-                file.write(extracted_data)
-        else:
-            print(extracted_data)
-            import pyperclip
-            pyperclip.copy(extracted_data)
+        chunks = sliding_window_transcript(transcript, max_tokens, overlap_tokens)
+        extracted_chunks = [self.extractor.extract(chunk) for chunk in chunks]
+
+        extracted_data = '\n'.join(extracted_chunks)
+
+        os.makedirs(os.path.dirname(output_path), exist_ok=True)
+        with open(output_path, 'w') as file:
+            file.write(extracted_data)
+
+        print(f"\n\nExtracted data saved to {output_path}")

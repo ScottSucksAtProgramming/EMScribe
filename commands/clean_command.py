@@ -1,24 +1,27 @@
-import sys
 import os
+from modules.transcript_cleaner import TranscriptCleaner
+from modules.utils import sliding_window_transcript
 
 class CleanCommand:
-    def __init__(self, cleaner):
+    def __init__(self, cleaner=None):
+        if cleaner is None:
+            cleaner = TranscriptCleaner()
         self.cleaner = cleaner
 
-    def execute(self, transcript_path, output_path):
-        if transcript_path == "-":
-            transcript = sys.stdin.read()
-        else:
-            with open(transcript_path, "r") as file:
-                transcript = file.read()
+    def execute(self, input_path, output_path="data/cleaned_transcript.txt"):
+        with open(input_path, 'r') as file:
+            transcript = file.read()
 
-        cleaned_transcript = self.cleaner.clean(transcript)
+        max_tokens = 4096  # Example token limit for the model
+        overlap_tokens = 250  # Example overlap
 
-        if output_path:
-            os.makedirs(os.path.dirname(output_path), exist_ok=True)
-            with open(output_path, "w") as file:
-                file.write(cleaned_transcript)
-        else:
-            print(cleaned_transcript)
-            import pyperclip
-            pyperclip.copy(cleaned_transcript)
+        chunks = sliding_window_transcript(transcript, max_tokens, overlap_tokens)
+        cleaned_chunks = [self.cleaner.clean(chunk) for chunk in chunks]
+
+        cleaned_transcript = ' '.join(cleaned_chunks)
+
+        os.makedirs(os.path.dirname(output_path), exist_ok=True)
+        with open(output_path, 'w') as file:
+            file.write(cleaned_transcript)
+
+        print(f"\n\nCleaned transcript saved to {output_path}")
