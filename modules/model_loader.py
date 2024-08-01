@@ -39,6 +39,10 @@ class ModelLoader:
             str: The generated response from the model.
         """
         response = self.client.generate(
-            model=self.model_name, prompts=[prompt], max_tokens=self.context_window
+            model=self.model_name,
+            prompts=[prompt],
+            options={
+                "num_ctx": self.context_window
+            },  # Ensure num_ctx is correctly placed in options
         )
         return response.generations[0][0].text.strip()
