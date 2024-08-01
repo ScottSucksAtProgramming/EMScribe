@@ -12,8 +12,8 @@ class ExtractCommand:
         with open(input_path, 'r') as file:
             transcript = file.read()
 
-        max_tokens = 4096  # Example token limit for the model
-        overlap_tokens = 250  # Example overlap
+        max_tokens = 1024  # Example token limit for the model
+        overlap_tokens = 100  # Example overlap
 
         chunks = sliding_window_transcript(transcript, max_tokens, overlap_tokens)
         extracted_chunks = [self.extractor.extract(chunk) for chunk in chunks]

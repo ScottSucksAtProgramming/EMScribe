@@ -1,45 +1,34 @@
-# modules/narrative_manager.py
-
-from modules.model_loader import ModelLoader
-from modules.prompt_manager import PromptManager
-
-
 class NarrativeManager:
     """
-    A class to generate EMS narratives using an AI model.
+    Manages the generation of narratives from extracted data using a language model.
 
     Attributes:
-        model_loader (ModelLoader): An instance of ModelLoader to interact with the AI model.
-        prompt_manager (PromptManager): An instance of PromptManager to manage prompts.
+        model_loader (ModelLoader): The model loader used to generate text.
+        prompt_manager (PromptManager): The prompt manager used to create prompts.
     """
 
-    def __init__(self, model_loader: ModelLoader, prompt_manager: PromptManager):
+    def __init__(self, model_loader, prompt_manager):
         """
-        Initializes the NarrativeManager with a ModelLoader and PromptManager instance.
+        Initializes the NarrativeManager with a model loader and a prompt manager.
 
         Args:
-            model_loader (ModelLoader): An instance of ModelLoader to interact with the AI model.
-            prompt_manager (PromptManager): An instance of PromptManager to manage prompts.
+            model_loader (ModelLoader): The model loader used to generate text.
+            prompt_manager (PromptManager): The prompt manager used to create prompts.
         """
         self.model_loader = model_loader
         self.prompt_manager = prompt_manager
 
-    def generate_narrative(self, narrative_format: str, data: dict) -> str:
+    def generate_narrative(self, data, max_tokens=4096):
         """
-        Generates a narrative based on the specified format and data.
+        Generates a narrative from the given data.
 
         Args:
-            narrative_format (str): The key for the desired narrative format.
-            data (dict): The extracted information in a dictionary.
+            data (str): The extracted data to generate a narrative from.
+            max_tokens (int, optional): The maximum number of tokens for the generated narrative. Defaults to 1024.
 
         Returns:
             str: The generated narrative.
         """
-        narrative_steps = self.prompt_manager.get_prompt(narrative_format, data=data)
-
-        narrative = []
-        for step_key, step_prompt in narrative_steps.items():
-            response = self.model_loader.generate(step_prompt)
-            narrative.append(response)
-
-        return "\n\n".join(narrative).strip()
+        prompt = self.prompt_manager.create_narrative_prompt(data)
+        response = self.model_loader.generate(prompt, max_tokens=max_tokens)
+        return response

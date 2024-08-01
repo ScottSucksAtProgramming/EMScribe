@@ -1,6 +1,8 @@
 import os
 from modules.narrative_manager import NarrativeManager
 from modules.utils import sliding_window_transcript
+from modules.model_loader import ModelLoader
+from modules.prompt_manager import PromptManager
 
 class GenerateCommand:
     def __init__(self, manager=None):
