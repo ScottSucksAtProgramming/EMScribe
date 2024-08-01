@@ -32,15 +32,25 @@ def test_clean_transcript(tmp_path):
         file.write(transcript_text)
 
     result = run_subprocess_with_env(
-        ["python3", script_path, "clean", str(transcript_path), "--output", str(output_path)],
+        [
+            "python3",
+            script_path,
+            "clean",
+            str(transcript_path),
+            "--output",
+            str(output_path),
+        ],
         os.path.dirname(script_path),
     )
     assert result.returncode == 0
 
-    with open(output_path, 'r') as file:
+    with open(output_path, "r") as file:
         cleaned_transcript = file.read()
 
-    assert "The patient is experiencing shortness of breath. The patient is also complaining of chest pain." in cleaned_transcript
+    assert (
+        "The patient is experiencing shortness of breath. The patient is also complaining of chest pain."
+        in cleaned_transcript
+    )
 
 
 def test_extract_information(tmp_path):
@@ -51,12 +61,19 @@ def test_extract_information(tmp_path):
         file.write(transcript_text)
 
     result = run_subprocess_with_env(
-        ["python3", script_path, "extract", str(transcript_path), "--output", str(output_path)],
+        [
+            "python3",
+            script_path,
+            "extract",
+            str(transcript_path),
+            "--output",
+            str(output_path),
+        ],
         os.path.dirname(script_path),
     )
     assert result.returncode == 0
 
-    with open(output_path, 'r') as file:
+    with open(output_path, "r") as file:
         extracted_data = file.read()
 
     assert "John" in extracted_data
@@ -100,4 +117,6 @@ def test_display_help():
     assert (
         "positional arguments:" in result.stdout
     )  # Adjust to check for the correct section header
-    assert "{clean,extract,generate,review}" in result.stdout  # Ensure the commands are listed
+    assert (
+        "{clean,extract,generate,review}" in result.stdout
+    )  # Ensure the commands are listed

@@ -1,5 +1,3 @@
-# modules/transcript_extractor.py
-
 from modules.model_loader import ModelLoader
 from modules.prompt_manager import PromptManager
 
@@ -54,10 +52,19 @@ class TranscriptExtractor:
         ]
         extracted_data = []
 
+        context_window_size = 32000  # Adjusting to use the new context window size
+
         for key in prompt_keys:
             prompt = self.prompt_manager.get_prompt(key, transcript=transcript)
-            response = self.model_loader.generate(prompt)
-            extracted_data.append(response)
+            if len(prompt) > context_window_size:
+                # Split the prompt if it exceeds the context window size
+                for i in range(0, len(prompt), context_window_size):
+                    sub_prompt = prompt[i : i + context_window_size]
+                    response = self.model_loader.generate(sub_prompt)
+                    extracted_data.append(response)
+            else:
+                response = self.model_loader.generate(prompt)
+                extracted_data.append(response)
 
         combined_response = "\n\n".join(extracted_data).strip()
         return combined_response

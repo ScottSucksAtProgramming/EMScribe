@@ -1,11 +1,12 @@
 import sys
 import os
 
+
 class CleanCommand:
     def __init__(self, cleaner):
         self.cleaner = cleaner
 
-    def execute(self, transcript_path, output_path):
+    def execute(self, transcript_path, output_path="data/cleaned_transcript.txt"):
         if transcript_path == "-":
             transcript = sys.stdin.read()
         else:
@@ -21,4 +22,5 @@ class CleanCommand:
         else:
             print(cleaned_transcript)
             import pyperclip
+
             pyperclip.copy(cleaned_transcript)

@@ -22,25 +22,61 @@ extractor = TranscriptExtractor(model_loader, prompt_manager)
 narrative_manager = NarrativeManager(model_loader, prompt_manager)
 extract_reviewer = ExtractReviewer(model_loader, prompt_manager)
 
+
 def main():
     parser = argparse.ArgumentParser(description="EMScribe CLI tool")
     subparsers = parser.add_subparsers(dest="command")
 
     clean_parser = subparsers.add_parser("clean", help="Clean the transcript")
     clean_parser.add_argument("transcript_path", help="Path to the transcript file")
-    clean_parser.add_argument("--output", default="data/cleaned_transcript.txt", help="Path to save the cleaned transcript")
+    clean_parser.add_argument(
+        "--output",
+        default="data/cleaned_transcript.txt",
+        help="Path to save the cleaned transcript",
+    )
 
-    extract_parser = subparsers.add_parser("extract", help="Extract information from the transcript")
-    extract_parser.add_argument("transcript_path", nargs='?', default="data/cleaned_transcript.txt", help="Path to the transcript file")
-    extract_parser.add_argument("--output", default="data/extract.txt", help="Path to save the extracted information")
+    extract_parser = subparsers.add_parser(
+        "extract", help="Extract information from the transcript"
+    )
+    extract_parser.add_argument(
+        "transcript_path",
+        nargs="?",
+        default="data/cleaned_transcript.txt",
+        help="Path to the transcript file",
+    )
+    extract_parser.add_argument(
+        "--output",
+        default="data/extract.txt",
+        help="Path to save the extracted information",
+    )
 
-    generate_parser = subparsers.add_parser("generate", help="Generate a narrative from the extracted information")
-    generate_parser.add_argument("transcript_path", nargs='?', default="data/reviewed_extract.txt", help="Path to the extracted data file")
-    generate_parser.add_argument("--output", default="data/narrative.txt", help="Path to save the generated narrative")
+    generate_parser = subparsers.add_parser(
+        "generate", help="Generate a narrative from the extracted information"
+    )
+    generate_parser.add_argument(
+        "transcript_path",
+        nargs="?",
+        default="data/reviewed_extract.txt",
+        help="Path to the extracted data file",
+    )
+    generate_parser.add_argument(
+        "--output",
+        default="data/narrative.txt",
+        help="Path to save the generated narrative",
+    )
 
     review_parser = subparsers.add_parser("review", help="Review extracted information")
-    review_parser.add_argument("extracted_data_path", nargs='?', default="data/extract.txt", help="Path to the extracted data file")
-    review_parser.add_argument("--output", default="data/reviewed_extract.txt", help="Path to save the reviewed data")
+    review_parser.add_argument(
+        "extracted_data_path",
+        nargs="?",
+        default="data/extract.txt",
+        help="Path to the extracted data file",
+    )
+    review_parser.add_argument(
+        "--output",
+        default="data/reviewed_extract.txt",
+        help="Path to save the reviewed data",
+    )
 
     args = parser.parse_args()
 
@@ -52,6 +88,7 @@ def main():
         GenerateCommand(narrative_manager).execute(args.transcript_path, args.output)
     elif args.command == "review":
         ReviewCommand(extract_reviewer).execute(args.extracted_data_path, args.output)
+
 
 if __name__ == "__main__":
     main()

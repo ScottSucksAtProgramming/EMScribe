@@ -7,5 +7,5 @@ review_prompts = {
     "final_review": (
         "Here is the updated section after making changes: {updated_section}. "
         "If everything is correct, type 'done'. Otherwise, provide further modifications."
-    )
+    ),
 }

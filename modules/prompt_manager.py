@@ -1,10 +1,8 @@
-# modules/prompt_manager.py
-
 from modules.prompts import (
     cleaning_prompts,
     extraction_prompts,
     narrative_prompts,
-    review_prompts
+    review_prompts,
 )
 
 
@@ -21,7 +19,7 @@ class PromptManager:
             **extraction_prompts.extraction_prompts,
             **cleaning_prompts.cleaning_prompts,
             **narrative_prompts.narrative_prompts,
-            **review_prompts.review_prompts
+            **review_prompts.review_prompts,
         }
 
     def get_prompt(self, key: str, **kwargs) -> str:
@@ -43,6 +41,17 @@ class PromptManager:
             if isinstance(prompt_template, dict):
                 return {k: v.format(**kwargs) for k, v in prompt_template.items()}
             else:
-                return prompt_template.format(**kwargs)
+                formatted_prompt = prompt_template.format(**kwargs)
+                context_window_size = (
+                    32000  # Adjusting to use the new context window size
+                )
+
+                if len(formatted_prompt) > context_window_size:
+                    prompt_chunks = [
+                        formatted_prompt[i : i + context_window_size]
+                        for i in range(0, len(formatted_prompt), context_window_size)
+                    ]
+                    return prompt_chunks
+                return formatted_prompt
         else:
             raise KeyError(f"No prompt found for key: {key}")

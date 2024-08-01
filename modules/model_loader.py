@@ -8,19 +8,24 @@ class ModelLoader:
     Attributes:
         model_name (str): The name of the model to use.
         base_url (str): The base URL of the model API.
+        context_window (int): The context window size to use.
     """
 
-    def __init__(self, model_name, base_url="http://localhost:11434"):
+    def __init__(
+        self, model_name, base_url="http://localhost:11434", context_window=32768
+    ):
         """
-        Initializes the ModelLoader with the specified model name and base URL.
+        Initializes the ModelLoader with the specified model name, base URL, and context window size.
 
         Args:
             model_name (str): The name of the model to use.
             base_url (str): The base URL of the model API.
+            context_window (int): The context window size to use.
         """
         self.base_url = base_url
         self.model_name = model_name
-        self.client = Ollama(base_url=base_url)
+        self.context_window = context_window
+        self.client = Ollama(base_url=base_url, context_window=context_window)
 
     def generate(self, prompt, stream=False):
         """

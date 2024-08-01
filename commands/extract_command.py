@@ -1,11 +1,12 @@
 import sys
 import os
 
+
 class ExtractCommand:
     def __init__(self, extractor):
         self.extractor = extractor
 
-    def execute(self, transcript_path, output_path):
+    def execute(self, transcript_path, output_path="data/extract.txt"):
         if transcript_path == "-":
             transcript = sys.stdin.read()
         else:
@@ -21,4 +22,5 @@ class ExtractCommand:
         else:
             print(extracted_data)
             import pyperclip
+
             pyperclip.copy(extracted_data)
