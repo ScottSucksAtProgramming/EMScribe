@@ -18,7 +18,7 @@ class ExtractReviewer:
         Returns:
             str: The AI model's response.
         """
-        context_window_size = 32000  # Adjusting to use the new context window size
+        context_window_size = self.model_loader.context_window  # Use the dynamic context window size
 
         if user_input:
             prompt = self.prompt_manager.get_prompt(
@@ -56,7 +56,7 @@ class ExtractReviewer:
             "final_review", updated_section=updated_section
         )
 
-        context_window_size = 32000  # Adjusting to use the new context window size
+        context_window_size = self.model_loader.context_window  # Use the dynamic context window size
         if len(prompt) > context_window_size:
             # Split the prompt if it exceeds the context window size
             response_parts = []

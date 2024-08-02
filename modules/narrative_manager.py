@@ -1,5 +1,3 @@
-# modules/narrative_manager.py
-
 from modules.model_loader import ModelLoader
 from modules.prompt_manager import PromptManager
 
@@ -36,7 +34,7 @@ class NarrativeManager:
             str: The generated narrative.
         """
         narrative_steps = self.prompt_manager.get_prompt(narrative_format, data=data)
-        context_window_size = 32000  # Adjusting to use the new context window size
+        context_window_size = self.model_loader.context_window  # Use the dynamic context window size
 
         narrative = []
         for step_key, step_prompt in narrative_steps.items():
