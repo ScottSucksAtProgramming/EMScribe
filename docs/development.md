@@ -157,6 +157,8 @@ Use the built-in debugging tools in your IDE (e.g., VS Code) to set breakpoints 
 
 - Use the imperative mood in the subject line.
 - Capitalize the first letter of the subject line.
+
+
 - Keep the subject line to 50 characters or less.
 - Use the body to explain what and why vs. how.
 

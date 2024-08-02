@@ -81,7 +81,7 @@ from modules.transcript_cleaner import TranscriptCleaner
 
 # Initialize components
 prompt_manager = PromptManager()
-model_loader = ModelLoader(base_url="http://localhost:11434", model_name="llama3.1")
+model_loader = ModelLoader(model_name="llama3.1")
 cleaner = TranscriptCleaner(model_loader=model_loader, prompt_manager=prompt_manager)
 
 # Clean a transcript
@@ -104,7 +104,7 @@ from modules.transcript_extractor import TranscriptExtractor
 
 # Initialize components
 prompt_manager = PromptManager()
-model_loader = ModelLoader(base_url="http://localhost:11434", model_name="llama3.1")
+model_loader = ModelLoader(model_name="llama3.1")
 extractor = TranscriptExtractor(model_loader=model_loader, prompt_manager=prompt_manager)
 
 # Extract information from a transcript
@@ -127,7 +127,7 @@ from modules.extract_reviewer import ExtractReviewer
 
 # Initialize components
 prompt_manager = PromptManager()
-model_loader = ModelLoader(base_url="http://localhost:11434", model_name="llama3.1")
+model_loader = ModelLoader(model_name="llama3.1")
 reviewer = ExtractReviewer(model_loader=model_loader, prompt_manager=prompt_manager)
 
 # Review extracted information
@@ -150,12 +150,12 @@ from modules.narrative_manager import NarrativeManager
 
 # Initialize components
 prompt_manager = PromptManager()
-model_loader = ModelLoader(base_url="http://localhost:11434", model_name="llama3.1")
+model_loader = ModelLoader(model_name="llama3.1")
 narrative_manager = NarrativeManager(model_loader=model_loader, prompt_manager=prompt_manager)
 
 # Generate a narrative
 reviewed_data = "Incident Information\n- Unit: 292\n- Response Mode: emergent\n..."
-narrative = narrative_manager.generate_narrative(reviewed_data)
+narrative = narrative_manager.generate_narrative("narrative_format", reviewed_data)
 print("Generated Narrative:")
 print(narrative)
 ```

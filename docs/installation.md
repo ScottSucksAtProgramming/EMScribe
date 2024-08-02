@@ -1,3 +1,4 @@
+
 # Installation
 
 This guide will help you set up EMScribe 2.0 on your local machine.
@@ -101,7 +102,7 @@ Here is an overview of the EMScribe 2.0 directory structure after installation:
 |   |-- test_model_loader.py
 |   |-- test_review_command.py
 |   |-- test_transcript_cleaner.py
-|   `-- test_transcript_extractor.py
+|   |-- test_transcript_extractor.py
 |-- transcript.txt
 `-- venv
 ```

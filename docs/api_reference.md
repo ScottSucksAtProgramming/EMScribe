@@ -16,6 +16,7 @@ A class to handle the interaction with the AI model.
 **Attributes:**
 - `base_url (str)`: The base URL for the AI model server.
 - `model_name (str)`: The name of the AI model to use.
+- `context_window (int)`: The context window size for the model, fixed at 32768.
 
 **Methods:**
 
@@ -150,7 +151,9 @@ The `narrative_manager` module contains the `NarrativeManager` class, which is r
 A class to generate EMS narratives using extracted data and an AI model.
 
 **Attributes:**
-- `model_loader (ModelLoader)`: An instance of `ModelLoader` to interact with the AI model.
+- `model
+
+_loader (ModelLoader)`: An instance of `ModelLoader` to interact with the AI model.
 - `prompt_manager (PromptManager)`: An instance of `PromptManager` to manage prompts.
 
 **Methods:**
@@ -164,14 +167,14 @@ Initializes the `NarrativeManager` with a `ModelLoader` and `PromptManager` inst
 - `model_loader (ModelLoader)`: An instance of `ModelLoader` to interact with the AI model.
 - `prompt_manager (PromptManager)`: An instance of `PromptManager` to manage prompts.
 
-##### `generate_narrative(self, narrative_format: str, data: str) -> str`
+##### `generate_narrative(self, narrative_format: str, data: dict) -> str`
 
 **Description:**
 Generates an EMS narrative based on the provided narrative format and extracted data.
 
 **Args:**
 - `narrative_format (str)`: The format to use for the narrative.
-- `data (str)`: The extracted data to include in the narrative.
+- `data (dict)`: The extracted data to include in the narrative.
 
 **Returns:**
 - `str`: The generated EMS narrative.
@@ -277,14 +280,12 @@ emscribe clean ./transcript.txt | emscribe extract - | emscribe generate - --out
 
 ```python
 from modules.model_loader import ModelLoader
-from modules.transcript
-
-_cleaner import TranscriptCleaner
+from modules.transcript_cleaner import TranscriptCleaner
 from modules.prompt_manager import PromptManager
 
 # Initialize components
 prompt_manager = PromptManager()
-model_loader = ModelLoader(base_url="http://localhost:11434", model_name="llama3.1")
+model_loader = ModelLoader(model_name="llama3.1")
 cleaner = TranscriptCleaner(model_loader=model_loader, prompt_manager=prompt_manager)
 
 # Clean a transcript
@@ -303,7 +304,7 @@ from modules.prompt_manager import PromptManager
 
 # Initialize components
 prompt_manager = PromptManager()
-model_loader = ModelLoader(base_url="http://localhost:11434", model_name="llama3.1")
+model_loader = ModelLoader(model_name="llama3.1")
 extractor = TranscriptExtractor(model_loader=model_loader, prompt_manager=prompt_manager)
 
 # Extract information from a transcript
@@ -322,16 +323,16 @@ from modules.narrative_manager import NarrativeManager
 
 # Initialize components
 prompt_manager = PromptManager()
-model_loader = ModelLoader(base_url="http://localhost:11434", model_name="llama3.1")
+model_loader = ModelLoader(model_name="llama3.1")
 narrative_manager = NarrativeManager(model_loader=model_loader, prompt_manager=prompt_manager)
 
 # Example data extracted from a transcript
-extracted_data = """
-incident_info: ...
-patient_demographics: John Doe, 45, Male
-patient_histories: Hypertension, Diabetes
-...
-"""
+extracted_data = {
+    "incident_info": "...",
+    "patient_demographics": "John Doe, 45, Male",
+    "patient_histories": "Hypertension, Diabetes",
+    # other extracted data
+}
 
 # Generate an EMS narrative
 narrative = narrative_manager.generate_narrative("presoaped_format", extracted_data)

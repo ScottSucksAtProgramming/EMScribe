@@ -83,7 +83,7 @@ The project is organized as follows:
 |   |-- test_model_loader.py
 |   |-- test_review_command.py
 |   |-- test_transcript_cleaner.py
-|   `-- test_transcript_extractor.py
+|   |-- test_transcript_extractor.py
 |-- transcript.txt
 `-- venv
 ```
