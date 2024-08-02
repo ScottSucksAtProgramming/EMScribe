@@ -9,3 +9,4 @@ data/
 .pre-commit-config.yaml
 app.log
 emscribe.code-workspace
+app.log
