@@ -83,9 +83,7 @@ def main():
     args = parser.parse_args()
 
     if args.command == "clean":
-        with open(args.transcript_path, 'r') as file:
-            transcript = file.read()
-        CleanCommand(cleaner).execute(transcript, args.output)
+        CleanCommand(cleaner).execute(args.transcript_path, args.output)
     elif args.command == "extract":
         ExtractCommand(extractor).execute(args.transcript_path, args.output)
     elif args.command == "generate":
