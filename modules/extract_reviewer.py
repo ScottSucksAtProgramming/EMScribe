@@ -1,71 +1,53 @@
-from modules.prompt_manager import PromptManager
-from modules.model_loader import ModelLoader
+# -*- coding: utf-8 -*-
+# modules/extract_reviewer.py
+
+"""
+Module for reviewing extracted information.
+
+This module defines the ExtractReviewer class which is responsible for reviewing
+extracted EMS data.
+"""
 
 
 class ExtractReviewer:
-    def __init__(self, model_loader: ModelLoader, prompt_manager: PromptManager):
+    """
+    Class for reviewing extracted EMS data.
+
+    This class provides methods to review and make corrections to extracted EMS data.
+    """
+
+    def __init__(self, model_loader, prompt_manager):
+        """
+        Initialize the ExtractReviewer with a ModelLoader and PromptManager.
+
+        Args:
+            model_loader (ModelLoader): An instance of ModelLoader.
+            prompt_manager (PromptManager): An instance of PromptManager.
+        """
         self.model_loader = model_loader
         self.prompt_manager = prompt_manager
 
-    def review_section(self, section, user_input=None):
+    def review_section(self, section):
         """
-        Reviews a section of extracted data using the AI model.
+        Review a section of extracted EMS data.
 
         Args:
-            section (str): The section of extracted data to review.
-            user_input (str): The user's input for modifications.
+            section (str): The section of extracted EMS data to review.
 
         Returns:
-            str: The AI model's response.
-        """
-        context_window_size = self.model_loader.context_window  # Use the dynamic context window size
-
-        if user_input:
-            prompt = self.prompt_manager.get_prompt(
-                "review_section", section_data=section, user_input=user_input
-            )
-        else:
-            prompt = self.prompt_manager.get_prompt(
-                "review_section", section_data=section
-            )
-
-        if len(prompt) > context_window_size:
-            # Split the prompt if it exceeds the context window size
-            response_parts = []
-            for i in range(0, len(prompt), context_window_size):
-                sub_prompt = prompt[i : i + context_window_size]
-                response = self.model_loader.generate(sub_prompt)
-                response_parts.append(response)
-            response = " ".join(response_parts)
-        else:
-            response = self.model_loader.generate(prompt)
-
-        return response
-
-    def final_review(self, updated_section):
-        """
-        Performs a final review of a section after changes have been made.
-
-        Args:
-            updated_section (str): The section of data after user modifications.
-
-        Returns:
-            str: The AI model's response after final review.
+            str: The reviewed section.
         """
         prompt = self.prompt_manager.get_prompt(
-            "final_review", updated_section=updated_section
+            "review_section", {"section_data": section}
         )
-
-        context_window_size = self.model_loader.context_window  # Use the dynamic context window size
-        if len(prompt) > context_window_size:
-            # Split the prompt if it exceeds the context window size
-            response_parts = []
-            for i in range(0, len(prompt), context_window_size):
-                sub_prompt = prompt[i : i + context_window_size]
-                response = self.model_loader.generate(sub_prompt)
-                response_parts.append(response)
-            response = " ".join(response_parts)
-        else:
-            response = self.model_loader.generate(prompt)
-
+        response = self.model_loader.load_model().generate(prompt)
         return response
+
+    def summary(self):
+        """
+        Provide a summary of the review process.
+
+        Returns:
+            str: Summary of the review process.
+        """
+        return "ExtractReviewer: Reviews extracted EMS data using ModelLoader and PromptManager."

@@ -1,48 +1,44 @@
-from modules.model_loader import ModelLoader
-from modules.prompt_manager import PromptManager
+# -*- coding: utf-8 -*-
+# modules/transcript_cleaner.py
+
+"""
+Module for cleaning EMS transcripts.
+
+This module defines the TranscriptCleaner class which is responsible for cleaning
+EMS transcripts.
+"""
 
 
 class TranscriptCleaner:
     """
-    A class to clean EMS transcripts using an AI model.
+    Class for cleaning EMS transcripts.
 
-    Attributes:
-        model_loader (ModelLoader): An instance of ModelLoader to interact with the AI model.
-        prompt_manager (PromptManager): An instance of PromptManager to manage prompts.
+    This class provides methods to clean EMS transcripts using a language model.
     """
 
-    def __init__(self, model_loader: ModelLoader, prompt_manager: PromptManager):
+    def __init__(self, model_loader, prompt_manager):
         """
-        Initializes the TranscriptCleaner with a ModelLoader and PromptManager instance.
+        Initialize the TranscriptCleaner with a ModelLoader and PromptManager.
 
         Args:
-            model_loader (ModelLoader): An instance of ModelLoader to interact with the AI model.
-            prompt_manager (PromptManager): An instance of PromptManager to manage prompts.
+            model_loader (ModelLoader): An instance of ModelLoader.
+            prompt_manager (PromptManager): An instance of PromptManager.
         """
         self.model_loader = model_loader
         self.prompt_manager = prompt_manager
 
-    def clean(self, transcript: str) -> str:
+    def clean(self, transcript):
         """
-        Cleans the transcript using specified prompts.
+        Clean the provided EMS transcript.
 
         Args:
-            transcript (str): The transcript to clean.
+            transcript (str): The EMS transcript to clean.
 
         Returns:
             str: The cleaned transcript.
         """
-        prompt_key = "clean_transcript"
-        prompt = self.prompt_manager.get_prompt(prompt_key, transcript=transcript)
-
-        if isinstance(prompt, list):
-            # If prompt is a list of chunks
-            cleaned_parts = []
-            for sub_prompt in prompt:
-                response = self.model_loader.generate(sub_prompt)
-                cleaned_parts.append(response)
-            cleaned_transcript = " ".join(cleaned_parts)
-        else:
-            cleaned_transcript = self.model_loader.generate(prompt)
-
-        return cleaned_transcript.strip()
+        prompt = self.prompt_manager.get_prompt(
+            "clean_transcript", {"transcript": transcript}
+        )
+        cleaned_transcript = self.model_loader.load_model().generate(prompt)
+        return cleaned_transcript

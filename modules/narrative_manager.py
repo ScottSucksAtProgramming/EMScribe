@@ -1,53 +1,45 @@
-from modules.model_loader import ModelLoader
-from modules.prompt_manager import PromptManager
+# -*- coding: utf-8 -*-
+# modules/narrative_manager.py
+
+"""
+Module for managing EMS narratives.
+
+This module defines the NarrativeManager class which is responsible for generating
+and managing EMS narratives.
+"""
 
 
 class NarrativeManager:
     """
-    A class to generate EMS narratives using an AI model.
+    Class for generating and managing EMS narratives.
 
-    Attributes:
-        model_loader (ModelLoader): An instance of ModelLoader to interact with the AI model.
-        prompt_manager (PromptManager): An instance of PromptManager to manage prompts.
+    This class provides methods to generate narratives from extracted EMS data.
     """
 
-    def __init__(self, model_loader: ModelLoader, prompt_manager: PromptManager):
+    def __init__(self, model_loader, prompt_manager):
         """
-        Initializes the NarrativeManager with a ModelLoader and PromptManager instance.
+        Initialize the NarrativeManager with a ModelLoader and PromptManager.
 
         Args:
-            model_loader (ModelLoader): An instance of ModelLoader to interact with the AI model.
-            prompt_manager (PromptManager): An instance of PromptManager to manage prompts.
+            model_loader (ModelLoader): An instance of ModelLoader.
+            prompt_manager (PromptManager): An instance of PromptManager.
         """
         self.model_loader = model_loader
         self.prompt_manager = prompt_manager
 
-    def generate_narrative(self, narrative_format: str, data: dict) -> str:
+    def generate_narrative(self, extracted_data):
         """
-        Generates a narrative based on the specified format and data.
+        Generate a narrative from the extracted EMS data.
 
         Args:
-            narrative_format (str): The key for the desired narrative format.
-            data (dict): The extracted information in a dictionary.
+            extracted_data (str): The extracted EMS data.
 
         Returns:
             str: The generated narrative.
         """
-        narrative_steps = self.prompt_manager.get_prompt(narrative_format, data=data)
-
-        narrative = []
-        for step_key, step_prompt in narrative_steps.items():
-            if len(step_prompt) > self.model_loader.context_window:
-                # Split the prompt if it exceeds the context window size
-                narrative_parts = []
-                for i in range(0, len(step_prompt), self.model_loader.context_window):
-                    sub_prompt = step_prompt[i : i + self.model_loader.context_window]
-                    response = self.model_loader.generate(sub_prompt)
-                    narrative_parts.append(response)
-                step_response = " ".join(narrative_parts)
-            else:
-                step_response = self.model_loader.generate(step_prompt)
-
-            narrative.append(step_response)
-
-        return "\n\n".join(narrative).strip()
+        narrative = ""
+        for step in self.prompt_manager.get_steps():
+            prompt = self.prompt_manager.get_prompt(step, {"data": extracted_data})
+            response = self.model_loader.load_model().generate(prompt)
+            narrative += response + "\n\n"
+        return narrative

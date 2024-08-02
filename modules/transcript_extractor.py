@@ -1,67 +1,45 @@
-from modules.model_loader import ModelLoader
-from modules.prompt_manager import PromptManager
+# -*- coding: utf-8 -*-
+# modules/transcript_extractor.py
+
+"""
+Module for extracting information from EMS transcripts.
+
+This module defines the TranscriptExtractor class which is responsible for extracting
+information from EMS transcripts.
+"""
+
 
 class TranscriptExtractor:
     """
-    A class to extract information from an EMS transcript using an AI model.
+    Class for extracting information from EMS transcripts.
 
-    Attributes:
-        model_loader (ModelLoader): An instance of ModelLoader to interact with the AI model.
-        prompt_manager (PromptManager): An instance of PromptManager to manage prompts.
+    This class provides methods to extract information from EMS transcripts using
+    a language model.
     """
 
-    def __init__(self, model_loader: ModelLoader, prompt_manager: PromptManager):
+    def __init__(self, model_loader, prompt_manager):
         """
-        Initializes the TranscriptExtractor with a ModelLoader and PromptManager instance.
+        Initialize the TranscriptExtractor with a ModelLoader and PromptManager.
 
         Args:
-            model_loader (ModelLoader): An instance of ModelLoader to interact with the AI model.
-            prompt_manager (PromptManager): An instance of PromptManager to manage prompts.
+            model_loader (ModelLoader): An instance of ModelLoader.
+            prompt_manager (PromptManager): An instance of PromptManager.
         """
         self.model_loader = model_loader
         self.prompt_manager = prompt_manager
 
-    def extract(self, transcript: str) -> str:
+    def extract(self, transcript):
         """
-        Extracts information from the transcript using specified prompts.
+        Extract information from the provided EMS transcript.
 
         Args:
-            transcript (str): The transcript to extract information from.
+            transcript (str): The EMS transcript to extract information from.
 
         Returns:
-            str: The extracted information in a single string.
+            str: The extracted information.
         """
-        prompt_keys = [
-            "incident_info",
-            "patient_demographics",
-            "subjective_info",
-            "history_of_present_illness",
-            "patient_histories",
-            "objective_1",
-            "objective_2",
-            "vitals",
-            "poc_tests",
-            "labs",
-            "imaging",
-            "impressions",
-            "treatments",
-            "packaging",
-            "transport",
-            "transfer_of_care",
-        ]
-        extracted_data = []
-
-        for key in prompt_keys:
-            prompt = self.prompt_manager.get_prompt(key, transcript=transcript)
-
-            if isinstance(prompt, list):
-                # If prompt is a list of chunks
-                for sub_prompt in prompt:
-                    response = self.model_loader.generate(sub_prompt)
-                    extracted_data.append(response)
-            else:
-                response = self.model_loader.generate(prompt)
-                extracted_data.append(response)
-
-        combined_response = "\n\n".join(extracted_data).strip()
-        return combined_response
+        prompt = self.prompt_manager.get_prompt(
+            "extract_transcript", {"transcript": transcript}
+        )
+        extracted_data = self.model_loader.load_model().generate(prompt)
+        return extracted_data

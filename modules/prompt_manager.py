@@ -1,57 +1,63 @@
-from modules.prompts import (
-    cleaning_prompts,
-    extraction_prompts,
-    narrative_prompts,
-    review_prompts,
-)
+# -*- coding: utf-8 -*-
+# modules/prompt_manager.py
+
+"""
+Module for managing prompts used in EMScribe.
+
+This module defines the PromptManager class which is responsible for managing
+prompts used in the EMScribe application.
+"""
 
 
 class PromptManager:
     """
-    Manages prompts for various tasks such as extraction, cleaning, narrative generation, and quality control.
+    Class for managing prompts used in EMScribe.
+
+    This class provides methods to retrieve and manage prompts for different sections
+    of EMS narratives.
     """
 
-    def __init__(self):
+    def __init__(self, prompts=None):
         """
-        Initializes the PromptManager with a dictionary of prompts.
-        """
-        self.prompts = {
-            **extraction_prompts.extraction_prompts,
-            **cleaning_prompts.cleaning_prompts,
-            **narrative_prompts.narrative_prompts,
-            **review_prompts.review_prompts,
-        }
-
-    def get_prompt(self, key: str, **kwargs) -> str:
-        """
-        Retrieves a prompt template and formats it with the provided keyword arguments.
+        Initialize the PromptManager with optional prompts.
 
         Args:
-            key (str): The key for the prompt template.
-            **kwargs: Keyword arguments to format the template.
+            prompts (dict, optional): A dictionary of prompts.
+        """
+        if prompts is None:
+            prompts = {}
+        self.prompts = prompts
+
+    def get_prompt(self, section, data):
+        """
+        Get the prompt for a specific section with the provided data.
+
+        Args:
+            section (str): The section to get the prompt for.
+            data (dict): The data to include in the prompt.
 
         Returns:
-            str: The formatted prompt.
-
-        Raises:
-            KeyError: If no prompt is found for the given key.
+            str: The prompt for the specified section.
         """
-        prompt_template = self.prompts.get(key)
-        if prompt_template:
-            if isinstance(prompt_template, dict):
-                return {k: v.format(**kwargs) for k, v in prompt_template.items()}
-            else:
-                formatted_prompt = prompt_template.format(**kwargs)
-                context_window_size = (
-                    32000  # Adjusting to use the new context window size
-                )
+        prompt_template = self.prompts.get(section, "")
+        return prompt_template.format(**data)
 
-                if len(formatted_prompt) > context_window_size:
-                    prompt_chunks = [
-                        formatted_prompt[i : i + context_window_size]
-                        for i in range(0, len(formatted_prompt), context_window_size)
-                    ]
-                    return prompt_chunks
-                return formatted_prompt
-        else:
-            raise KeyError(f"No prompt found for key: {key}")
+    def get_steps(self):
+        """
+        Get the steps for generating a narrative.
+
+        Returns:
+            list: A list of steps for generating a narrative.
+        """
+        return [
+            "prearrival",
+            "subjective",
+            "history_of_present_illness",
+            "patient_histories",
+            "objective_1",
+            "labs_and_tests",
+            "assessment",
+            "plan",
+            "delta",
+            "hand_off",
+        ]
