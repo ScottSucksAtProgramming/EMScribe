@@ -1,7 +1,6 @@
 from modules.model_loader import ModelLoader
 from modules.prompt_manager import PromptManager
 
-
 class TranscriptExtractor:
     """
     A class to extract information from an EMS transcript using an AI model.
@@ -54,12 +53,6 @@ class TranscriptExtractor:
 
         for key in prompt_keys:
             prompt = self.prompt_manager.get_prompt(key, transcript=transcript)
-
-            # Calculate the optimal context window size based on the length of the prompt
-            optimal_context_window = self.model_loader.calculate_optimal_context_window(len(prompt))
-
-            # Update the context window of the model loader
-            self.model_loader.context_window = optimal_context_window
 
             if isinstance(prompt, list):
                 # If prompt is a list of chunks

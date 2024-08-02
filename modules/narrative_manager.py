@@ -34,15 +34,14 @@ class NarrativeManager:
             str: The generated narrative.
         """
         narrative_steps = self.prompt_manager.get_prompt(narrative_format, data=data)
-        context_window_size = self.model_loader.context_window  # Use the dynamic context window size
 
         narrative = []
         for step_key, step_prompt in narrative_steps.items():
-            if len(step_prompt) > context_window_size:
+            if len(step_prompt) > self.model_loader.context_window:
                 # Split the prompt if it exceeds the context window size
                 narrative_parts = []
-                for i in range(0, len(step_prompt), context_window_size):
-                    sub_prompt = step_prompt[i : i + context_window_size]
+                for i in range(0, len(step_prompt), self.model_loader.context_window):
+                    sub_prompt = step_prompt[i : i + self.model_loader.context_window]
                     response = self.model_loader.generate(sub_prompt)
                     narrative_parts.append(response)
                 step_response = " ".join(narrative_parts)

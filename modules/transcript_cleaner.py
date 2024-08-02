@@ -4,7 +4,7 @@ from modules.prompt_manager import PromptManager
 
 class TranscriptCleaner:
     """
-    A class to clean up an EMS transcript using an AI model.
+    A class to clean EMS transcripts using an AI model.
 
     Attributes:
         model_loader (ModelLoader): An instance of ModelLoader to interact with the AI model.
@@ -13,7 +13,7 @@ class TranscriptCleaner:
 
     def __init__(self, model_loader: ModelLoader, prompt_manager: PromptManager):
         """
-        Initializes the TranscriptCleaner with a ModelLoader instance.
+        Initializes the TranscriptCleaner with a ModelLoader and PromptManager instance.
 
         Args:
             model_loader (ModelLoader): An instance of ModelLoader to interact with the AI model.
@@ -24,7 +24,7 @@ class TranscriptCleaner:
 
     def clean(self, transcript: str) -> str:
         """
-        Cleans the transcript using the specified prompt.
+        Cleans the transcript using specified prompts.
 
         Args:
             transcript (str): The transcript to clean.
@@ -32,22 +32,17 @@ class TranscriptCleaner:
         Returns:
             str: The cleaned transcript.
         """
-        prompt = self.prompt_manager.get_prompt(
-            "clean_transcript", transcript=transcript
-        )
+        prompt_key = "clean_transcript"
+        prompt = self.prompt_manager.get_prompt(prompt_key, transcript=transcript)
 
-        optimal_context_window = self.model_loader.calculate_context_window(prompt)
-
-        if len(prompt) > optimal_context_window:
-            # Split the prompt if it exceeds the context window size
+        if isinstance(prompt, list):
+            # If prompt is a list of chunks
             cleaned_parts = []
-            for i in range(0, len(prompt), optimal_context_window):
-                sub_prompt = prompt[i : i + optimal_context_window]
-                response = self.model_loader.generate(sub_prompt, optimal_context_window)
+            for sub_prompt in prompt:
+                response = self.model_loader.generate(sub_prompt)
                 cleaned_parts.append(response)
             cleaned_transcript = " ".join(cleaned_parts)
         else:
-            response = self.model_loader.generate(prompt, optimal_context_window)
-            cleaned_transcript = response
+            cleaned_transcript = self.model_loader.generate(prompt)
 
         return cleaned_transcript.strip()
