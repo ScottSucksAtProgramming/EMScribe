@@ -1,3 +1,7 @@
+from modules.model_loader import ModelLoader
+from modules.prompt_manager import PromptManager
+
+
 class TranscriptCleaner:
     """
     A class to clean up an EMS transcript using an AI model.
