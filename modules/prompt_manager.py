@@ -41,17 +41,6 @@ class PromptManager:
             if isinstance(prompt_template, dict):
                 return {k: v.format(**kwargs) for k, v in prompt_template.items()}
             else:
-                formatted_prompt = prompt_template.format(**kwargs)
-                context_window_size = (
-                    32000  # Adjusting to use the new context window size
-                )
-
-                if len(formatted_prompt) > context_window_size:
-                    prompt_chunks = [
-                        formatted_prompt[i : i + context_window_size]
-                        for i in range(0, len(formatted_prompt), context_window_size)
-                    ]
-                    return prompt_chunks
-                return formatted_prompt
+                return prompt_template.format(**kwargs)
         else:
             raise KeyError(f"No prompt found for key: {key}")

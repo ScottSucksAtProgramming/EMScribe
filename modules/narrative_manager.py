@@ -22,22 +22,37 @@ class NarrativeManager:
         self.model_loader = model_loader
         self.prompt_manager = prompt_manager
 
-    def generate_narrative(self, narrative_format: str, data: dict) -> str:
+    def generate_narrative(self, narrative_format: str, data: str) -> str:
         """
         Generates a narrative based on the specified format and data.
 
         Args:
             narrative_format (str): The key for the desired narrative format.
-            data (dict): The extracted information in a dictionary.
+            data (str): The extracted information as a string.
 
         Returns:
             str: The generated narrative.
         """
         narrative_steps = self.prompt_manager.get_prompt(narrative_format, data=data)
-        context_window_size = self.model_loader.context_window  # Use the dynamic context window size
+        context_window_size = self.model_loader.context_window  # Use the fixed context window size
 
         narrative = []
-        for step_key, step_prompt in narrative_steps.items():
+        if isinstance(narrative_steps, dict):
+            for step_key, step_prompt in narrative_steps.items():
+                if len(step_prompt) > context_window_size:
+                    # Split the prompt if it exceeds the context window size
+                    narrative_parts = []
+                    for i in range(0, len(step_prompt), context_window_size):
+                        sub_prompt = step_prompt[i : i + context_window_size]
+                        response = self.model_loader.generate(sub_prompt)
+                        narrative_parts.append(response)
+                    step_response = " ".join(narrative_parts)
+                else:
+                    step_response = self.model_loader.generate(step_prompt)
+
+                narrative.append(step_response)
+        else:
+            step_prompt = narrative_steps
             if len(step_prompt) > context_window_size:
                 # Split the prompt if it exceeds the context window size
                 narrative_parts = []
