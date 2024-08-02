@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 narrative_prompts = {
     "presoaped_format": {
         "prearrival": """
@@ -47,11 +48,11 @@ narrative_prompts = {
             """,
         "subjective": """
             You will be generating the second section of an EMS narrative from provided data. This section is called the Subjective and it contains information about the patient's initial situation during a medical emergency.
-            
+
             Subjective
             This section should include:
                 - Information about the patient including their first name, age, and sex.
-                - The initial impression or condition of the patient when the crew first encounters them. 
+                - The initial impression or condition of the patient when the crew first encounters them.
                 - The location and position the patient is found.
                 - If the patient has any medical equipment attached to them it should be noted as well.
                 - The complaint the patient has (which might be different from the dispatch complaint), or the nature of the illness / injury as described by the EMS provider if the patient (or their family)  isn't able provide the information.
@@ -74,7 +75,7 @@ narrative_prompts = {
             ({data})""",
         "history_of_present_illness": """
             You will be generating the History of Present Illness subsection for an EMS narrative from provided data. This section contains information about story and events leading up to the patient's current illness.
-            
+
             History of Present Illness Subsection
             This subsection must include:
                 - The story of events which lead to the call for emergency medical services. This may be provided by the patient themselves, by bystanders or other first responders on scene, by witnesses or family, surmised or assumed by the responding EMS provider themselves. For transfer from one medical care center to another, (i.e. doctor's office to hospital, hospital to hospital) this information may also be obtained from medical staff, or patient documents.
@@ -82,12 +83,12 @@ narrative_prompts = {
                 - It may then continue to tell the patient's story. The treatments provided to the patient prior to ems arrival.
                 - The length time the situation has been going on for.
                 - The suspected conditions.
-                - As well as any further information that can be gathered from the patient or another third party. 
+                - As well as any further information that can be gathered from the patient or another third party.
                 - This section is one of the most important and should be accurate. It should only contain information provided and no assumptions or inferences made by the EMS provider themselves.
                 - Any direct quotes should be inside of quotation marks and given attribution to where they came from.
-                - Other information in this section can vary from patient to patient as necessary but a common acronym to ensure a complete picture is presented in the narrative is OPQRSTI. 
+                - Other information in this section can vary from patient to patient as necessary but a common acronym to ensure a complete picture is presented in the narrative is OPQRSTI.
                     - Onset: Whether the illness began suddenly, or if it has come on gradually.
-                    - Provocation and Palliation: Anything which makes the condition worse, or better 
+                    - Provocation and Palliation: Anything which makes the condition worse, or better
                     - Quality: When applicable, how the patient would describe what they are feeling.
                     - Radiation: Generally used for pain, but can be appropriate else where, if the symptoms start in one area and have radiated or moved to another area (such as chest pain which radiations to the left neck or left arm).
                     - Severity: How severe the illnesses is for the patient. This will often be provided on a scale from 1 to 10,  but there are numerous other ways this can be described as well.
@@ -103,15 +104,15 @@ narrative_prompts = {
 
             For Example:
                 -History of Present Illness-
-                John has a known medical history of hypertension, hyperlipidemia, heart attack (2007) with two cardiac stents placed, and diabetes. He states that he often has chest pain which is relieved with his prescribed nitroglycerin. 
+                John has a known medical history of hypertension, hyperlipidemia, heart attack (2007) with two cardiac stents placed, and diabetes. He states that he often has chest pain which is relieved with his prescribed nitroglycerin.
 
-                Today he has taken two nitro and the pain has not gone away. He states the pain started suddenly while he was sitting down watching television. It feels similar to the chest pain he experienced during his heart attack. He rates the pain currently as a constant 8/10 that feels like there is hand squeezing his heart. The pain radiates down his left arm and he has been profusely sweating. It started about 30 minutes prior to EMS arrival. 
+                Today he has taken two nitro and the pain has not gone away. He states the pain started suddenly while he was sitting down watching television. It feels similar to the chest pain he experienced during his heart attack. He rates the pain currently as a constant 8/10 that feels like there is hand squeezing his heart. The pain radiates down his left arm and he has been profusely sweating. It started about 30 minutes prior to EMS arrival.
 
             A template for this section may look like:
 
                 -History of Present Illness-
 
-                    All of the above information written clearly and succinctly in paragraph format. 
+                    All of the above information written clearly and succinctly in paragraph format.
 
                     It is difficult to write a more specific template because this section will be different for most patients.
 
@@ -125,8 +126,8 @@ narrative_prompts = {
                 As opposed to the brief pertinent history given in the previous section this section lists out the patients full history. It must include the following if they are available:
                     - The patient's Medical History
                     - The patient's Surgical History
-                    - The patient's Social History, 
-                    - The patient's Family History 
+                    - The patient's Social History,
+                    - The patient's Family History
                     - The patient's Sexual history (rarely provided)
                     - The patient's Medications and Allergies.
 
@@ -147,7 +148,7 @@ narrative_prompts = {
                     - Allergies: Cat and dog dander. No know drug allergies.
 
                 A template for this section may look like
-                    - Medical History: [Medical History including dates when applicable or provided, separated by commas.] 
+                    - Medical History: [Medical History including dates when applicable or provided, separated by commas.]
                     - Surgical History: [Surgical Procedure including dates and locations where performed when applicable or provided, separated by commas.]
                     - Social History: [Frequency of nicotine or vaporizer use, frequency of alcohol use, frequency of any other recreational drugs, separate by commas]
                     - Family History: [Status of parents, and siblings (alive or deceased, and any notable medical history they have.]
@@ -157,7 +158,7 @@ narrative_prompts = {
                 Use the following data:
                     ({data})""",
         "objective_1": """
-                You will generate the Objective section for an EMS narrative from the provided data. 
+                You will generate the Objective section for an EMS narrative from the provided data.
 
                 Patient Histories Sub-Section
                     This section provides a list of objective physical exam finding broken down by the body systems: general, skin, heent (head ears eyes nose throat), neck, cardiovascular, respiratory, abdomen, genitourinary and gastrointestinal, spine, musculoskeletal, neurological, and psychiatric.
@@ -189,16 +190,16 @@ narrative_prompts = {
                 Use the following data:
                 ({data})""",
         "labs_and_tests": """
-            Act and an expert medical scribe. From the provided data, you will generate the Lab Values and Point of Care Test Results section for an EMS narrative. 
+            Act and an expert medical scribe. From the provided data, you will generate the Lab Values and Point of Care Test Results section for an EMS narrative.
 
-This section contains the results of any available vital signs, laboratory values, and point-of-care tests. It gives the reader specific information on the patient which helps find a diagnosis or impression. 
+This section contains the results of any available vital signs, laboratory values, and point-of-care tests. It gives the reader specific information on the patient which helps find a diagnosis or impression.
 
 Many items may be contained within this section. Here are the most common:
-- Initial Vital Signs: 
-	- Blood Pressure; 
-	- Heart Rate, Rhythm (regular/irregular), and Strength; 
-	- Respiration Rate; 
-	- Pulse Oximetry (SpO2) and whether the patient is on room air or oxygen; 
+- Initial Vital Signs:
+	- Blood Pressure;
+	- Heart Rate, Rhythm (regular/irregular), and Strength;
+	- Respiration Rate;
+	- Pulse Oximetry (SpO2) and whether the patient is on room air or oxygen;
 	- Pain Score out of 10.
 
 Point-of-care test results may also be included. These are specific to each patient and will change frequently. Here are some common ones:
@@ -230,7 +231,7 @@ Here is an example for reference:
 	- EKG: Sinus Rhythm 70-100. Occasional PVCs. ST-segment elevation in leads II, III, and aVF with reciprocal changes in leads I and aVL.
 	- Metabolic: Na: 135 (N); K: 3.7 (N); Cl: 107 (H); CO2: 28 (N); BUN: 18 (N); Cr: 6.55 (H); Gluc: 140 (H); Ca: 9.7 (N); Mg: 2.1 (N); Phos: 4.3 (N);
 	- CT Brain without contrast @ 8/21 0706: No intracranial hemorrhage.
-	
+
 Rules
 - Use this heading: -Lab Values and Point of Care Testing-
 - Skip any items if no information is provided for them.
@@ -238,11 +239,11 @@ Rules
 - Use plain text format.
 - Do not provide any notes or comments about the response.
 
-Please provide the relevant findings based on the provided information from the following information: 
+Please provide the relevant findings based on the provided information from the following information:
 ({data})""",
         "assessment": """
 
-        Act and an expert medical scribe. From the provided data, you will generate the Assessment section for an EMS narrative. 
+        Act and an expert medical scribe. From the provided data, you will generate the Assessment section for an EMS narrative.
 
 This section contains:
 - The provider's primary and secondary (if applicable) impression of the patient's illness.
@@ -266,11 +267,11 @@ Rules
 - Use plain text format.
 - Do not provide any notes or comments about the response.
 
-Please provide the relevant findings based on the provided information from the following information: 
+Please provide the relevant findings based on the provided information from the following information:
 ({data})""",
         "plan": """
 
-        Act and an expert medical scribe. From the provided data, you will generate the Plan section for an EMS narrative. 
+        Act and an expert medical scribe. From the provided data, you will generate the Plan section for an EMS narrative.
 
 This section contains:
 - A list of treatments provided by the EMS providers to the patient.
@@ -288,7 +289,7 @@ Here is an example:
 	- Normal Saline Bolus
 	- Aspirin was considered by not given due to patient allergies.
 	- Pain medication was deferred by the patient's request.
-	
+
 	Full treatment details as documented elsewhere.
 
 Rules
@@ -299,7 +300,7 @@ Rules
 - Do not provide any notes or comments about the response.
 - Think critically and review the provided information multiple times to ensure you find all the treatments provided to the patient.
 
-Please provide the relevant findings based on the provided information from the following information: 
+Please provide the relevant findings based on the provided information from the following information:
 ({data})""",
         "delta": """
 Act and an expert medical scribe. From the provided data, you will generate the Delta section of an EMS narrative. Delta stands for change. It is a section where the rest of the emergency call is discussed. It should be written in a paragraph format and should include the following.
@@ -316,7 +317,7 @@ Here is an example:
 
 	DELTA:
 	Following assessment and 12-lead EKG John was given aspirin, and an IV was established and fluids were begun. John was given fentanyl for his pain which reduced it from an 8/10 to a 4/10. He also stated relief of his nausea. John was transferred to the transport stretcher via pull-sheet and was secured with three straps. Transport was begun without delay.  John's wife, Abagail accompanied him during transport in the patient compartment secured to the bench seat with the harness.
-	
+
 	A notification was given to St. Michael's Hospital with a request to activate the cath lab team. During transport John's clinical status remained unchanged. His pain stayed around a 4/10. He denied any worsening complaints or new symptoms. On-going reassessments were unremarkable from previous. Serial 12-Lead EKGs were performed with no changes.
 
 Template:
@@ -324,7 +325,7 @@ Template:
     [Paragraph discussing events on the scene, including how the patient was moved to the stretcher/ambulance. How the patient was secured to the stretcher.]
 
     [Paragraph discussing events during transport, including patient response to the treatments, any new complaints, clinical changes, findings from further assessments or point of care testing.]
-	
+
 Rules
 - Thinking critically and review the information multiple times to provide the most accurate response.
 - Use this heading: DELTA:
@@ -333,7 +334,7 @@ Rules
 - Use plain text format.
 - Do not provide any notes or comments about the response. Just respond with the completed section.
 
-Please provide the relevant findings based on the following information: 
+Please provide the relevant findings based on the following information:
 ({data})""",
         "hand_off": """
 Act and an expert medical scribe. From the provided data, you will generate the Hand Off subsection of an EMS narrative.
@@ -350,9 +351,9 @@ Here is an example:
 
 	-Hand Off-
 	Upon arrival at St. Michael's Hospital full report and paperwork was given to Ratchett, RN. Patient was moved into resuscitation room where report was also given to emergency physician and cath lab team, with all questions answered. Transfer of care was completed and patient-care report was signed by the nurse.
-	
+
 	John was transferred to the emergency department stretcher via pull-sheet and left in the bed with wheels locked, rails up, in staff presence, and with all therapies continued. John's belongings were given to his wife.
-	
+
 	Unit was cleaned, restocked and returned to service.
 
 Template:
@@ -362,7 +363,7 @@ Template:
     [Paragraph discussing where the patient was left.]
 
     [Paragraph discussing any actions taken after the transfer of care.]
-	
+
 Rules
 - Use this heading: -Hand-Off-
 - Never add any information that was not provided in the data.
@@ -370,7 +371,7 @@ Rules
 - Use plain text format.
 - Do not provide any notes or comments about the response. Just respond with the completed section.
 
-Please provide the relevant findings based on the following information: 
+Please provide the relevant findings based on the following information:
 ({data})""",
     }
 }

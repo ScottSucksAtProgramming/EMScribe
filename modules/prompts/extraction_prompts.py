@@ -1,9 +1,12 @@
+# -*- coding: utf-8 -*-
+# modules/prompts/extraction_prompts.py
+
 extraction_prompts = {
     "incident_info": """
 As an expert in Natural Language Processing (NLP), your job is to pull out relevant medical information from documents provided to you. These documents will all be about EMS medical incidents. Follow the steps below to find the required information and then provide your response.
 
 1. Review the entire document looking for the unit number, ambulance number or other unit identifier for the unit that is responding to the medical emergency.
-2. Review the entire document looking for the response mode (emergent or non-emergent) used. 
+2. Review the entire document looking for the response mode (emergent or non-emergent) used.
 3. Review the entire document looking for the crew type for this response (full crew, driver only, medic only, EMT only)
 4. Review the entire document looking for any delays which occurred during the response.
 5. Review the entire document looking for the location where the ambulance or vehicle was when they began their response.
@@ -16,12 +19,12 @@ Use Plain text. Do not add any comments or additional information.
 Template
 
 Incident Information
-- Unit: 
-- Response Mode: 
-- Crew Type: 
-- Response Delays: 
-- Incident Location: 
-- Dispatch Complaint: 
+- Unit:
+- Response Mode:
+- Crew Type:
+- Response Delays:
+- Incident Location:
+- Dispatch Complaint:
 
 Example:
 DO NOT USE THIS INFORMATION IN YOUR RESPONSE IT IS ONLY FOR REFERENCE
@@ -47,10 +50,10 @@ Use Plain text. Do not add any comments or additional information.
 Template
 
 Patient Demographics
-- Name: 
-- Date of Birth: 
+- Name:
+- Date of Birth:
 - Age:
-- Gender: 
+- Gender:
 
 Example:
 DO NOT USE THIS INFORMATION IN YOUR RESPONSE IT IS ONLY FOR REFERENCE
@@ -76,11 +79,11 @@ Use Plain text. Do not add any comments or additional information.
 Template
 
 Subjective Information
-- Address or Facility Name: 
-- Patient Location and Position: 
-- Patient Appearance: 
+- Address or Facility Name:
+- Patient Location and Position:
+- Patient Appearance:
 - Medical Equipment:
-- Patient Chief Complaint: 
+- Patient Chief Complaint:
 
 Here is the information: ({transcript})""",
     "history_of_present_illness": """
@@ -102,16 +105,16 @@ Once you have obtained all the information give your response using the followin
 Template
 
 History of Present Illness
-- Associated Signs and Symptoms: 
+- Associated Signs and Symptoms:
 - Onset:
-- Provocation: 
-- Palliation: 
-- Quality: 
-- Radiation: 
-- Severity: 
-- Time: 
-- Interventions: 
-- Additional History of Present Illness: 
+- Provocation:
+- Palliation:
+- Quality:
+- Radiation:
+- Severity:
+- Time:
+- Interventions:
+- Additional History of Present Illness:
 
 Once you have obtained all the information give your response using the following template. Use Plain text. Do not add any comments or additional information.
 
@@ -133,13 +136,13 @@ Use Plain text. Do not add any comments or additional information.
 Template
 
 Patient Histories
-- Medical History:  
-- Surgical History: 
-- Social History: 
-- Family History: 
-- Sexual History: 
-- Medications: 
-- Allergies: 
+- Medical History:
+- Surgical History:
+- Social History:
+- Family History:
+- Sexual History:
+- Medications:
+- Allergies:
 
 Here is the information: ({transcript})""",
     "objective_1": """
@@ -159,14 +162,14 @@ Once you have obtained all the information give your response using the followin
 Template
 
 Objective Assessment
-- GENERAL: 
-- SKIN: 
-- HEAD: 
-- EARS: 
-- EYES: 
-- NOSE: 
-- THROAT: 
-- NECK: 
+- GENERAL:
+- SKIN:
+- HEAD:
+- EARS:
+- EYES:
+- NOSE:
+- THROAT:
+- NECK:
 
 Here is the information: ({transcript})""",
     "objective_2": """
@@ -187,15 +190,15 @@ Once you have obtained all the information give your response using the followin
 Template
 
 Objective Assessment (Cont)
-- CARDIOVASCULAR: 
-- RESPIRATORY: 
-- ABDOMEN: 
-- GENITOURINARY: 
-- GASTROINTESTINAL: 
-- SPINE: 
-- MUSCULOSKELETAL: 
-- NEUROLOGICAL: 
-- PSYCHIATRIC: 
+- CARDIOVASCULAR:
+- RESPIRATORY:
+- ABDOMEN:
+- GENITOURINARY:
+- GASTROINTESTINAL:
+- SPINE:
+- MUSCULOSKELETAL:
+- NEUROLOGICAL:
+- PSYCHIATRIC:
 
 Here is the information: ({transcript})""",
     "vitals": """
@@ -213,12 +216,12 @@ Once you have obtained all the information give your response using the followin
 Template
 
 Vital Signs
-- Blood Pressure: 
-- Heart Rate: 
-- Respiratory Rate: 
-- SpO2: 
-- Pain: 
-- Temperature: 
+- Blood Pressure:
+- Heart Rate:
+- Respiratory Rate:
+- SpO2:
+- Pain:
+- Temperature:
 
 Here is the information: ({transcript})""",
     "poc_tests": """
@@ -236,12 +239,12 @@ Once you have obtained all the information give your response using the followin
 Template
 
 Point of Care Testing
-- Capillary Blood Glucose: 
-- EKG: 
+- Capillary Blood Glucose:
+- EKG:
 - EtCO2:
-- Cincinnati: 
-- LA Motor Scale: 
-- NIHSS: 
+- Cincinnati:
+- LA Motor Scale:
+- NIHSS:
 
 Here is the information: ({transcript})""",
     "labs": """
@@ -258,20 +261,20 @@ Once you have obtained all the information, give your response using the followi
 Template
 
 Laboratory Results
-Metabolic - 
-Hematology - 
-Hepatic - 
-Coagulation - 
-Cardiac - 
-Other - 
+Metabolic -
+Hematology -
+Hepatic -
+Coagulation -
+Cardiac -
+Other -
 
 Here is the information: ({transcript})""",
     "imaging": """
 As an expert in Natural Language Processing (NLP), your job is to pull out relevant medical information from documents provided to you. These documents will all be about EMS medical incidents. This information will not always be provided. If no information is provided for a section, answer '[No Info]'. There may be multiple imaging tests of the same type. If so each one should be listed individually. Follow the steps below to find the required information and then provide your response.
 
-1. Review the entire document looking for X-ray results. 
-2. Review the entire document looking for CAT Scan (CT) results. 
-3. Review the entire document, looking for MRI results. 
+1. Review the entire document looking for X-ray results.
+2. Review the entire document looking for CAT Scan (CT) results.
+3. Review the entire document, looking for MRI results.
 4. Review the entire document, looking for Ultrasound results.
 5. Review the entire document, looking for other imaging results.
 
@@ -303,9 +306,9 @@ Template
 Impression Information
 - Primary Impression:
 - Secondary Impressions:
-- Destination Name: 
-- Transport Mode to Destination: 
-- Patient Refusal: 
+- Destination Name:
+- Transport Mode to Destination:
+- Patient Refusal:
 
 Here is the information: ({transcript})""",
     "treatments": """
@@ -323,10 +326,10 @@ Template
 Treatments
 - Medications Given to Patient:
 - Procedures Performed on Patient:
-- IV or IO Access: 
-- Point-of-Care Testing Performed on Patient: 
-- Unsuccessful Treatments: 
-- Deferred Treatments: 
+- IV or IO Access:
+- Point-of-Care Testing Performed on Patient:
+- Unsuccessful Treatments:
+- Deferred Treatments:
 
 Once you have obtained all the information, give your response using the following template. Use Plain text. Do not add any comments or additional information.
 
@@ -347,8 +350,8 @@ Template
 Patient Packaging
 - On-Scene Events:
 - Scene Delays:
-- Patient Movement to Stretcher: 
-- Safety Equipment Used: 
+- Patient Movement to Stretcher:
+- Safety Equipment Used:
 
 Here is the information: ({transcript})""",
     "transport": """
@@ -367,11 +370,11 @@ Once you have obtained all the information, give your response using the followi
 Template
 
 Transport Info
-- Hospital Notifications: 
+- Hospital Notifications:
 - Transport Events:
 - Transport Delays:
-- Clinical Changes: 
-- Vitals and Monitoring Changes: 
+- Clinical Changes:
+- Vitals and Monitoring Changes:
 
 Here is the information: ({transcript})""",
     "transfer_of_care": """
@@ -392,13 +395,13 @@ Once you have obtained all the information, give your response using the followi
 Template
 
 Transfer of Care
-- Transfer of Care Personnel: 
+- Transfer of Care Personnel:
 - Bed or Room Patient Transferred to:
 - How the Patient was Moved to the Destination Bed:
-- Safety Measures Used: 
-- Transfer of Care Delays: 
-- Turn Around Delays: 
-- Events Prior to Returning to Service: 
+- Safety Measures Used:
+- Transfer of Care Delays:
+- Turn Around Delays:
+- Events Prior to Returning to Service:
 
 Here is the information: ({transcript})""",
 }

@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+# modules/prompts/review_prompts.py
+
+"""
+Module for review prompts used in EMScribe.
+
+This module defines the prompts used for reviewing sections of EMS narratives.
+"""
+
 review_prompts = {
     "review_section": (
         "Here is a section of data: {section_data}\n"
@@ -6,6 +15,7 @@ review_prompts = {
     ),
     "final_review": (
         "Here is the updated section after making changes: {updated_section}. "
-        "If everything is correct, type 'done'. Otherwise, provide further modifications."
+        "If everything is correct, type 'done'. Otherwise, provide further "
+        "modifications."
     ),
 }
