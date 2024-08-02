@@ -1,7 +1,3 @@
-from modules.model_loader import ModelLoader
-from modules.prompt_manager import PromptManager
-
-
 class TranscriptCleaner:
     """
     A class to clean up an EMS transcript using an AI model.
@@ -35,18 +31,19 @@ class TranscriptCleaner:
         prompt = self.prompt_manager.get_prompt(
             "clean_transcript", transcript=transcript
         )
-        optimal_context_window = self.model_loader.calculate_context_window(len(prompt))
+
+        optimal_context_window = self.model_loader.calculate_context_window(prompt)
 
         if len(prompt) > optimal_context_window:
             # Split the prompt if it exceeds the context window size
             cleaned_parts = []
             for i in range(0, len(prompt), optimal_context_window):
                 sub_prompt = prompt[i : i + optimal_context_window]
-                response = self.model_loader.generate(sub_prompt)
+                response = self.model_loader.generate(sub_prompt, optimal_context_window)
                 cleaned_parts.append(response)
             cleaned_transcript = " ".join(cleaned_parts)
         else:
-            response = self.model_loader.generate(prompt)
+            response = self.model_loader.generate(prompt, optimal_context_window)
             cleaned_transcript = response
 
         return cleaned_transcript.strip()

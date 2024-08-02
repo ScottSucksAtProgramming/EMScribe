@@ -14,6 +14,16 @@ from commands.generate_command import GenerateCommand
 
 # Initialize PromptManager and ModelLoader
 prompt_manager = PromptManager()
+model_loader = ModelLoader(
+    base_url="http://localhost:11434", model_name="llama3.1"
+)
+
+# Initialize other modules
+cleaner = TranscriptCleaner(model_loader, prompt_manager)
+extractor = TranscriptExtractor(model_loader, prompt_manager)
+narrative_manager = NarrativeManager(model_loader, prompt_manager)
+extract_reviewer = ExtractReviewer(model_loader, prompt_manager)
+
 
 def main():
     parser = argparse.ArgumentParser(description="EMScribe CLI tool")
@@ -72,29 +82,17 @@ def main():
 
     args = parser.parse_args()
 
-    if args.command in ["clean", "extract", "generate", "review"]:
-        # Read the transcript content for context window calculation
-        with open(args.transcript_path, 'r') as file:
-            transcript_content = file.read()
-
-        model_loader = ModelLoader(
-            base_url="http://localhost:11434", model_name="llama3.1", transcript_content=transcript_content
-        )
-
-    # Initialize other modules
-    cleaner = TranscriptCleaner(model_loader, prompt_manager)
-    extractor = TranscriptExtractor(model_loader, prompt_manager)
-    narrative_manager = NarrativeManager(model_loader, prompt_manager)
-    extract_reviewer = ExtractReviewer(model_loader, prompt_manager)
-
     if args.command == "clean":
-        CleanCommand(cleaner).execute(args.transcript_path, args.output)
+        with open(args.transcript_path, 'r') as file:
+            transcript = file.read()
+        CleanCommand(cleaner).execute(transcript, args.output)
     elif args.command == "extract":
         ExtractCommand(extractor).execute(args.transcript_path, args.output)
     elif args.command == "generate":
         GenerateCommand(narrative_manager).execute(args.transcript_path, args.output)
     elif args.command == "review":
         ReviewCommand(extract_reviewer).execute(args.extracted_data_path, args.output)
+
 
 if __name__ == "__main__":
     main()
