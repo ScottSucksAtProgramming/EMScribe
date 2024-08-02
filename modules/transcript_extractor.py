@@ -54,7 +54,12 @@ class TranscriptExtractor:
 
         for key in prompt_keys:
             prompt = self.prompt_manager.get_prompt(key, transcript=transcript)
-            context_window = 32768  # Always use a context window of 32768
+
+            # Calculate the optimal context window size based on the length of the prompt
+            optimal_context_window = self.model_loader.calculate_optimal_context_window(len(prompt))
+
+            # Update the context window of the model loader
+            self.model_loader.context_window = optimal_context_window
 
             if isinstance(prompt, list):
                 # If prompt is a list of chunks
