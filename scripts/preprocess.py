@@ -1,3 +1,13 @@
+# -*- coding: utf-8 -*-
+# scripts/preprocess.py
+
+"""
+Module for preprocessing EMS transcripts.
+
+This module defines functions to preprocess EMS transcripts by cleaning and
+normalizing the text.
+"""
+
 import re
 from modules.model_loader import ModelLoader
 from modules.transcript_cleaner import TranscriptCleaner
@@ -28,5 +38,8 @@ def preprocess_transcript(transcript):
 
 # Example usage
 if __name__ == "__main__":
-    example_transcript = "The patient is experiencing experiencing shortness of breath. The patient is The patient is also complaining of chest pain."
-    print(preprocess_transcript(example_transcript))
+    example_transcript = (
+        "The patient is experiencing experiencing shortness of breath. "
+        "The patient is The patient is also complaining of chest pain."
+    )
+print(preprocess_transcript(example_transcript))

@@ -1,3 +1,13 @@
+# -*- coding: utf-8 -*-
+# scripts/extraction.py
+
+"""
+Module for extracting information from EMS transcripts.
+
+This module defines functions to preprocess and extract information from EMS
+transcripts.
+"""
+
 from modules.model_loader import ModelLoader
 from modules.transcript_cleaner import TranscriptCleaner
 from modules.transcript_extractor import TranscriptExtractor
@@ -42,9 +52,9 @@ Our patient is Frederich Neizche he was born February 8th, 1986. He is a 38 year
 
 Frederich can you tell me what's going on today?
 
-About two hours ago I was sitting and watching TV in my living room and I began to feel a sudden crushing pressure in my chest. 
+About two hours ago I was sitting and watching TV in my living room and I began to feel a sudden crushing pressure in my chest.
 
-Do you have any shortness of breath? 
+Do you have any shortness of breath?
 
 No, but I do feel nauseous and dizzy. I've also been sweating a lot. I took one of my nitro tabs but it didn't help. Any time I stand up or try to do any activity the pain gets worse. I feel a little better when I'm laying down.
 
@@ -52,11 +62,11 @@ Does the pain radiate or move?
 
 I also have pain to my jaw and down my left arm.
 
-On a scale of 1 to 10, with 10 being the worst pain you've ever felt in your life and 1 being almost no pain what is it right now. 
+On a scale of 1 to 10, with 10 being the worst pain you've ever felt in your life and 1 being almost no pain what is it right now.
 
 It's a 10. It's really bad.
 
-According to the paperwork provided by the doctor here Frederich has a known medical history of coronary artery disease, hypertension, high cholesterol, type 2 diabetes, BPH, GERD and a previous MI in 2018 with two cardiac stents placed. 
+According to the paperwork provided by the doctor here Frederich has a known medical history of coronary artery disease, hypertension, high cholesterol, type 2 diabetes, BPH, GERD and a previous MI in 2018 with two cardiac stents placed.
 
 The doctor has placed an IV in the patients right arm, and gave them another dose of sublingual nitro. He also did an EKG which show ST Elevations in leads II, III, and aVF with a reciprocal ST Depression in aVL.
 
@@ -84,6 +94,6 @@ Blood sugar is 84.
 
 Vitals are 102/54, heart rate 100 weak and regular, 17 breaths per minutes regular and labored, SpO2 is 98%, EtCO2 is 33.
     """
-    extracted_data = extract_information(example_transcript)
+    extracted_info = extract_information(example_transcript)
     print("Extracted Information:")
-    print(extracted_data)
+    print(extracted_info)

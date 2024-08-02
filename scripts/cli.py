@@ -1,6 +1,14 @@
+# -*- coding: utf-8 -*-
+# scripts/cli.py
+
+"""
+CLI tool for EMScribe.
+
+This module defines the CLI commands for EMScribe, including cleaning,
+extracting, reviewing, and generating narratives from EMS transcripts.
+"""
+
 import argparse
-import sys
-import os
 from modules.prompt_manager import PromptManager
 from modules.model_loader import ModelLoader
 from modules.transcript_cleaner import TranscriptCleaner
@@ -14,9 +22,7 @@ from commands.generate_command import GenerateCommand
 
 # Initialize PromptManager and ModelLoader
 prompt_manager = PromptManager()
-model_loader = ModelLoader(
-    base_url="http://localhost:11434", model_name="llama3.1"
-)
+model_loader = ModelLoader(base_url="http://localhost:11434", model_name="llama3.1")
 
 # Initialize other modules
 cleaner = TranscriptCleaner(model_loader, prompt_manager)

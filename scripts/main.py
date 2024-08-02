@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # scripts/main.py
 
 from scripts.cli import main
