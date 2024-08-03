@@ -1,4 +1,7 @@
-from langchain_community.llms import Ollama
+# -*- coding: utf-8 -*-
+from langchain_community.llms.ollama import Ollama
+
+
 class ModelLoader:
     """
     A class to load and interact with AI models.
@@ -9,18 +12,28 @@ class ModelLoader:
         context_window (int): The maximum context window size for the model.
     """
 
-    def __init__(self, model_name, base_url="http://localhost:11434"):
+    def __init__(self, model_name, client=None, base_url="http://localhost:11434"):
         """
         Initializes the ModelLoader with the specified model name and base URL.
 
         Args:
             model_name (str): The name of the model to use.
+            client (Ollama, optional): An instance of the Ollama client. Defaults to None.
             base_url (str): The base URL of the model API.
         """
         self.base_url = base_url
         self.model_name = model_name
-        self.client = Ollama(base_url=base_url)
+        self.client = client or Ollama(base_url=base_url)
         self.context_window = 32768  # Fixed context window size
+
+    def _get_options(self):
+        """
+        Constructs the options for the model prompt.
+
+        Returns:
+            dict: The options for the model prompt.
+        """
+        return {"num_ctx": self.context_window}
 
     def generate(self, prompt):
         """
@@ -35,7 +48,7 @@ class ModelLoader:
         response = self.client.generate(
             model=self.model_name,
             prompts=[prompt],
-            options={"num_ctx": self.context_window}  # Ensure num_ctx is correctly placed in options
+            options=self._get_options(),  # Ensure num_ctx is correctly placed in options
         )
 
         # Extract and return the text from the first generation response
