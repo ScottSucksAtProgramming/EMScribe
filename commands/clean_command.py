@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class CleanCommand:
     """
     Command class to handle the cleaning of a transcript.
@@ -23,10 +24,10 @@ class CleanCommand:
             transcript_path (str): The path to the transcript file.
             output_path (str): The path to save the cleaned transcript.
         """
-        with open(transcript_path, "r") as file:
+        with open(transcript_path, "r", encoding="utf-8") as file:
             transcript = file.read()
-        
+
         cleaned_transcript = self.cleaner.clean(transcript)
-        
-        with open(output_path, "w") as file:
+
+        with open(output_path, "w", encoding="utf-8") as file:
             file.write(cleaned_transcript)
