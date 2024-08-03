@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from modules.model_loader import ModelLoader
 from modules.prompt_manager import PromptManager
 
@@ -36,7 +37,7 @@ class NarrativeManager:
         narrative_steps = self.prompt_manager.get_prompt(narrative_format, data=data)
 
         narrative = []
-        for step_key, step_prompt in narrative_steps.items():
+        for step_prompt in narrative_steps.values():
             if len(step_prompt) > self.model_loader.context_window:
                 # Split the prompt if it exceeds the context window size
                 narrative_parts = []

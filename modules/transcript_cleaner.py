@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from modules.model_loader import ModelLoader
 from modules.prompt_manager import PromptManager
 

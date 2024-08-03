@@ -1,8 +1,21 @@
+# -*- coding: utf-8 -*-
 from modules.prompt_manager import PromptManager
 from modules.model_loader import ModelLoader
 
 
 class ExtractReviewer:
+    """
+    Class for reviewing extracted EMS data sections using an AI model.
+
+    This class provides methods to review and finalize sections of extracted EMS
+    data by generating prompts and using an AI model to validate and refine user
+    modifications.
+
+    Attributes:
+        model_loader (ModelLoader): The model loader used to generate AI responses.
+        prompt_manager (PromptManager): The manager to handle prompt templates.
+    """
+
     def __init__(self, model_loader: ModelLoader, prompt_manager: PromptManager):
         self.model_loader = model_loader
         self.prompt_manager = prompt_manager
@@ -18,7 +31,9 @@ class ExtractReviewer:
         Returns:
             str: The AI model's response.
         """
-        context_window_size = self.model_loader.context_window  # Use the dynamic context window size
+        context_window_size = (
+            self.model_loader.context_window
+        )  # Use the dynamic context window size
 
         if user_input:
             prompt = self.prompt_manager.get_prompt(
@@ -56,7 +71,9 @@ class ExtractReviewer:
             "final_review", updated_section=updated_section
         )
 
-        context_window_size = self.model_loader.context_window  # Use the dynamic context window size
+        context_window_size = (
+            self.model_loader.context_window
+        )  # Use the dynamic context window size
         if len(prompt) > context_window_size:
             # Split the prompt if it exceeds the context window size
             response_parts = []

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from modules.prompts import (
     cleaning_prompts,
     extraction_prompts,
@@ -8,7 +9,8 @@ from modules.prompts import (
 
 class PromptManager:
     """
-    Manages prompts for various tasks such as extraction, cleaning, narrative generation, and quality control.
+    Manages prompts for various tasks such as extraction, cleaning, narrative generation, and quality
+    control.
     """
 
     def __init__(self):
@@ -37,21 +39,20 @@ class PromptManager:
             KeyError: If no prompt is found for the given key.
         """
         prompt_template = self.prompts.get(key)
-        if prompt_template:
-            if isinstance(prompt_template, dict):
-                return {k: v.format(**kwargs) for k, v in prompt_template.items()}
-            else:
-                formatted_prompt = prompt_template.format(**kwargs)
-                context_window_size = (
-                    32000  # Adjusting to use the new context window size
-                )
-
-                if len(formatted_prompt) > context_window_size:
-                    prompt_chunks = [
-                        formatted_prompt[i : i + context_window_size]
-                        for i in range(0, len(formatted_prompt), context_window_size)
-                    ]
-                    return prompt_chunks
-                return formatted_prompt
-        else:
+        if not prompt_template:
             raise KeyError(f"No prompt found for key: {key}")
+
+        if isinstance(prompt_template, dict):
+            return {k: v.format(**kwargs) for k, v in prompt_template.items()}
+
+        formatted_prompt = prompt_template.format(**kwargs)
+        context_window_size = 32000  # Adjusting to use the new context window size
+
+        if len(formatted_prompt) > context_window_size:
+            prompt_chunks = [
+                formatted_prompt[i : i + context_window_size]
+                for i in range(0, len(formatted_prompt), context_window_size)
+            ]
+            return prompt_chunks
+
+        return formatted_prompt
