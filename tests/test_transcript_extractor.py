@@ -1,5 +1,7 @@
-import pytest
 from unittest.mock import MagicMock
+
+import pytest
+
 from modules.model_loader import ModelLoader
 from modules.prompt_manager import PromptManager
 from modules.transcript_extractor import TranscriptExtractor
@@ -79,7 +81,10 @@ def test_extract_with_chunks(
             "response for incident_info chunk1 response for incident_info chunk2",
             "response for patient_demographics chunk1 response for patient_demographics chunk2",
             "response for subjective_info chunk1 response for subjective_info chunk2",
-            "response for history_of_present_illness chunk1 response for history_of_present_illness chunk2",
+            (
+                "response for history_of_present_illness "
+                "chunk1 response for history_of_present_illness chunk2"
+            ),
             "response for patient_histories chunk1 response for patient_histories chunk2",
             "response for objective_1 chunk1 response for objective_1 chunk2",
             "response for objective_2 chunk1 response for objective_2 chunk2",
