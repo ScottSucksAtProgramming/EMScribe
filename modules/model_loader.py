@@ -27,7 +27,7 @@ class ModelLoader:
         """
         self.base_url = base_url
         self.model_name = model_name
-        self.model = self._load_model()
+        self.model = Ollama(base_url=self.base_url, model=self.model_name)
 
     def _load_model(self):
         """
