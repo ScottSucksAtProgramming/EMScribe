@@ -1,4 +1,4 @@
-# EMScribe 2.0
+# EMScribe
 
 <p align="center">
   <img src="images/emscribe_logo.png" alt="EMScribe Logo" width="500" />
@@ -6,7 +6,7 @@
 
 ## Overview
 
-EMScribe 2.0 is a project designed to create comprehensive EMS narratives in a user-selected format. The application can extract information from text transcripts of patient interactions, providing detailed reports that include patient demographics, medical history, chief complaints, history of present illness, treatments done, objective assessment, treatment plans, transport information, and transfer of care.
+EMScribe is a project designed to create comprehensive EMS narratives in a user-selected format. The application can extract information from text transcripts of patient interactions, providing detailed reports that include patient demographics, medical history, chief complaints, history of present illness, treatments done, objective assessment, treatment plans, transport information, and transfer of care.
 
 ## Features
 
@@ -60,7 +60,7 @@ To verify that everything is set up correctly, run the tests:
 pytest
 ```
 
-If all tests pass, your installation is successful and you are ready to use EMScribe 2.0.
+If all tests pass, your installation is successful and you are ready to use EMScribe.
 
 ## Using the `emscribe` Command
 
@@ -242,3 +242,4 @@ For detailed documentation, refer to the following:
 - [Development Guide](docs/development.md)
 - [API Reference](docs/api_reference.md)
 - [Contributing Guidelines](docs/contributing.md)
+- [Testing](docs/testing.md)
