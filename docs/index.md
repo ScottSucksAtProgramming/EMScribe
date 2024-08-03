@@ -1,12 +1,12 @@
-# EMScribe 2.0 Documentation
+# EMScribe Documentation 🚑
 
 <div style="text-align: center;">
     <img src="images/emscribe_logo.png" alt="EMScribe Logo" width="300"/>
 </div>
 
-Welcome to the EMScribe 2.0 documentation. This documentation covers everything you need to know about installing, using, and contributing to EMScribe 2.0.
+Welcome to the EMScribe documentation. This documentation covers everything you need to know about installing, using, and contributing to EMScribe.
 
-## Table of Contents
+## Table of Contents 📚
 
 - [Overview](#overview)
 - [Installation](installation.md)
@@ -15,20 +15,20 @@ Welcome to the EMScribe 2.0 documentation. This documentation covers everything 
 - [API Reference](api_reference.md)
 - [Contributing](contributing.md)
 
-## Overview
+## Overview 🌟
 
-EMScribe 2.0 is a project designed to create comprehensive EMS narratives in a user-selected format. The application can extract information from text transcripts of patient interactions, providing detailed reports that include patient demographics, medical history, chief complaints, history of present illness, treatments done, objective assessment, treatment plans, transport information, and transfer of care.
+EMScribe is a project designed to create comprehensive EMS narratives in a user-selected format. The application can extract information from text transcripts of patient interactions, providing detailed reports that include patient demographics, medical history, chief complaints, history of present illness, treatments done, objective assessment, treatment plans, transport information, and transfer of care.
 
-### Features
+### Features 🌟
 
-- Extracts detailed patient information from text transcripts.
-- Generates comprehensive EMS narratives.
-- Reviews narratives for missing information or incongruencies.
-- Provides medical-legal review and suggests changes to protect the user.
-- Outputs the final narrative in plain text.
-- CLI support for cleaning, extracting, and generating narratives.
+- 🩺 Extracts detailed patient information from text transcripts.
+- 🖋️ Generates comprehensive EMS narratives.
+- 🔍 Reviews narratives for missing information or incongruencies.
+- 🛡️ Provides medical-legal review and suggests changes to protect the user.
+- 📄 Outputs the final narrative in plain text.
+- 💻 CLI support for cleaning, extracting, and generating narratives.
 
-### Directory Structure
+### Directory Structure 📂
 
 The project is organized as follows:
 
@@ -88,16 +88,16 @@ The project is organized as follows:
 `-- venv
 ```
 
-### Getting Started
+### Getting Started 🚀
 
-To get started with EMScribe 2.0, follow the [installation instructions](installation.md).
+To get started with EMScribe, follow the [installation instructions](installation.md).
 
 For usage examples and detailed instructions on how to run the scripts, refer to the [usage guide](usage.md).
 
-For developers looking to contribute to EMScribe 2.0, see the [development guide](development.md) and the [contributing guidelines](contributing.md).
+For developers looking to contribute to EMScribe, see the [development guide](development.md) and the [contributing guidelines](contributing.md).
 
 For detailed information about the API and how to use each module, see the [API reference](api_reference.md).
 
-## Contact
+## Contact 📧
 
 For any questions or support, please contact [ScottSucks](https://github.com/ScottSucksAtProgramming).

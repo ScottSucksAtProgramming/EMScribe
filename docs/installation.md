@@ -1,21 +1,20 @@
-
 # Installation
 
-This guide will help you set up EMScribe 2.0 on your local machine.
+This guide will help you set up EMScribe on your local machine.
 
 ## Prerequisites
 
 Before you begin, ensure you have the following:
 
-- Python 3.8 or higher
-- Virtual Environment (venv)
-- Ollama (running locally)
-- VS Code (or any IDE)
-- Git
+- Python 3.8 or higher 🐍
+- Virtual Environment (venv) 🌐
+- Ollama (running locally) 💻 [Ollama Documentation](https://github.com/ollama/ollama)
+- VS Code (or any IDE) 🖥️
+- Git 🌲
 
 ## Clone the Repository
 
-First, clone the EMScribe 2.0 repository from GitHub to your local machine.
+First, clone the EMScribe repository from GitHub to your local machine.
 
 ```bash
 git clone <repository_url>
@@ -45,11 +44,11 @@ Ensure that Ollama is running locally and accessible at `http://localhost:11434`
 
 ### Starting Ollama
 
-Refer to Ollama's documentation to start the server locally. Ensure it is running and accessible before proceeding.
+Refer to [Ollama's documentation](https://github.com/ollama/ollama) to start the server locally. Ensure it is running and accessible before proceeding.
 
 ## Directory Structure
 
-Here is an overview of the EMScribe 2.0 directory structure after installation:
+Here is an overview of the EMScribe directory structure after installation:
 
 ```plaintext
 .
@@ -115,11 +114,11 @@ To verify that everything is set up correctly, run the tests:
 pytest
 ```
 
-If all tests pass, your installation is successful and you are ready to use EMScribe 2.0.
+If all tests pass, your installation is successful and you are ready to use EMScribe.
 
 ## Next Steps
 
-- [Usage](usage.md): Learn how to use EMScribe 2.0 for extracting and cleaning transcripts.
-- [Development](development.md): Understand the development workflow and how to contribute to EMScribe 2.0.
+- [Usage](usage.md): Learn how to use EMScribe for extracting and cleaning transcripts.
+- [Development](development.md): Understand the development workflow and how to contribute to EMScribe.
 - [API Reference](api_reference.md): Detailed information about the API and modules.
 - [Contributing](contributing.md): Guidelines for contributing to the project.

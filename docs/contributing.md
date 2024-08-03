@@ -1,6 +1,6 @@
 # Contributing
 
-This guide provides instructions for contributing to EMScribe 2.0, including setting up the development environment, adding new features, and writing tests.
+This guide provides instructions for contributing to EMScribe 2.0. Currently, we are not seeking new contributors. If you are interested in contributing, please contact [ScottSucks](https://github.com/ScottSucksAtProgramming) to discuss potential opportunities.
 
 ## Setting Up the Development Environment
 
@@ -73,6 +73,8 @@ Ensure you are familiar with the updated project directory structure:
 
 ## Adding New Features
 
+If approved for contributing, follow these steps:
+
 ### Create a New Branch
 
 Create a new branch for your feature:
@@ -133,4 +135,4 @@ Ensure your new features are well-documented. Update or add new documentation fi
 
 ## Conclusion
 
-Following these guidelines will help maintain the quality and consistency of the EMScribe 2.0 codebase. For any questions or support, please contact [ScottSucks](https://github.com/ScottSucksAtProgramming).
+For any questions or support, please contact [ScottSucks](https://github.com/ScottSucksAtProgramming).

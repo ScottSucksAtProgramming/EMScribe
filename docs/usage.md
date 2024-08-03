@@ -1,12 +1,12 @@
 # Usage
 
-This guide will show you how to use EMScribe 2.0 for extracting and cleaning EMS transcripts, reviewing extracted information, and generating narratives.
+This guide will show you how to use EMScribe for extracting and cleaning EMS transcripts, reviewing extracted information, and generating narratives.
 
-## CLI Usage
+## CLI Usage 🚀
 
 The `emscribe` command can be used to clean transcripts, extract information, review extracted information, and generate narratives.
 
-### Clean Transcript
+### Clean Transcript 🧼
 
 To clean a transcript, use the following command:
 
@@ -14,7 +14,7 @@ To clean a transcript, use the following command:
 emscribe clean path/to/transcript.txt --output path/to/cleaned_transcript.txt
 ```
 
-### Extract Information
+### Extract Information 📋
 
 To extract information from a transcript, use the following command:
 
@@ -22,7 +22,7 @@ To extract information from a transcript, use the following command:
 emscribe extract path/to/cleaned_transcript.txt --output path/to/extract.txt
 ```
 
-### Review Extracted Information
+### Review Extracted Information 🔍
 
 To review and make changes to the extracted information, use the following command:
 
@@ -30,7 +30,7 @@ To review and make changes to the extracted information, use the following comma
 emscribe review path/to/extract.txt --output path/to/reviewed_extract.txt
 ```
 
-### Generate Narrative
+### Generate Narrative 🖋️
 
 To generate a narrative from the reviewed extracted information, use the following command:
 
@@ -38,7 +38,7 @@ To generate a narrative from the reviewed extracted information, use the followi
 emscribe generate path/to/reviewed_extract.txt --output path/to/narrative.txt
 ```
 
-### Using Pipes
+### Using Pipes 🚦
 
 You can also use pipes to streamline the process. Here’s an example of cleaning a transcript and generating a narrative in one command:
 
@@ -46,7 +46,7 @@ You can also use pipes to streamline the process. Here’s an example of cleanin
 emscribe clean path/to/transcript.txt | emscribe extract - | emscribe review - | emscribe generate - --output path/to/narrative.txt
 ```
 
-### Example Transcript Input
+### Example Transcript Input ✏️
 
 Here is an example of the input transcript:
 
@@ -54,7 +54,7 @@ Here is an example of the input transcript:
 Patient John Doe, 45 years old, male, experiencing chest pain for the past 2 hours. History of hypertension and diabetes.
 ```
 
-### Expected Output
+### Expected Output 📄
 
 The script will output detailed information extracted from the transcript, formatted into comprehensive EMS narratives.
 
@@ -66,7 +66,7 @@ patient_histories: Hypertension, Diabetes
 ...
 ```
 
-### Example Usage
+### Example Usage 💡
 
 #### Cleaning a Transcript
 
@@ -160,6 +160,6 @@ print("Generated Narrative:")
 print(narrative)
 ```
 
-## Conclusion
+## Conclusion 🎯
 
-EMScribe 2.0 provides powerful tools for extracting, cleaning, reviewing, and generating EMS transcripts using AI models. By following the examples and commands provided, you can effectively utilize these tools to process your own transcripts. For more advanced usage and customization, refer to the [Development](development.md) and [API Reference](api_reference.md) sections of the documentation.
+EMScribe provides powerful tools for extracting, cleaning, reviewing, and generating EMS transcripts using AI models. By following the examples and commands provided, you can effectively utilize these tools to process your own transcripts. For more advanced usage and customization, refer to the [Development](development.md) and [API Reference](api_reference.md) sections of the documentation.
