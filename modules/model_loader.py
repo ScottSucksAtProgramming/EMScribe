@@ -28,36 +28,29 @@ class ModelLoader:
         self.base_url = base_url
         self.model_name = model_name
         self.model = Ollama(base_url=self.base_url, model=self.model_name)
-
-    def _load_model(self):
-        """
-        Load the language model.
-
-        Returns:
-            object: The loaded language model.
-        """
-        try:
-            return Ollama(base_url=self.base_url, model_name=self.model_name)
-        except ImportError as exc:
-            raise ImportError("The ollama module is not installed.") from exc
-
-    def load_model(self):
-        """
-        Get the loaded language model.
-
-        Returns:
-            object: The loaded language model.
-        """
-        return self.model
+        self.context_window = 32768  # Fixed context window size
 
     def generate(self, prompt):
         """
-        Generate a response from the language model based on the given prompt.
+        Generates a response from the AI model based on the provided prompt and context
+        window.
 
         Args:
-            prompt (str): The prompt to generate a response for.
+            prompt (str): The input prompt for the model.
 
         Returns:
-            str: The generated response.
+            str: The generated response from the model.
         """
-        return self.model.generate(prompt)
+        # Ensure prompt is passed as a list of strings
+        if isinstance(prompt, str):
+            prompt = [prompt]
+
+        response = self.model.generate(
+            prompts=prompt,
+            options={
+                "num_ctx": self.context_window
+            },  # Ensure num_ctx is correctly placed in options
+        )
+
+        # Extract and return the text from the first generation response
+        return response.generations[0][0].text.strip()
