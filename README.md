@@ -1,4 +1,4 @@
-# EMScribe 2.0
+# EMScribe 🚑
 
 <p align="center">
   <img src="images/emscribe_logo.png" alt="EMScribe Logo" width="500" />
@@ -6,36 +6,37 @@
 
 ## Overview
 
-EMScribe 2.0 is a project designed to create comprehensive EMS narratives in a user-selected format. The application can extract information from text transcripts of patient interactions, providing detailed reports that include patient demographics, medical history, chief complaints, history of present illness, treatments done, objective assessment, treatment plans, transport information, and transfer of care.
+Welcome to **EMScribe**! **EMScribe** extracts vital information from text transcripts of patient interactions and generates high-quality, accurate patient care report narratives. With this software, EMS providers can focus their attention on patient care instead of documenting during transport. Give your patients a world-class experience while generating expert patient care reports in record time. 📋
 
-## Features
+## Features 🌟
 
-- Extracts detailed patient information from text transcripts.
-- Generates comprehensive EMS narratives.
-- Reviews narratives for missing information or incongruencies.
-- Provides medical-legal review and suggests changes to protect the user.
-- Outputs the final narrative in plain text.
+- 🩺 **Extracts detailed patient information from recordings taken during the EMS call.**
+- 🧹 **Cleans out background noise, side conversations, and inessential chatter while preserving the details of your medical care.**
+- 🖋️ **Generates comprehensive EMS narratives with quality checks ensuring information accuracy and a clear professional tone.**
+- 🔍 **Reviews narratives for missing information or incongruencies.**
+- 🛡️ **Provides medical-legal review and suggests changes to protect the EMS provider.**
+- 📄 **Outputs the final narrative in plain text ready for import directly into your ePCR software.**
 
-## Setup
+## Setup 🛠️
 
 ### Prerequisites
 
-- Python 3.8 or higher
-- Virtual Environment (venv)
-- Ollama (running locally)
-- VS Code (or any IDE)
-- Git
+- Python 3.8 or higher 🐍
+- Virtual Environment (venv) 🌐
+- [Ollama](https://github.com/ollama/ollama) (running locally) 💻
+- VS Code (or any IDE) 🖥️
+- Git 🌲
 
 ### Installation
 
 1. **Clone the Repository:**
 
    ```bash
-   git clone <repository_url>
+   git clone https://github.com/ScottSucksAtProgramming/EMScribe.git
    cd emscribe
    ```
 
-2. **Set Up a Virtual Environment:**
+2. **Set Up the Virtual Environment:**
 
    ```bash
    python -m venv venv
@@ -48,9 +49,9 @@ EMScribe 2.0 is a project designed to create comprehensive EMS narratives in a u
    pip install -r requirements.txt
    ```
 
-4. **Configure Ollama:**
+4. **Configure [Ollama](https://github.com/ollama/ollama):**
 
-   Ensure Ollama is running locally and accessible at `http://localhost:11434`.
+   Ensure Ollama is running locally and accessible at `http://localhost:11434`. 🦙
 
 ### Verify the Installation
 
@@ -60,7 +61,7 @@ To verify that everything is set up correctly, run the tests:
 pytest
 ```
 
-If all tests pass, your installation is successful and you are ready to use EMScribe 2.0.
+If all tests pass, your installation is successful and you are ready to use EMScribe 2.0. 🎉
 
 ## Using the `emscribe` Command
 
@@ -97,90 +98,6 @@ You can also pipe the output from one command to another:
 emscribe clean ./transcript.txt | emscribe extract - | emscribe review - | emscribe generate - --output ./narrative.txt
 ```
 
-## Directory Structure
-
-```plaintext
-.
-|-- README.md
-|-- bin
-|   `-- emscribe
-|-- commands
-|   |-- clean_command.py
-|   |-- extract_command.py
-|   |-- generate_command.py
-|   `-- review_command.py
-|-- data
-|   |-- cleaned_transcript.txt
-|   |-- extract.txt
-|   |-- narrative.txt
-|   `-- reviewed_extract.txt
-|-- docs
-|   |-- api_reference.md
-|   |-- contributing.md
-|   |-- development.md
-|   |-- index.md
-|   |-- installation.md
-|   `-- usage.md
-|-- images
-|   `-- emscribe_logo.png
-|-- modules
-|   |-- extract_reviewer.py
-|   |-- model_loader.py
-|   |-- narrative_manager.py
-|   |-- prompt_manager.py
-|   |-- prompts
-|   |   |-- cleaning_prompts.py
-|   |   |-- extraction_prompts.py
-|   |   |-- narrative_prompts.py
-|   |   `-- review_prompts.py
-|   |-- transcript_cleaner.py
-|   `-- transcript_extractor.py
-|-- requirements.txt
-|-- scripts
-|   |-- cli.py
-|   |-- data
-|   |   |-- cleaned_transcript.txt
-|   |   `-- extract.txt
-|   |-- extraction.py
-|   |-- main.py
-|   `-- preprocess.py
-|-- tests
-|   |-- conftest.py
-|   |-- test_cli.py
-|   |-- test_model_loader.py
-|   |-- test_review_command.py
-|   |-- test_transcript_cleaner.py
-|   `-- test_transcript_extractor.py
-|-- transcript.txt
-`-- venv
-```
-
-## Running the Scripts
-
-### Extraction Script
-
-To run the extraction script, use the following command:
-
-```bash
-python -m scripts.extraction
-```
-
-### Preprocess Script
-
-To run the preprocess script, use the following command:
-
-```bash
-python -m scripts.preprocess
-```
-
-### Main Script
-
-To run the main script which demonstrates cleaning, extracting, and generating narratives, use the following command:
-
-```bash
-python -m scripts.main
-```
-
 ### Example Transcript Input
 
 ```plaintext
@@ -193,47 +110,50 @@ The chief complaint is chest pain that started two hours ago...
 
 The script will output detailed information extracted from the transcript, formatted into comprehensive EMS narratives.
 
-## Development
+## Roadmap 🚀
 
-### Adding New Features
+### Current Roadmap
 
-To add new features or enhance existing ones, follow these steps:
+#### Initial Setup and Features
 
-1. **Create a New Branch:**
+- [x] **Set up project repository and initial code structure** ✔️
+- [x] **Implement transcript cleaning functionality** 🧼
+- [x] **Implement information extraction functionality** 📝
+- [x] **Implement narrative generation functionality** 🖋️
+- [x] **Add CLI for user interaction** 💻
+- [x] **Perform initial testing and validation** 🧪
 
-   ```bash
-   git checkout -b feature/new-feature
-   ```
+#### Enhancements and New Features
 
-2. **Make Changes and Commit:**
+- [x] **Implement review functionality for extracted data** 🔍
+- [x] **Add medical-legal review for narratives** 🛡️
+- [ ] **Implement PDF information extraction** 📄
+- [ ] **Integrate additional narrative types** 📑
+- [ ] **Generate verbal report for hospital staff** 🗣️
+- [ ] **Fine-tune model for narrative generation** 🧠
 
-   ```bash
-   git add .
-   git commit -m "Add new feature"
-   ```
+#### Future Development
 
-3. **Push the Branch and Create a Pull Request:**
+- [ ] **Develop a web-based interface** 🌐
+- [ ] **Implement as a cloud service** ☁️
+- [ ] **Ensure HIPAA compliance for cloud service** 🏥
+- [ ] **Develop a mobile application** 📱
 
-   ```bash
-   git push origin feature/new-feature
-   ```
+### Future Roadmap
 
-### Contribution Guidelines
+- [ ] **Explore integration with EHR systems** 🏥
+- [ ] **Expand functionality for additional data sources** 🌐
+- [ ] **Continuous improvement and feature updates** 🔄
 
-- Ensure your code follows the project’s coding standards.
-- Write clear, concise commit messages.
-- Test your changes thoroughly before submitting a pull request.
-- Provide detailed descriptions of the changes in pull requests.
+## License 📜
 
-## License
+This project is licensed under the Proprietary Software License. See the [LICENSE](./LICENSE) file for details.
 
-There is currently no license for this project.
-
-## Contact
+## Contact 📧
 
 For any questions or support, please contact [ScottSucks](https://github.com/ScottSucksAtProgramming).
 
-## Documentation
+## Documentation 📚
 
 For detailed documentation, refer to the following:
 
