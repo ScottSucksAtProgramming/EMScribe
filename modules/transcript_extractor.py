@@ -1,6 +1,7 @@
 from modules.model_loader import ModelLoader
 from modules.prompt_manager import PromptManager
 
+
 class TranscriptExtractor:
     """
     A class to extract information from an EMS transcript using an AI model.
@@ -49,19 +50,30 @@ class TranscriptExtractor:
             "transport",
             "transfer_of_care",
         ]
-        extracted_data = []
-
-        for key in prompt_keys:
-            prompt = self.prompt_manager.get_prompt(key, transcript=transcript)
-
-            if isinstance(prompt, list):
-                # If prompt is a list of chunks
-                for sub_prompt in prompt:
-                    response = self.model_loader.generate(sub_prompt)
-                    extracted_data.append(response)
-            else:
-                response = self.model_loader.generate(prompt)
-                extracted_data.append(response)
+        extracted_data = [
+            self._extract_from_prompt(key, transcript) for key in prompt_keys
+        ]
 
         combined_response = "\n\n".join(extracted_data).strip()
         return combined_response
+
+    def _extract_from_prompt(self, prompt_key: str, transcript: str) -> str:
+        """
+        Extracts information from the transcript using a single prompt.
+
+        Args:
+            prompt_key (str): The key for the desired prompt.
+            transcript (str): The transcript to extract information from.
+
+        Returns:
+            str: The extracted information.
+        """
+        prompt = self.prompt_manager.get_prompt(prompt_key, transcript=transcript)
+
+        if isinstance(prompt, list):
+            responses = [
+                self.model_loader.generate(sub_prompt) for sub_prompt in prompt
+            ]
+            return " ".join(responses).strip()
+
+        return self.model_loader.generate(prompt).strip()
