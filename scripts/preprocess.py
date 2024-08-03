@@ -42,4 +42,4 @@ if __name__ == "__main__":
         "The patient is experiencing experiencing shortness of breath. "
         "The patient is The patient is also complaining of chest pain."
     )
-print(preprocess_transcript(example_transcript))
+    print(preprocess_transcript(example_transcript))
