@@ -1,31 +1,30 @@
 import argparse
-import sys
-import os
-from modules.prompt_manager import PromptManager
-from modules.model_loader import ModelLoader
-from modules.transcript_cleaner import TranscriptCleaner
-from modules.transcript_extractor import TranscriptExtractor
-from modules.narrative_manager import NarrativeManager
-from modules.extract_reviewer import ExtractReviewer
+
 from commands.clean_command import CleanCommand
 from commands.extract_command import ExtractCommand
-from commands.review_command import ReviewCommand
 from commands.generate_command import GenerateCommand
-
-# Initialize PromptManager and ModelLoader
-prompt_manager = PromptManager()
-model_loader = ModelLoader(
-    base_url="http://localhost:11434", model_name="llama3.1"
-)
-
-# Initialize other modules
-cleaner = TranscriptCleaner(model_loader, prompt_manager)
-extractor = TranscriptExtractor(model_loader, prompt_manager)
-narrative_manager = NarrativeManager(model_loader, prompt_manager)
-extract_reviewer = ExtractReviewer(model_loader, prompt_manager)
+from commands.review_command import ReviewCommand
+from modules.extract_reviewer import ExtractReviewer
+from modules.model_loader import ModelLoader
+from modules.narrative_manager import NarrativeManager
+from modules.prompt_manager import PromptManager
+from modules.transcript_cleaner import TranscriptCleaner
+from modules.transcript_extractor import TranscriptExtractor
 
 
-def main():
+def initialize_components(base_url="http://localhost:11434", model_name="llama3.1"):
+    prompt_manager = PromptManager()
+    model_loader = ModelLoader(base_url=base_url, model_name=model_name)
+
+    cleaner = TranscriptCleaner(model_loader, prompt_manager)
+    extractor = TranscriptExtractor(model_loader, prompt_manager)
+    narrative_manager = NarrativeManager(model_loader, prompt_manager)
+    extract_reviewer = ExtractReviewer(model_loader, prompt_manager)
+
+    return cleaner, extractor, narrative_manager, extract_reviewer
+
+
+def parse_args():
     parser = argparse.ArgumentParser(description="EMScribe CLI tool")
     subparsers = parser.add_subparsers(dest="command")
 
@@ -80,7 +79,12 @@ def main():
         help="Path to save the reviewed data",
     )
 
-    args = parser.parse_args()
+    return parser.parse_args()
+
+
+def main():
+    args = parse_args()
+    cleaner, extractor, narrative_manager, extract_reviewer = initialize_components()
 
     if args.command == "clean":
         CleanCommand(cleaner).execute(args.transcript_path, args.output)
