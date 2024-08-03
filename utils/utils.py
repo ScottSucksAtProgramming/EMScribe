@@ -1,4 +1,6 @@
+# -*- coding: utf-8 -*-
 import os
+
 
 def read_file(file_path):
     """
@@ -10,8 +12,9 @@ def read_file(file_path):
     Returns:
         str: The content of the file.
     """
-    with open(file_path, 'r') as file:
+    with open(file_path, "r", encoding="utf-8") as file:
         return file.read()
+
 
 def write_file(file_path, content):
     """
@@ -22,8 +25,9 @@ def write_file(file_path, content):
         content (str): The content to write to the file.
     """
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
-    with open(file_path, 'w') as file:
+    with open(file_path, "w", encoding="utf-8") as file:
         file.write(content)
+
 
 def ensure_file_exists(file_path):
     """
