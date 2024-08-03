@@ -7,7 +7,7 @@ Module for loading language models.
 This module defines the ModelLoader class which is responsible for loading and
 managing language models used in EMScribe.
 """
-from langchain_community.llms import Ollama
+from langchain_community.llms.ollama import Ollama
 
 
 class ModelLoader:
@@ -37,7 +37,7 @@ class ModelLoader:
             object: The loaded language model.
         """
         try:
-            return Ollama.Model(base_url=self.base_url, model_name=self.model_name)
+            return Ollama(base_url=self.base_url, model_name=self.model_name)
         except ImportError as exc:
             raise ImportError("The ollama module is not installed.") from exc
 
