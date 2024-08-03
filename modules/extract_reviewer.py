@@ -40,7 +40,7 @@ class ExtractReviewer:
         prompt = self.prompt_manager.get_prompt(
             "review_section", {"section_data": section}
         )
-        response = self.model_loader.load_model().generate(prompt)
+        response = self.model_loader.generate(prompt)
         return response
 
     def summary(self):

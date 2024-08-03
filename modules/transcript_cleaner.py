@@ -1,12 +1,7 @@
 # -*- coding: utf-8 -*-
 # modules/transcript_cleaner.py
-
-"""
-Module for cleaning EMS transcripts.
-
-This module defines the TranscriptCleaner class which is responsible for cleaning
-EMS transcripts.
-"""
+from modules.model_loader import ModelLoader
+from modules.prompt_manager import PromptManager
 
 
 class TranscriptCleaner:
@@ -16,7 +11,7 @@ class TranscriptCleaner:
     This class provides methods to clean EMS transcripts using a language model.
     """
 
-    def __init__(self, model_loader, prompt_manager):
+    def __init__(self, model_loader: ModelLoader, prompt_manager: PromptManager):
         """
         Initialize the TranscriptCleaner with a ModelLoader and PromptManager.
 
@@ -27,7 +22,7 @@ class TranscriptCleaner:
         self.model_loader = model_loader
         self.prompt_manager = prompt_manager
 
-    def clean(self, transcript):
+    def clean(self, transcript: str) -> str:
         """
         Clean the provided EMS transcript.
 
@@ -38,7 +33,7 @@ class TranscriptCleaner:
             str: The cleaned transcript.
         """
         prompt = self.prompt_manager.get_prompt(
-            "clean_transcript", {"transcript": transcript}
+            "clean_transcript", transcript=transcript
         )
-        cleaned_transcript = self.model_loader.load_model().generate(prompt)
+        cleaned_transcript = self.model_loader.generate(prompt)
         return cleaned_transcript

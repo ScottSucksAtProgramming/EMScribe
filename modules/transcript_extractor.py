@@ -41,5 +41,5 @@ class TranscriptExtractor:
         prompt = self.prompt_manager.get_prompt(
             "extract_transcript", {"transcript": transcript}
         )
-        extracted_data = self.model_loader.load_model().generate(prompt)
+        extracted_data = self.model_loader.generate(prompt)
         return extracted_data

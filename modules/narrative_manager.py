@@ -40,6 +40,6 @@ class NarrativeManager:
         narrative = ""
         for step in self.prompt_manager.get_steps():
             prompt = self.prompt_manager.get_prompt(step, {"data": extracted_data})
-            response = self.model_loader.load_model().generate(prompt)
+            response = self.model_loader.generate(prompt)
             narrative += response + "\n\n"
         return narrative
