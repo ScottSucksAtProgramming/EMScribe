@@ -1,3 +1,5 @@
+from typing import Dict
+
 from modules.model_loader import ModelLoader
 from modules.prompt_manager import PromptManager
 
@@ -22,13 +24,13 @@ class NarrativeManager:
         self.model_loader = model_loader
         self.prompt_manager = prompt_manager
 
-    def generate_narrative(self, narrative_format: str, data: dict) -> str:
+    def generate_narrative(self, narrative_format: str, data: Dict) -> str:
         """
         Generates a narrative based on the specified format and data.
 
         Args:
             narrative_format (str): The key for the desired narrative format.
-            data (dict): The extracted information in a dictionary.
+            data (Dict): The extracted information in a dictionary.
 
         Returns:
             str: The generated narrative.
@@ -36,18 +38,29 @@ class NarrativeManager:
         narrative_steps = self.prompt_manager.get_prompt(narrative_format, data=data)
 
         narrative = []
-        for step_key, step_prompt in narrative_steps.items():
-            if len(step_prompt) > self.model_loader.context_window:
-                # Split the prompt if it exceeds the context window size
-                narrative_parts = []
-                for i in range(0, len(step_prompt), self.model_loader.context_window):
-                    sub_prompt = step_prompt[i : i + self.model_loader.context_window]
-                    response = self.model_loader.generate(sub_prompt)
-                    narrative_parts.append(response)
-                step_response = " ".join(narrative_parts)
-            else:
-                step_response = self.model_loader.generate(step_prompt)
-
+        for step_prompt in narrative_steps.values():
+            step_response = self._generate_response(step_prompt)
             narrative.append(step_response)
 
         return "\n\n".join(narrative).strip()
+
+    def _generate_response(self, prompt: str) -> str:
+        """
+        Generates a response from the AI model based on the provided prompt.
+
+        Args:
+            prompt (str): The input prompt for the model.
+
+        Returns:
+            str: The AI model's response.
+        """
+        context_window_size = self.model_loader.context_window
+
+        if len(prompt) > context_window_size:
+            response_parts = [
+                self.model_loader.generate(prompt[i : i + context_window_size])
+                for i in range(0, len(prompt), context_window_size)
+            ]
+            return " ".join(response_parts)
+
+        return self.model_loader.generate(prompt)
