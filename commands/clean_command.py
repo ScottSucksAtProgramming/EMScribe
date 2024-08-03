@@ -1,3 +1,6 @@
+from modules.transcript_cleaner import TranscriptCleaner
+
+
 class CleanCommand:
     """
     Command class to handle the cleaning of a transcript.
@@ -6,7 +9,7 @@ class CleanCommand:
         cleaner (TranscriptCleaner): An instance of TranscriptCleaner to clean the transcript.
     """
 
-    def __init__(self, cleaner):
+    def __init__(self, cleaner: TranscriptCleaner):
         """
         Initializes the CleanCommand with a TranscriptCleaner instance.
 
@@ -15,7 +18,7 @@ class CleanCommand:
         """
         self.cleaner = cleaner
 
-    def execute(self, transcript_path, output_path):
+    def execute(self, transcript_path: str, output_path: str):
         """
         Executes the cleaning process on the given transcript file and saves the output.
 
@@ -25,8 +28,8 @@ class CleanCommand:
         """
         with open(transcript_path, "r") as file:
             transcript = file.read()
-        
+
         cleaned_transcript = self.cleaner.clean(transcript)
-        
+
         with open(output_path, "w") as file:
             file.write(cleaned_transcript)
