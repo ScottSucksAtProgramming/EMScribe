@@ -1,3 +1,5 @@
+from typing import Union
+
 from modules.model_loader import ModelLoader
 from modules.prompt_manager import PromptManager
 
@@ -34,15 +36,22 @@ class TranscriptCleaner:
         """
         prompt_key = "clean_transcript"
         prompt = self.prompt_manager.get_prompt(prompt_key, transcript=transcript)
+        return self._generate_cleaned_transcript(prompt)
 
+    def _generate_cleaned_transcript(self, prompt: Union[str, list]) -> str:
+        """
+        Generates the cleaned transcript based on the provided prompt.
+
+        Args:
+            prompt (Union[str, list]): The input prompt for the model.
+
+        Returns:
+            str: The cleaned transcript.
+        """
         if isinstance(prompt, list):
-            # If prompt is a list of chunks
-            cleaned_parts = []
-            for sub_prompt in prompt:
-                response = self.model_loader.generate(sub_prompt)
-                cleaned_parts.append(response)
-            cleaned_transcript = " ".join(cleaned_parts)
-        else:
-            cleaned_transcript = self.model_loader.generate(prompt)
+            cleaned_parts = [
+                self.model_loader.generate(sub_prompt) for sub_prompt in prompt
+            ]
+            return " ".join(cleaned_parts).strip()
 
-        return cleaned_transcript.strip()
+        return self.model_loader.generate(prompt).strip()
