@@ -12,7 +12,7 @@ Your task includes:
 
 When you provide your response only provide the cleaned transcript and nothing more. Do not summarize. 
 
-Here is a the transcript for you to clean:
+Here is the transcript for you to clean:
 {transcript}
     """
 }
