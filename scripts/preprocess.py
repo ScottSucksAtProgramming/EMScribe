@@ -1,51 +1,38 @@
+# preprocess.py
+
 import re
-from modules.model_loader import ModelLoader
 from modules.transcript_cleaner import TranscriptCleaner
+from modules.model_loader import ModelLoader
 from modules.prompt_manager import PromptManager
 
 
 class TranscriptPreprocessor:
-    """
-    A class to preprocess EMS transcripts using an AI model and additional text processing.
-
-    Attributes:
-        cleaner (TranscriptCleaner): An instance of TranscriptCleaner to clean transcripts.
-    """
-
     def __init__(self, model_loader: ModelLoader, prompt_manager: PromptManager):
-        """
-        Initializes the TranscriptPreprocessor with a ModelLoader and PromptManager instance.
-
-        Args:
-            model_loader (ModelLoader): An instance of ModelLoader to interact with the AI model.
-            prompt_manager (PromptManager): An instance of PromptManager to manage prompts.
-        """
+        self.model_loader = model_loader
+        self.prompt_manager = prompt_manager
         self.cleaner = TranscriptCleaner(model_loader, prompt_manager)
 
     def preprocess(self, transcript: str) -> str:
-        """
-        Preprocesses the transcript by cleaning it and applying further text processing.
+        cleaned_transcript = self.clean_transcript(transcript)
+        return self.further_process(cleaned_transcript)
 
-        Args:
-            transcript (str): The transcript to preprocess.
+    def clean_transcript(self, transcript: str) -> str:
+        return self.cleaner.clean(transcript)
 
-        Returns:
-            str: The preprocessed transcript.
-        """
-        cleaned_transcript = self.cleaner.clean(transcript)
-        cleaned_transcript = re.sub(r"\s+", " ", cleaned_transcript).strip()
-        return cleaned_transcript
+    def further_process(self, cleaned_transcript: str) -> str:
+        return re.sub(r"\s+", " ", cleaned_transcript).strip()
 
 
-# Example usage
+def run(model_loader: ModelLoader, prompt_manager: PromptManager):
+    example_transcript = "example transcript text"
+    preprocessor = TranscriptPreprocessor(model_loader, prompt_manager)
+    cleaned_transcript = preprocessor.preprocess(example_transcript)
+    print(cleaned_transcript)
+
+
 if __name__ == "__main__":
     model_loader_instance = ModelLoader(
         base_url="http://localhost:11434", model_name="llama3.1"
     )
-    preprocessor = TranscriptPreprocessor(model_loader_instance, PromptManager())
-
-    example_transcript = (
-        "The patient is experiencing experiencing shortness of breath. "
-        "The patient is The patient is also complaining of chest pain."
-    )
-    print(preprocessor.preprocess(example_transcript))
+    prompt_manager_instance = PromptManager()
+    run(model_loader_instance, prompt_manager_instance)
