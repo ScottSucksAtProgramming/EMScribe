@@ -1,55 +1,56 @@
 import os
-import tempfile
-
 import pytest
-
 from utils.utils import FileManager
 
 
-def test_read_file():
-    # Create a temporary file and write some content to it
-    temp_file = tempfile.NamedTemporaryFile(delete=False)
-    temp_file.write(b"Test content")
-    temp_file.close()
+@pytest.fixture(name="test_file_path")
+def fixture_test_file_path(tmpdir):
+    return os.path.join(tmpdir, "test_file.txt")
 
+
+@pytest.fixture(name="test_content")
+def fixture_test_content():
+    return "This is a test content."
+
+
+def test_read_file(test_file_path, test_content):
+    # Setup
+    FileManager.write_file(test_file_path, test_content)
+
+    # Test read_file
+    content = FileManager.read_file(test_file_path)
+    assert content == test_content
+
+
+def test_write_file(test_file_path, test_content):
+    # Test write_file
+    FileManager.write_file(test_file_path, test_content)
+
+    # Verify
+    with open(test_file_path, "r", encoding="utf-8") as file:
+        content = file.read()
+        assert content == test_content
+
+
+def test_ensure_file_exists(test_file_path, test_content):
+    # Setup
+    FileManager.write_file(test_file_path, test_content)
+
+    # Test ensure_file_exists
     try:
-        # Use the FileManager to read the file
-        content = FileManager.read_file(temp_file.name)
-        assert content == "Test content"
-    finally:
-        os.remove(temp_file.name)
-
-
-def test_write_file():
-    # Create a temporary file path
-    temp_dir = tempfile.mkdtemp()
-    temp_file_path = os.path.join(temp_dir, "test_write.txt")
-
-    try:
-        # Use the FileManager to write to the file
-        FileManager.write_file(temp_file_path, "Test content")
-
-        # Read the file to ensure the content was written
-        with open(temp_file_path, "r", encoding="utf-8") as file:
-            content = file.read()
-        assert content == "Test content"
-    finally:
-        os.remove(temp_file_path)
-        os.rmdir(temp_dir)
-
-
-def test_ensure_file_exists():
-    # Create a temporary file
-    temp_file = tempfile.NamedTemporaryFile(delete=False)
-    temp_file.close()
-
-    try:
-        # Use the FileManager to check if the file exists
-        FileManager.ensure_file_exists(temp_file.name)
-    finally:
-        os.remove(temp_file.name)
+        FileManager.ensure_file_exists(test_file_path)
+    except FileNotFoundError:
+        pytest.fail("FileNotFoundError raised unexpectedly.")
 
 
 def test_ensure_file_exists_raises_error():
+    # Test ensure_file_exists raises error
     with pytest.raises(FileNotFoundError):
         FileManager.ensure_file_exists("non_existent_file.txt")
+
+
+def test_write_and_read_empty_file(test_file_path):
+    # Test writing and reading an empty file
+    FileManager.write_file(test_file_path, "")
+    content = FileManager.read_file(test_file_path)
+    assert content == ""
