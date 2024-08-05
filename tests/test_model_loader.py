@@ -1,4 +1,3 @@
-# test_model_loader.py
 from unittest.mock import MagicMock, patch
 
 import pytest
@@ -18,6 +17,9 @@ def fixture_model_loader(mock_ollama):
 
 
 def test_initialization_with_client(mock_ollama):
+    """
+    Test ModelLoader initialization with a provided client.
+    """
     model_loader = ModelLoader(model_name="test_model", client=mock_ollama)
     assert model_loader.model_name == "test_model"
     assert model_loader.client == mock_ollama
@@ -26,6 +28,9 @@ def test_initialization_with_client(mock_ollama):
 
 
 def test_initialization_without_client():
+    """
+    Test ModelLoader initialization without a provided client.
+    """
     with patch("modules.model_loader.Ollama") as MockOllama:
         mock_instance = MockOllama.return_value
         model_loader = ModelLoader(model_name="test_model")
@@ -34,6 +39,9 @@ def test_initialization_without_client():
 
 
 def test_generate(model_loader, mock_ollama):
+    """
+    Test the generate method of ModelLoader.
+    """
     mock_response = MagicMock()
     mock_response.generations = [[MagicMock(text="Mocked response")]]
     mock_ollama.generate.return_value = mock_response
@@ -44,3 +52,13 @@ def test_generate(model_loader, mock_ollama):
     mock_ollama.generate.assert_called_once_with(
         model="test_model", prompts=["test prompt"], options={"num_ctx": 32768}
     )
+
+
+def test_generate_with_exception(model_loader, mock_ollama):
+    """
+    Test the generate method to handle exceptions.
+    """
+    mock_ollama.generate.side_effect = Exception("Test exception")
+
+    with pytest.raises(RuntimeError, match="Error generating response: Test exception"):
+        model_loader.generate("test prompt")

@@ -1,5 +1,5 @@
-# -*- coding: utf-8 -*-
 from langchain_community.llms.ollama import Ollama
+from typing import Optional, Dict
 
 
 class ModelLoader:
@@ -12,13 +12,18 @@ class ModelLoader:
         context_window (int): The maximum context window size for the model.
     """
 
-    def __init__(self, model_name, client=None, base_url="http://localhost:11434"):
+    def __init__(
+        self,
+        model_name: str,
+        client: Optional[Ollama] = None,
+        base_url: str = "http://localhost:11434",
+    ):
         """
         Initializes the ModelLoader with the specified model name and base URL.
 
         Args:
             model_name (str): The name of the model to use.
-            client (Ollama, optional): An instance of the Ollama client. Defaults to None.
+            client (Optional[Ollama]): An instance of the Ollama client. Defaults to None.
             base_url (str): The base URL of the model API.
         """
         self.base_url = base_url
@@ -26,7 +31,7 @@ class ModelLoader:
         self.client = client or Ollama(base_url=base_url)
         self.context_window = 32768  # Fixed context window size
 
-    def _get_options(self):
+    def _get_options(self) -> Dict[str, int]:
         """
         Constructs the options for the model prompt.
 
@@ -35,7 +40,7 @@ class ModelLoader:
         """
         return {"num_ctx": self.context_window}
 
-    def generate(self, prompt):
+    def generate(self, prompt: str) -> str:
         """
         Generates a response from the AI model based on the provided prompt and context window.
 
@@ -45,11 +50,15 @@ class ModelLoader:
         Returns:
             str: The generated response from the model.
         """
-        response = self.client.generate(
-            model=self.model_name,
-            prompts=[prompt],
-            options=self._get_options(),  # Ensure num_ctx is correctly placed in options
-        )
+        try:
+            response = self.client.generate(
+                model=self.model_name,
+                prompts=[prompt],
+                options=self._get_options(),  # Ensure num_ctx is correctly placed in options
+            )
 
-        # Extract and return the text from the first generation response
-        return response.generations[0][0].text.strip()
+            # Extract and return the text from the first generation response
+            return response.generations[0][0].text.strip()
+        except Exception as e:
+            # Log the exception and handle it appropriately
+            raise RuntimeError(f"Error generating response: {e}")
