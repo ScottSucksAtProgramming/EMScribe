@@ -35,23 +35,34 @@ class TranscriptCleaner:
             str: The cleaned transcript.
         """
         prompt_key = "clean_transcript"
-        prompt = self.prompt_manager.get_prompt(prompt_key, transcript=transcript)
-        return self._generate_cleaned_transcript(prompt)
+        try:
+            prompt = self.prompt_manager.get_prompt(prompt_key, transcript=transcript)
+            return self._generate_cleaned_transcript(prompt)
+        except KeyError as e:
+            # Allow KeyError to propagate
+            raise e
+        except Exception as e:
+            # Log the exception and handle it appropriately
+            raise RuntimeError(f"Error cleaning transcript: {e}")
 
-    def _generate_cleaned_transcript(self, prompt: Union[str, list]) -> str:
+    def _generate_cleaned_transcript(self, prompt: Union[str, list[str]]) -> str:
         """
         Generates the cleaned transcript based on the provided prompt.
 
         Args:
-            prompt (Union[str, list]): The input prompt for the model.
+            prompt (Union[str, list[str]]): The input prompt for the model.
 
         Returns:
             str: The cleaned transcript.
         """
-        if isinstance(prompt, list):
-            cleaned_parts = [
-                self.model_loader.generate(sub_prompt) for sub_prompt in prompt
-            ]
-            return " ".join(cleaned_parts).strip()
+        try:
+            if isinstance(prompt, list):
+                cleaned_parts = [
+                    self.model_loader.generate(sub_prompt) for sub_prompt in prompt
+                ]
+                return " ".join(cleaned_parts).strip()
 
-        return self.model_loader.generate(prompt).strip()
+            return self.model_loader.generate(prompt).strip()
+        except Exception as e:
+            # Log the exception and handle it appropriately
+            raise RuntimeError(f"Error generating cleaned transcript: {e}")

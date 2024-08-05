@@ -27,6 +27,9 @@ def fixture_transcript_cleaner(mock_model_loader, mock_prompt_manager):
 
 
 def test_clean_transcript(transcript_cleaner, mock_prompt_manager, mock_model_loader):
+    """
+    Test cleaning a transcript with a single prompt.
+    """
     mock_prompt_manager.get_prompt.return_value = "cleaning prompt"
     mock_model_loader.generate.return_value = "cleaned transcript"
 
@@ -43,6 +46,9 @@ def test_clean_transcript(transcript_cleaner, mock_prompt_manager, mock_model_lo
 def test_clean_transcript_with_chunks(
     transcript_cleaner, mock_prompt_manager, mock_model_loader
 ):
+    """
+    Test cleaning a transcript that requires multiple chunks.
+    """
     mock_prompt_manager.get_prompt.return_value = ["chunk1", "chunk2"]
     mock_model_loader.generate.side_effect = ["cleaned chunk1", "cleaned chunk2"]
 
@@ -60,6 +66,9 @@ def test_clean_transcript_with_chunks(
 def test_clean_transcript_empty(
     transcript_cleaner, mock_prompt_manager, mock_model_loader
 ):
+    """
+    Test cleaning an empty transcript.
+    """
     mock_prompt_manager.get_prompt.return_value = ""
     mock_model_loader.generate.return_value = "cleaned transcript"
 
@@ -76,6 +85,9 @@ def test_clean_transcript_empty(
 def test_clean_transcript_nonexistent_prompt_key(
     transcript_cleaner, mock_prompt_manager
 ):
+    """
+    Test cleaning a transcript with a nonexistent prompt key.
+    """
     mock_prompt_manager.get_prompt.side_effect = KeyError("No prompt found")
 
     transcript = "This is a test transcript."
@@ -86,6 +98,9 @@ def test_clean_transcript_nonexistent_prompt_key(
 def test_clean_transcript_model_error(
     transcript_cleaner, mock_prompt_manager, mock_model_loader
 ):
+    """
+    Test handling an error from the model while cleaning a transcript.
+    """
     mock_prompt_manager.get_prompt.return_value = "cleaning prompt"
     mock_model_loader.generate.side_effect = RuntimeError("Model error")
 
@@ -97,6 +112,9 @@ def test_clean_transcript_model_error(
 def test_clean_transcript_special_characters(
     transcript_cleaner, mock_prompt_manager, mock_model_loader
 ):
+    """
+    Test cleaning a transcript with special characters.
+    """
     special_prompt = "Prompt with special characters: !@#$%^&*()"
     mock_prompt_manager.get_prompt.return_value = special_prompt
     mock_model_loader.generate.return_value = (
@@ -116,6 +134,9 @@ def test_clean_transcript_special_characters(
 def test_clean_transcript_large_input(
     transcript_cleaner, mock_prompt_manager, mock_model_loader
 ):
+    """
+    Test cleaning a large transcript.
+    """
     large_transcript = "This is a large transcript. " * 1000
     large_prompt = "cleaning prompt for large input"
     mock_prompt_manager.get_prompt.return_value = large_prompt
@@ -128,3 +149,63 @@ def test_clean_transcript_large_input(
         "clean_transcript", transcript=large_transcript
     )
     mock_model_loader.generate.assert_called_once_with(large_prompt)
+
+
+def test_generate_cleaned_transcript_with_string(transcript_cleaner, mock_model_loader):
+    """
+    Test generating a cleaned transcript with a single string prompt.
+    """
+    prompt = "cleaning prompt"
+    mock_model_loader.generate.return_value = "cleaned transcript"
+
+    response = transcript_cleaner._generate_cleaned_transcript(prompt)
+
+    assert response == "cleaned transcript"
+    mock_model_loader.generate.assert_called_once_with(prompt)
+
+
+def test_generate_cleaned_transcript_with_list(transcript_cleaner, mock_model_loader):
+    """
+    Test generating a cleaned transcript with a list of prompts.
+    """
+    prompts = ["prompt1", "prompt2"]
+    mock_model_loader.generate.side_effect = ["cleaned part 1", "cleaned part 2"]
+
+    response = transcript_cleaner._generate_cleaned_transcript(prompts)
+
+    assert response == "cleaned part 1 cleaned part 2"
+    mock_model_loader.generate.assert_any_call("prompt1")
+    mock_model_loader.generate.assert_any_call("prompt2")
+
+
+def test_generate_cleaned_transcript_model_error(transcript_cleaner, mock_model_loader):
+    """
+    Test handling an error from the model in _generate_cleaned_transcript.
+    """
+    prompt = "cleaning prompt"
+    mock_model_loader.generate.side_effect = RuntimeError("Model error")
+
+    with pytest.raises(
+        RuntimeError, match="Error generating cleaned transcript: Model error"
+    ):
+        transcript_cleaner._generate_cleaned_transcript(prompt)
+
+
+def test_clean_transcript_key_error(transcript_cleaner, mock_prompt_manager):
+    """
+    Test handling KeyError in clean method.
+    """
+    mock_prompt_manager.get_prompt.side_effect = KeyError("No prompt found")
+
+    with pytest.raises(KeyError, match="No prompt found"):
+        transcript_cleaner.clean("This is a test transcript.")
+
+
+def test_clean_transcript_generic_error(transcript_cleaner, mock_prompt_manager):
+    """
+    Test handling a generic error in clean method.
+    """
+    mock_prompt_manager.get_prompt.side_effect = Exception("Generic error")
+
+    with pytest.raises(RuntimeError, match="Error cleaning transcript: Generic error"):
+        transcript_cleaner.clean("This is a test transcript.")
