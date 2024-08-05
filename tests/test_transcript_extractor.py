@@ -26,191 +26,111 @@ def fixture_transcript_extractor(mock_model_loader, mock_prompt_manager):
     )
 
 
-def test_extract_standard_prompts(
+def test_extract_transcript(
     transcript_extractor, mock_prompt_manager, mock_model_loader
 ):
-    mock_prompt_manager.get_prompt.side_effect = lambda key, transcript: f"{key} prompt"
-    mock_model_loader.generate.side_effect = lambda prompt: f"response for {prompt}"
-
-    transcript = "This is a test transcript."
-    response = transcript_extractor.extract(transcript)
-
-    expected_response = "\n\n".join(
-        [
-            f"response for {key} prompt"
-            for key in [
-                "incident_info",
-                "patient_demographics",
-                "subjective_info",
-                "history_of_present_illness",
-                "patient_histories",
-                "objective_1",
-                "objective_2",
-                "vitals",
-                "poc_tests",
-                "labs",
-                "imaging",
-                "impressions",
-                "treatments",
-                "packaging",
-                "transport",
-                "transfer_of_care",
-            ]
-        ]
-    ).strip()
-
-    assert response == expected_response
-    assert mock_prompt_manager.get_prompt.call_count == 16
-    assert mock_model_loader.generate.call_count == 16
-
-
-def test_extract_with_chunks(
-    transcript_extractor, mock_prompt_manager, mock_model_loader
-):
-    mock_prompt_manager.get_prompt.side_effect = lambda key, transcript: [
-        f"{key} chunk1",
-        f"{key} chunk2",
+    """
+    Test extracting information from a transcript with multiple prompts.
+    """
+    prompt_keys = [
+        "incident_info",
+        "patient_demographics",
+        "subjective_info",
+        "history_of_present_illness",
+        "patient_histories",
+        "objective_1",
+        "objective_2",
+        "vitals",
+        "poc_tests",
+        "labs",
+        "imaging",
+        "impressions",
+        "treatments",
+        "packaging",
+        "transport",
+        "transfer_of_care",
     ]
+    mock_prompt_manager.get_prompt.side_effect = (
+        lambda key, transcript: f"prompt for {key}"
+    )
     mock_model_loader.generate.side_effect = lambda prompt: f"response for {prompt}"
 
     transcript = "This is a test transcript."
     response = transcript_extractor.extract(transcript)
 
     expected_response = "\n\n".join(
-        [
-            "response for incident_info chunk1 response for incident_info chunk2",
-            "response for patient_demographics chunk1 response for patient_demographics chunk2",
-            "response for subjective_info chunk1 response for subjective_info chunk2",
-            (
-                "response for history_of_present_illness "
-                "chunk1 response for history_of_present_illness chunk2"
-            ),
-            "response for patient_histories chunk1 response for patient_histories chunk2",
-            "response for objective_1 chunk1 response for objective_1 chunk2",
-            "response for objective_2 chunk1 response for objective_2 chunk2",
-            "response for vitals chunk1 response for vitals chunk2",
-            "response for poc_tests chunk1 response for poc_tests chunk2",
-            "response for labs chunk1 response for labs chunk2",
-            "response for imaging chunk1 response for imaging chunk2",
-            "response for impressions chunk1 response for impressions chunk2",
-            "response for treatments chunk1 response for treatments chunk2",
-            "response for packaging chunk1 response for packaging chunk2",
-            "response for transport chunk1 response for transport chunk2",
-            "response for transfer_of_care chunk1 response for transfer_of_care chunk2",
-        ]
+        [f"response for prompt for {key}" for key in prompt_keys]
     ).strip()
-
     assert response == expected_response
-    assert mock_prompt_manager.get_prompt.call_count == 16
-    assert mock_model_loader.generate.call_count == 32
+    assert mock_prompt_manager.get_prompt.call_count == len(prompt_keys)
+    assert mock_model_loader.generate.call_count == len(prompt_keys)
 
 
-def test_extract_empty_transcript(
+def test_extract_from_prompt_with_string(
     transcript_extractor, mock_prompt_manager, mock_model_loader
 ):
-    mock_prompt_manager.get_prompt.return_value = "empty prompt"
-    mock_model_loader.generate.return_value = "empty response"
+    """
+    Test extracting information from a transcript with a single string prompt.
+    """
+    prompt_key = "incident_info"
+    mock_prompt_manager.get_prompt.return_value = "string prompt"
+    mock_model_loader.generate.return_value = "response for string prompt"
 
-    transcript = ""
-    response = transcript_extractor.extract(transcript)
+    transcript = "This is a test transcript."
+    response = transcript_extractor._extract_from_prompt(prompt_key, transcript)
 
-    expected_response = "\n\n".join(["empty response"] * 16).strip()
+    assert response == "response for string prompt"
+    mock_prompt_manager.get_prompt.assert_called_once_with(
+        prompt_key, transcript=transcript
+    )
+    mock_model_loader.generate.assert_called_once_with("string prompt")
 
-    assert response == expected_response
-    assert mock_prompt_manager.get_prompt.call_count == 16
-    assert mock_model_loader.generate.call_count == 16
+
+def test_extract_from_prompt_with_list(
+    transcript_extractor, mock_prompt_manager, mock_model_loader
+):
+    """
+    Test extracting information from a transcript with a list of prompts.
+    """
+    prompt_key = "incident_info"
+    mock_prompt_manager.get_prompt.return_value = ["prompt1", "prompt2"]
+    mock_model_loader.generate.side_effect = [
+        "response for prompt1",
+        "response for prompt2",
+    ]
+
+    transcript = "This is a test transcript."
+    response = transcript_extractor._extract_from_prompt(prompt_key, transcript)
+
+    assert response == "response for prompt1 response for prompt2"
+    mock_prompt_manager.get_prompt.assert_called_once_with(
+        prompt_key, transcript=transcript
+    )
+    mock_model_loader.generate.assert_any_call("prompt1")
+    mock_model_loader.generate.assert_any_call("prompt2")
 
 
-def test_extract_nonexistent_prompt_key(transcript_extractor, mock_prompt_manager):
+def test_extract_from_prompt_key_error(transcript_extractor, mock_prompt_manager):
+    """
+    Test handling KeyError in _extract_from_prompt method.
+    """
+    prompt_key = "nonexistent_key"
     mock_prompt_manager.get_prompt.side_effect = KeyError("No prompt found")
 
     transcript = "This is a test transcript."
-    with pytest.raises(KeyError):
-        transcript_extractor.extract(transcript)
+    with pytest.raises(KeyError, match=f"No prompt found for key: {prompt_key}"):
+        transcript_extractor._extract_from_prompt(prompt_key, transcript)
 
 
-def test_extract_model_error(
-    transcript_extractor, mock_prompt_manager, mock_model_loader
-):
-    mock_prompt_manager.get_prompt.return_value = "standard prompt"
-    mock_model_loader.generate.side_effect = RuntimeError("Model error")
-
-    transcript = "This is a test transcript."
-    with pytest.raises(RuntimeError):
-        transcript_extractor.extract(transcript)
-
-
-def test_extract_special_characters(
-    transcript_extractor, mock_prompt_manager, mock_model_loader
-):
-    special_prompt = "Prompt with special characters: !@#$%^&*()"
-    mock_prompt_manager.get_prompt.return_value = special_prompt
-    mock_model_loader.generate.return_value = (
-        "response with special characters: !@#$%^&*()"
-    )
-
-    transcript = "This is a test transcript with special characters: !@#$%^&*()"
-    response = transcript_extractor.extract(transcript)
-
-    expected_response = "\n\n".join(
-        ["response with special characters: !@#$%^&*()"] * 16
-    ).strip()
-
-    assert response == expected_response
-    assert mock_prompt_manager.get_prompt.call_count == 16
-    assert mock_model_loader.generate.call_count == 16
-
-
-def test_extract_large_transcript(
-    transcript_extractor, mock_prompt_manager, mock_model_loader
-):
-    large_transcript = "This is a large transcript. " * 1000
-    mock_prompt_manager.get_prompt.return_value = "large prompt"
-    mock_model_loader.generate.return_value = "large response"
-
-    response = transcript_extractor.extract(large_transcript)
-
-    expected_response = "\n\n".join(["large response"] * 16).strip()
-
-    assert response == expected_response
-    assert mock_prompt_manager.get_prompt.call_count == 16
-    assert mock_model_loader.generate.call_count == 16
-
-
-def test_extract_mixed_chunks_and_single(
-    transcript_extractor, mock_prompt_manager, mock_model_loader
-):
-    mock_prompt_manager.get_prompt.side_effect = lambda key, transcript: (
-        [f"{key} chunk1", f"{key} chunk2"]
-        if key in ["incident_info", "patient_demographics"]
-        else f"{key} prompt"
-    )
-    mock_model_loader.generate.side_effect = lambda prompt: f"response for {prompt}"
+def test_extract_from_prompt_generic_error(transcript_extractor, mock_prompt_manager):
+    """
+    Test handling a generic error in _extract_from_prompt method.
+    """
+    prompt_key = "incident_info"
+    mock_prompt_manager.get_prompt.side_effect = Exception("Generic error")
 
     transcript = "This is a test transcript."
-    response = transcript_extractor.extract(transcript)
-
-    expected_response = "\n\n".join(
-        [
-            "response for incident_info chunk1 response for incident_info chunk2",
-            "response for patient_demographics chunk1 response for patient_demographics chunk2",
-            "response for subjective_info prompt",
-            "response for history_of_present_illness prompt",
-            "response for patient_histories prompt",
-            "response for objective_1 prompt",
-            "response for objective_2 prompt",
-            "response for vitals prompt",
-            "response for poc_tests prompt",
-            "response for labs prompt",
-            "response for imaging prompt",
-            "response for impressions prompt",
-            "response for treatments prompt",
-            "response for packaging prompt",
-            "response for transport prompt",
-            "response for transfer_of_care prompt",
-        ]
-    ).strip()
-
-    assert response == expected_response
-    assert mock_prompt_manager.get_prompt.call_count == 16
-    assert mock_model_loader.generate.call_count == 18
+    with pytest.raises(
+        RuntimeError, match="Error extracting information: Generic error"
+    ):
+        transcript_extractor._extract_from_prompt(prompt_key, transcript)

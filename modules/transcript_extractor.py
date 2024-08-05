@@ -1,3 +1,5 @@
+from typing import List, Union
+
 from modules.model_loader import ModelLoader
 from modules.prompt_manager import PromptManager
 
@@ -68,12 +70,17 @@ class TranscriptExtractor:
         Returns:
             str: The extracted information.
         """
-        prompt = self.prompt_manager.get_prompt(prompt_key, transcript=transcript)
+        try:
+            prompt = self.prompt_manager.get_prompt(prompt_key, transcript=transcript)
 
-        if isinstance(prompt, list):
-            responses = [
-                self.model_loader.generate(sub_prompt) for sub_prompt in prompt
-            ]
-            return " ".join(responses).strip()
+            if isinstance(prompt, list):
+                responses = [
+                    self.model_loader.generate(sub_prompt) for sub_prompt in prompt
+                ]
+                return " ".join(responses).strip()
 
-        return self.model_loader.generate(prompt).strip()
+            return self.model_loader.generate(prompt).strip()
+        except KeyError as e:
+            raise KeyError(f"No prompt found for key: {prompt_key}") from e
+        except Exception as e:
+            raise RuntimeError(f"Error extracting information: {e}") from e
