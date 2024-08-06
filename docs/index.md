@@ -12,7 +12,7 @@ Welcome to the EMScribe documentation! Here you'll find everything you need to k
 - [Installation](installation.md)
 - [Usage](usage.md)
 - [Development](development.md)
-- [API Reference](api_reference.md)
+- [API Reference](api_reference/index.md)
 - [Contributing](contributing.md)
 - [Contact](#contact)
 
@@ -59,7 +59,14 @@ Here's a peek into how EMScribe is organized:
 |   |-- narrative.txt
 |   `-- reviewed_extract.txt
 |-- docs
-|   |-- api_reference.md
+|   |-- api_reference
+|   |   |-- extract_reviewer.md
+|   |   |-- index.md
+|   |   |-- model_loader.md
+|   |   |-- narrative_manager.md
+|   |   |-- prompt_manager.md
+|   |   |-- transcript_cleaner.md
+|   |   `-- transcript_extractor.md
 |   |-- contributing.md
 |   |-- development.md
 |   |-- index.md
@@ -82,12 +89,6 @@ Here's a peek into how EMScribe is organized:
 |-- requirements.txt
 |-- scripts
 |   |-- cli.py
-|   |-- data
-|   |   |-- cleaned_transcript.txt
-|   |   `-- extract.txt
-|   |-- extraction.py
-|   |-- main.py
-|   `-- preprocess.py
 |-- tests
 |   |-- conftest.py
 |   |-- test_cli.py
@@ -106,7 +107,7 @@ Ready to jump in? Here’s how to get started with EMScribe:
 1. **[Installation Instructions](installation.md)**: Set up EMScribe on your machine.
 2. **[Usage Guide](usage.md)**: Learn how to run scripts and make the most out of EMScribe.
 3. **[Development Guide](development.md)**: For developers looking to contribute, this guide covers everything you need to know.
-4. **[API Reference](api_reference.md)**: Detailed information about the API and how to use each module.
+4. **[API Reference](api_reference/index.md)**: Detailed information about the API and how to use each module.
 5. **[Contributing Guidelines](contributing.md)**: Learn how to contribute to the project.
 
 ## 📧 Contact
