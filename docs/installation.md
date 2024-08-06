@@ -66,7 +66,14 @@ Here's an overview of the EMScribe directory structure after installation:
 |   |-- narrative.txt
 |   `-- reviewed_extract.txt
 |-- docs
-|   |-- api_reference.md
+|   |-- api_reference
+|   |   |-- extract_reviewer.md
+|   |   |-- index.md
+|   |   |-- model_loader.md
+|   |   |-- narrative_manager.md
+|   |   |-- prompt_manager.md
+|   |   |-- transcript_cleaner.md
+|   |   `-- transcript_extractor.md
 |   |-- contributing.md
 |   |-- development.md
 |   |-- index.md
@@ -89,12 +96,6 @@ Here's an overview of the EMScribe directory structure after installation:
 |-- requirements.txt
 |-- scripts
 |   |-- cli.py
-|   |-- data
-|   |   |-- cleaned_transcript.txt
-|   |   `-- extract.txt
-|   |-- extraction.py
-|   |-- main.py
-|   `-- preprocess.py
 |-- tests
 |   |-- conftest.py
 |   |-- test_cli.py
@@ -120,5 +121,5 @@ If all tests pass, congratulations! Your installation is successful, and you are
 
 - **[Usage](usage.md)**: Learn how to use EMScribe for extracting and cleaning transcripts.
 - **[Development](development.md)**: Understand the development workflow and how to contribute to EMScribe.
-- **[API Reference](api_reference.md)**: Detailed information about the API and modules.
+- **[API Reference](api_reference/index.md)**: Detailed information about the API and modules.
 - **[Contributing](contributing.md)**: Guidelines for contributing to the project.
