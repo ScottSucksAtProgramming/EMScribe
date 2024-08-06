@@ -72,15 +72,19 @@ def create_parser():
     )
 
     # Review command
-    parser_review = subparsers.add_parser("review", help="Review extracted information")
-    parser_review.add_argument(
+    review_parser = subparsers.add_parser("review", help="Review extracted data")
+    review_parser.add_argument(
         "extracted_data_path",
+        type=str,
+        nargs="?",
+        default="data/extract.txt",
         help="Path to the extracted data file",
     )
-    parser_review.add_argument(
+    review_parser.add_argument(
         "--output",
+        type=str,
         default="data/reviewed_extract.txt",
-        help="Path to save the reviewed data",
+        help="Path to the reviewed output file",
     )
 
     return parser
