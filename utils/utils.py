@@ -3,12 +3,11 @@ import os
 
 class FileManager:
     """
-    A class to handle file operations including reading, writing, and checking the existence of
-    files.
+    A class to handle file operations including reading, writing, and checking the existence of files.
     """
 
     @staticmethod
-    def read_file(file_path):
+    def read_file(file_path: str) -> str:
         """
         Reads the content of a file and returns it as a string.
 
@@ -22,7 +21,7 @@ class FileManager:
             return file.read()
 
     @staticmethod
-    def write_file(file_path, content):
+    def write_file(file_path: str, content: str) -> None:
         """
         Writes content to a file.
 
@@ -35,7 +34,7 @@ class FileManager:
             file.write(content)
 
     @staticmethod
-    def ensure_file_exists(file_path):
+    def ensure_file_exists(file_path: str) -> None:
         """
         Ensures that the specified file exists.
 

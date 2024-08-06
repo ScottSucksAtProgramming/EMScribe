@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, List
 
 from modules.model_loader import ModelLoader
 from modules.prompt_manager import PromptManager
@@ -35,14 +35,23 @@ class NarrativeManager:
         Returns:
             str: The generated narrative.
         """
-        narrative_steps = self.prompt_manager.get_prompt(narrative_format, data=data)
+        try:
+            narrative_steps = self.prompt_manager.get_prompt(
+                narrative_format, data=data
+            )
 
-        narrative = []
-        for step_prompt in narrative_steps.values():
-            step_response = self._generate_response(step_prompt)
-            narrative.append(step_response)
+            narrative = []
+            for step_prompt in narrative_steps.values():
+                step_response = self._generate_response(step_prompt)
+                narrative.append(step_response)
 
-        return "\n\n".join(narrative).strip()
+            return "\n\n".join(narrative).strip()
+        except KeyError:
+            # Allow KeyError to propagate
+            raise
+        except Exception as e:
+            # Log the exception and handle it appropriately
+            raise RuntimeError(f"Error generating narrative: {e}")
 
     def _generate_response(self, prompt: str) -> str:
         """
@@ -54,13 +63,17 @@ class NarrativeManager:
         Returns:
             str: The AI model's response.
         """
-        context_window_size = self.model_loader.context_window
+        try:
+            context_window_size = self.model_loader.context_window
 
-        if len(prompt) > context_window_size:
-            response_parts = [
-                self.model_loader.generate(prompt[i : i + context_window_size])
-                for i in range(0, len(prompt), context_window_size)
-            ]
-            return " ".join(response_parts)
+            if len(prompt) > context_window_size:
+                response_parts = [
+                    self.model_loader.generate(prompt[i : i + context_window_size])
+                    for i in range(0, len(prompt), context_window_size)
+                ]
+                return " ".join(response_parts)
 
-        return self.model_loader.generate(prompt)
+            return self.model_loader.generate(prompt)
+        except Exception as e:
+            # Log the exception and handle it appropriately
+            raise RuntimeError(f"Error generating response: {e}")

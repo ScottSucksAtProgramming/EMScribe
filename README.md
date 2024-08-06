@@ -1,4 +1,5 @@
 # EMScribe
+# EMScribe
 
 <p align="center">
   <img src="images/emscribe_logo.png" alt="EMScribe Logo" width="500" />

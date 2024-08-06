@@ -1,3 +1,5 @@
+from typing import Any, Dict, Union
+
 from modules.prompts import (
     cleaning_prompts,
     extraction_prompts,
@@ -12,12 +14,17 @@ class PromptManager:
     and quality control.
     """
 
-    def __init__(self, prompts=None):
+    def __init__(
+        self,
+        prompts: Dict[str, Union[str, Dict[str, str]]] = None,
+        context_window_size: int = 32000,
+    ):
         """
         Initializes the PromptManager with a dictionary of prompts.
 
         Args:
-            prompts (dict, optional): A dictionary of prompts. Defaults to None.
+            prompts (Dict[str, Union[str, Dict[str, str]]], optional): A dictionary of prompts. Defaults to None.
+            context_window_size (int): The maximum context window size for the prompts.
         """
         if prompts is None:
             prompts = {
@@ -27,8 +34,11 @@ class PromptManager:
                 **review_prompts.review_prompts,
             }
         self.prompts = prompts
+        self.context_window_size = context_window_size
 
-    def get_prompt(self, key: str, **kwargs) -> str:
+    def get_prompt(
+        self, key: str, **kwargs: Any
+    ) -> Union[str, Dict[str, str], list[str]]:
         """
         Retrieves a prompt template and formats it with the provided keyword arguments.
 
@@ -37,7 +47,7 @@ class PromptManager:
             **kwargs: Keyword arguments to format the template.
 
         Returns:
-            str: The formatted prompt.
+            Union[str, Dict[str, str], list[str]]: The formatted prompt.
 
         Raises:
             KeyError: If no prompt is found for the given key.
@@ -50,12 +60,11 @@ class PromptManager:
             return {k: v.format(**kwargs) for k, v in prompt_template.items()}
 
         formatted_prompt = prompt_template.format(**kwargs)
-        context_window_size = 32000  # Adjusting to use the new context window size
 
-        if len(formatted_prompt) > context_window_size:
+        if len(formatted_prompt) > self.context_window_size:
             prompt_chunks = [
-                formatted_prompt[i : i + context_window_size]
-                for i in range(0, len(formatted_prompt), context_window_size)
+                formatted_prompt[i : i + self.context_window_size]
+                for i in range(0, len(formatted_prompt), self.context_window_size)
             ]
             return prompt_chunks
 

@@ -11,22 +11,16 @@ class ExtractReviewer:
     Attributes:
         model_loader (ModelLoader): An instance of ModelLoader for loading the AI model.
         prompt_manager (PromptManager): An instance of PromptManager for managing prompts.
-
-    Methods:
-        review_section(section: str, user_input: Optional[str] = None) -> str:
-            Reviews a section of extracted data using the AI model.
-
-        final_review(updated_section: str) -> str:
-            Performs a final review of a section after changes have been made.
-
-        _get_review_prompt(prompt_key: str, section: str, user_input: Optional[str] = None) -> str:
-            Retrieves and formats the review prompt.
-
-        _generate_response(prompt: str) -> str:
-            Generates a response from the AI model based on the provided prompt.
     """
 
     def __init__(self, model_loader: ModelLoader, prompt_manager: PromptManager):
+        """
+        Initializes the ExtractReviewer with a model loader and a prompt manager.
+
+        Args:
+            model_loader (ModelLoader): An instance of ModelLoader.
+            prompt_manager (PromptManager): An instance of PromptManager.
+        """
         self.model_loader = model_loader
         self.prompt_manager = prompt_manager
 
@@ -36,7 +30,7 @@ class ExtractReviewer:
 
         Args:
             section (str): The section of extracted data to review.
-            user_input (Optional[str]): The user's input for modifications.
+            user_input (Optional[str]): The user's input for modifications, if any.
 
         Returns:
             str: The AI model's response.
@@ -68,12 +62,12 @@ class ExtractReviewer:
         Args:
             prompt_key (str): The key for the review prompt.
             section (str): The section of extracted data.
-            user_input (Optional[str]): The user's input for modifications.
+            user_input (Optional[str]): The user's input for modifications, if any.
 
         Returns:
             str: The formatted review prompt.
         """
-        if user_input:
+        if user_input is not None:
             return self.prompt_manager.get_prompt(
                 prompt_key, section_data=section, user_input=user_input
             )
@@ -89,9 +83,7 @@ class ExtractReviewer:
         Returns:
             str: The AI model's response.
         """
-        context_window_size = (
-            self.model_loader.context_window
-        )  # Use the dynamic context window size
+        context_window_size = self.model_loader.context_window
 
         if len(prompt) > context_window_size:
             response_parts = [

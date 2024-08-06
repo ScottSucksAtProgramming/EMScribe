@@ -1,17 +1,24 @@
+"""
+This module contains prompts for extracting information from EMS transcripts.
+
+Attributes:
+    extraction_prompts (dict): A dictionary containing prompts for extracting specific types of information from EMS transcripts.
+"""
+
 extraction_prompts = {
     "incident_info": """
 As an expert in Natural Language Processing (NLP), your job is to pull out relevant medical information from documents provided to you. These documents will all be about EMS medical incidents. Follow the steps below to find the required information and then provide your response.
 
-1. Review the entire document looking for the unit number, ambulance number or other unit identifier for the unit that is responding to the medical emergency.
-2. Review the entire document looking for the response mode (emergent or non-emergent) used. 
-3. Review the entire document looking for the crew type for this response (full crew, driver only, medic only, EMT only)
+1. Review the entire document looking for the unit number, ambulance number, or other unit identifier for the unit that is responding to the medical emergency.
+2. Review the entire document looking for the response mode (emergent or non-emergent) used.
+3. Review the entire document looking for the crew type for this response (full crew, driver only, medic only, EMT only).
 4. Review the entire document looking for any delays which occurred during the response.
 5. Review the entire document looking for the location where the ambulance or vehicle was when they began their response.
 6. Review the entire document looking for the location of the medical emergency.
-7. Review the entire document looking for the medical complaint provided during dispatch, or prior to the crew meeting the patient.
+7. Review the entire document looking for the medical complaint provided during dispatch or prior to the crew meeting the patient.
 
-Once you have obtained all the information give your response using the following template. If information is missing leave an answer of '[No Info]'.
-Use Plain text. Do not add any comments or additional information.
+Once you have obtained all the information, give your response using the following template. If information is missing, leave an answer of '[No Info]'.
+Use plain text. Do not add any comments or additional information.
 
 Template
 
@@ -24,12 +31,12 @@ Incident Information
 - Dispatch Complaint: 
 
 Example:
-DO NOT USE THIS INFORMATION IN YOUR RESPONSE IT IS ONLY FOR REFERENCE
+DO NOT USE THIS INFORMATION IN YOUR RESPONSE. IT IS ONLY FOR REFERENCE
 - Unit: 5-41-16
 - Response Mode: non-emergent
 - Crew Type: full crew
 - Response Delays: none
-- Incident Location: residence in new york
+- Incident Location: residence in New York
 - Dispatch Complaint: knee pain
 
 Here is the information: ({transcript})""",
@@ -39,10 +46,10 @@ As an expert in Natural Language Processing (NLP), your job is to pull out relev
 1. Review the entire document looking for the patient's first name.
 2. Review the entire document looking for the patient's date of birth.
 3. Review the entire document looking for the patient's age.
-4. Review the entire document looking for the patient's gender
+4. Review the entire document looking for the patient's gender.
 
-Once you have obtained all the information give your response using the following template. If information is missing leave an answer of '[No Info]'.
-Use Plain text. Do not add any comments or additional information.
+Once you have obtained all the information, give your response using the following template. If information is missing, leave an answer of '[No Info]'.
+Use plain text. Do not add any comments or additional information.
 
 Template
 
@@ -53,7 +60,7 @@ Patient Demographics
 - Gender: 
 
 Example:
-DO NOT USE THIS INFORMATION IN YOUR RESPONSE IT IS ONLY FOR REFERENCE
+DO NOT USE THIS INFORMATION IN YOUR RESPONSE. IT IS ONLY FOR REFERENCE
 - Name: Scott
 - Date of Birth: January 2nd, 1986
 - Age: 38
@@ -63,15 +70,14 @@ Here is the information: ({transcript})""",
     "subjective_info": """
 As an expert in Natural Language Processing (NLP), your job is to pull out relevant medical information from documents provided to you. These documents will all be about EMS medical incidents. Follow the steps below to find the required information and then provide your response.
 
-1. Review the entire document looking for the patient's address or facility name, unit and room where the patient is currently located.
+1. Review the entire document looking for the patient's address or facility name, unit, and room where the patient is currently located.
 2. Review the entire document looking for the location and position in which the patient was found.
 3. Review the entire document looking for an initial description of the patient's appearance.
-4. Review the entire document looking any medical equipment the patient is using or connected to when first encountered by the EMS crew. Do not include any equipment that was later placed by EMS.
+4. Review the entire document looking for any medical equipment the patient is using or connected to when first encountered by the EMS crew. Do not include any equipment that was later placed by EMS.
 5. Review the entire document looking for the patient's chief complaint.
 
-
-Once you have obtained all the information give your response using the following template. This information will not always be provided. If no information is provided for a section, answer '[No Info]'.
-Use Plain text. Do not add any comments or additional information.
+Once you have obtained all the information, give your response using the following template. If no information is provided for a section, answer '[No Info]'.
+Use plain text. Do not add any comments or additional information.
 
 Template
 
@@ -86,7 +92,7 @@ Here is the information: ({transcript})""",
     "history_of_present_illness": """
 As an expert in Natural Language Processing (NLP), your job is to pull out relevant medical information from documents provided to you. These documents will all be about EMS medical incidents. Follow the steps below to find the required information and then provide your response.
 
-1. Review the entire document looking for any other complaints, signs or symptoms mentioned by the patient.
+1. Review the entire document looking for any other complaints, signs, or symptoms mentioned by the patient.
 2. Review the entire document looking for the onset of the patient's complaints (sudden, gradual, episodic, other).
 3. Review the entire document looking for any information on what makes the patient's condition worse.
 4. Review the entire document looking for any information on what makes the patient's condition better.
@@ -97,7 +103,8 @@ As an expert in Natural Language Processing (NLP), your job is to pull out relev
 9. Review the entire document looking for any actions or treatments completed before the EMS crew arrived.
 10. Review the entire document looking for any further information on the history of the patient's present illness.
 
-Once you have obtained all the information give your response using the following template. This information will not always be provided. If no information is provided for a section, answer '[No Info]'.
+Once you have obtained all the information, give your response using the following template. If no information is provided for a section, answer '[No Info]'.
+Use plain text. Do not add any comments or additional information.
 
 Template
 
@@ -113,8 +120,6 @@ History of Present Illness
 - Interventions: 
 - Additional History of Present Illness: 
 
-Once you have obtained all the information give your response using the following template. Use Plain text. Do not add any comments or additional information.
-
 Here is the information: ({transcript})""",
     "patient_histories": """
 As an expert in Natural Language Processing (NLP), your job is to pull out relevant medical information from documents provided to you. These documents will all be about EMS medical incidents. Follow the steps below to find the required information and then provide your response.
@@ -127,8 +132,8 @@ As an expert in Natural Language Processing (NLP), your job is to pull out relev
 6. Review the entire document looking for the patient's prescribed medications.
 7. Review the entire document looking for the patient's allergies.
 
-Once you have obtained all the information give your response using the following template. This information will not always be provided. If no information is provided for a section, answer '[No Info]'.
-Use Plain text. Do not add any comments or additional information.
+Once you have obtained all the information, give your response using the following template. If no information is provided for a section, answer '[No Info]'.
+Use plain text. Do not add any comments or additional information.
 
 Template
 
@@ -145,7 +150,7 @@ Here is the information: ({transcript})""",
     "objective_1": """
 As an expert in Natural Language Processing (NLP), your job is to pull out relevant medical information from documents provided to you. These documents will all be about EMS medical incidents. This information will not always be provided. If no information is provided for a section, answer '[No Info]'. Follow the steps below to find the required information and then provide your response.
 
-1. Review the entire document looking for objective exam findings related to the patient's general body system. This should include the patients level of consciousness (alert, verbal, painful, unresponsive) and the patients orientation status.
+1. Review the entire document looking for objective exam findings related to the patient's general body system. This should include the patient's level of consciousness (alert, verbal, painful, unresponsive) and the patient's orientation status.
 2. Review the entire document looking for objective exam findings related to the patient's skin.
 3. Review the entire document looking for objective exam findings related to the patient's head.
 4. Review the entire document looking for objective exam findings related to the patient's ears.
@@ -154,7 +159,7 @@ As an expert in Natural Language Processing (NLP), your job is to pull out relev
 7. Review the entire document looking for objective exam findings related to the patient's throat.
 8. Review the entire document looking for objective exam findings related to the patient's neck, including the status of the patient's airways.
 
-Once you have obtained all the information give your response using the following template. Use Plain text. Do not add any comments or additional information.
+Once you have obtained all the information, give your response using the following template. Use plain text. Do not add any comments or additional information.
 
 Template
 
@@ -175,14 +180,14 @@ As an expert in Natural Language Processing (NLP), your job is to pull out relev
 1. Review the entire document looking for objective exam findings related to the patient's cardiovascular body system.
 2. Review the entire document looking for objective exam findings related to the patient's respiratory body system.
 3. Review the entire document looking for objective exam findings related to the patient's abdomen.
-4. Review the entire document looking for objective exam findings related to the patient's genitourinal body system.
+4. Review the entire document looking  for objective exam findings related to the patient's genitourinary body system.
 5. Review the entire document looking for objective exam findings related to the patient's gastrointestinal body system.
 6. Review the entire document looking for objective exam findings related to the patient's spine.
 7. Review the entire document looking for objective exam findings related to the patient's musculoskeletal body system.
 8. Review the entire document looking for objective exam findings related to the patient's neurologic body system.
-9. Review the entire document looking for objective exam findings related to the patient's phsychiatric body system.
+9. Review the entire document looking for objective exam findings related to the patient's psychiatric body system.
 
-Once you have obtained all the information give your response using the following template. Use Plain text. Do not add any comments or additional information.
+Once you have obtained all the information, give your response using the following template. Use plain text. Do not add any comments or additional information.
 
 Template
 
@@ -202,13 +207,13 @@ Here is the information: ({transcript})""",
 As an expert in Natural Language Processing (NLP), your job is to pull out relevant medical information from documents provided to you. These documents will all be about EMS medical incidents. This information will not always be provided. If no information is provided for a section, answer '[No Info]'. Follow the steps below to find the required information and then provide your response.
 
 1. Review the entire document looking for the patient's initial blood pressure.
-2. Review the entire document looking for the patient's initial heart rate, rhythm (regular/irregular) and quality (strong, weak, bounding, thready.
-3. Review the entire document looking for the patient's initial respiration rate, regularity (regular/irregular) and quality (slow, rapid, weak, assisted, mechanically ventilated).
+2. Review the entire document looking for the patient's initial heart rate, rhythm (regular/irregular), and quality (strong, weak, bounding, thready).
+3. Review the entire document looking for the patient's initial respiration rate, regularity (regular/irregular), and quality (slow, rapid, weak, assisted, mechanically ventilated).
 4. Review the entire document looking for the patient's initial pulse oximetry (SpO2) percentage and whether the patient was on room air (RA) or oxygen (O2).
 5. Review the entire document looking for the patient's initial pain level (0-10).
 6. Review the entire document looking for the patient's initial temperature.
 
-Once you have obtained all the information give your response using the following template. Use Plain text. Do not add any comments or additional information.
+Once you have obtained all the information, give your response using the following template. Use plain text. Do not add any comments or additional information.
 
 Template
 
@@ -225,13 +230,13 @@ Here is the information: ({transcript})""",
 As an expert in Natural Language Processing (NLP), your job is to pull out relevant medical information from documents provided to you. These documents will all be about EMS medical incidents. This information will not always be provided. If no information is provided for a section, answer '[No Info]'. Follow the steps below to find the required information and then provide your response.
 
 1. Review the entire document looking for the patient's initial blood glucose level.
-2. Review the entire document looking for the patient's initial EKG Interpretation (Rhythm name, rate range. Any Ectopy. Other Findings.)
+2. Review the entire document looking for the patient's initial EKG interpretation (Rhythm name, rate range, any ectopy, other findings).
 3. Review the entire document looking for the patient's initial End Tidal CO2 (EtCO2) reading.
 4. Review the entire document looking for the patient's initial Cincinnati Stroke Exam score (Positive/Negative).
 5. Review the entire document looking for the patient's initial Los Angeles Motor Scale (LAMS) score (0-4).
-6. Review the entire document looking for the patient's initial NIH Stroke Score (NIHSS).
+6. Review the entire document looking for the patient's initial NIH Stroke Scale (NIHSS).
 
-Once you have obtained all the information give your response using the following template. Use Plain text. Do not add any comments or additional information.
+Once you have obtained all the information, give your response using the following template. Use plain text. Do not add any comments or additional information.
 
 Template
 
@@ -247,48 +252,49 @@ Here is the information: ({transcript})""",
     "labs": """
 As an expert in Natural Language Processing (NLP), your job is to pull out relevant medical information from documents provided to you. These documents will all be about EMS medical incidents. This information will not always be provided. If no information is provided for a section, answer '[No Info]'. Follow the steps below to find the required information and then provide your response.
 
-1. Review the entire document looking for lab results for a metabolic panel (Sodium (Na); Potassium (K); Chloride(Cl); Carbon Dioxide (CO2); Blood Urea Nitrogen (BUN); Creatinine (Cr); Glucose (Gluc); Calcium (Ca); Magnesium (Mg); Phosphorus (Phos)).
-2. Review the entire document looking for lab results for a hematology panel (White Blood Count (WBC); Hemoglobin (Hgb); Hematocrit (Hct); Platelets (Plat))
-3. Review the entire document looking for lab results for a hepatic panel (Total Bilirubin (Tot. Bilirubin); Alanine Transaminase (ALT); Aspartate Aminotransferase (AST); Alkaline Phosphatase (ALP))
-4. Review the entire document looking for lab results for a coagulation panel (Prothrombin Time (PT); Partial Thromboplastin Time ((a)PTT); International Normalized Ratio (INR))
-5. Review the entire document looking for lab results for a cardiac panel (Troponin; Creatinine Kinase (CK); Creatine Kinase-MB (CK-MB); Creatine Phosphokinase (CPK); B-Type Natriuretic Peptide (BNP))
+1. Review the entire document looking for lab results for a metabolic panel (Sodium (Na); Potassium (K); Chloride (Cl); Carbon Dioxide (CO2); Blood Urea Nitrogen (BUN); Creatinine (Cr); Glucose (Gluc); Calcium (Ca); Magnesium (Mg); Phosphorus (Phos)).
+2. Review the entire document looking for lab results for a hematology panel (White Blood Count (WBC); Hemoglobin (Hgb); Hematocrit (Hct); Platelets (Plat)).
+3. Review the entire document looking for lab results for a hepatic panel (Total Bilirubin (Tot. Bilirubin); Alanine Transaminase (ALT); Aspartate Aminotransferase (AST); Alkaline Phosphatase (ALP)).
+4. Review the entire document looking for lab results for a coagulation panel (Prothrombin Time (PT); Partial Thromboplastin Time ((a)PTT); International Normalized Ratio (INR)).
+5. Review the entire document looking for lab results for a cardiac panel (Troponin; Creatinine Kinase (CK); Creatine Kinase-MB (CK-MB); Creatine Phosphokinase (CPK); B-Type Natriuretic Peptide (BNP)).
 6. Review the entire document looking for any other lab results.
-Once you have obtained all the information, give your response using the following template. Use Plain text. Do not add any comments or additional information.
+
+Once you have obtained all the information, give your response using the following template. Use plain text. Do not add any comments or additional information.
 
 Template
 
 Laboratory Results
-Metabolic - 
-Hematology - 
-Hepatic - 
-Coagulation - 
-Cardiac - 
-Other - 
+- Metabolic: 
+- Hematology: 
+- Hepatic: 
+- Coagulation: 
+- Cardiac: 
+- Other: 
 
 Here is the information: ({transcript})""",
     "imaging": """
-As an expert in Natural Language Processing (NLP), your job is to pull out relevant medical information from documents provided to you. These documents will all be about EMS medical incidents. This information will not always be provided. If no information is provided for a section, answer '[No Info]'. There may be multiple imaging tests of the same type. If so each one should be listed individually. Follow the steps below to find the required information and then provide your response.
+As an expert in Natural Language Processing (NLP), your job is to pull out relevant medical information from documents provided to you. These documents will all be about EMS medical incidents. This information will not always be provided. If no information is provided for a section, answer '[No Info]'. There may be multiple imaging tests of the same type. If so, each one should be listed individually. Follow the steps below to find the required information and then provide your response.
 
 1. Review the entire document looking for X-ray results. 
 2. Review the entire document looking for CAT Scan (CT) results. 
-3. Review the entire document, looking for MRI results. 
-4. Review the entire document, looking for Ultrasound results.
-5. Review the entire document, looking for other imaging results.
+3. Review the entire document looking for MRI results. 
+4. Review the entire document looking for Ultrasound results.
+5. Review the entire document looking for other imaging results.
 
-Once you have obtained all the information, give your response using the following template. Use Plain text. Do not add any comments or additional information.
+Once you have obtained all the information, give your response using the following template. Use plain text. Do not add any comments or additional information.
 
 Template
 
 Imaging Reports
-[List all X-Ray Results using this format: X-Ray (Target) @ (Date / Time): (Impression)]
-[List all CT Results using this format: CT (Target) (with/without) contrast @ (Date / Time): (Impression)]
+[List all X-ray results using this format: X-ray (Target) @ (Date / Time): (Impression)]
+[List all CT results using this format: CT (Target) (with/without) contrast @ (Date / Time): (Impression)]
 [List all MRI/MRA results using this format: MRI (or MRA) (Target) (with/without) contrast @ (Date / Time): (Impression)]
-[List all Ultrasound results using this format: Ultrasound (Target)  @ (Date / Time): (Impression)]
+[List all Ultrasound results using this format: Ultrasound (Target) @ (Date / Time): (Impression)]
 [List all other imaging reports]
 
 Here is the information: ({transcript})""",
     "impressions": """
-As an expert in Natural Language Processing (NLP), your job is to pull out relevant medical information from documents provided to you. These documents will all be about EMS medical incidents. This information will not always be provided. If no information is provided for a section, answer '[No Info]'. If so each one should be listed individually. Follow the steps below to find the required information and respond.
+As an expert in Natural Language Processing (NLP), your job is to pull out relevant medical information from documents provided to you. These documents will all be about EMS medical incidents. This information will not always be provided. If no information is provided for a section, answer '[No Info]'. Follow the steps below to find the required information and respond.
 
 1. Review the entire document for the EMS provider's primary impression or diagnosis.
 2. Review the entire document for the EMS provider's secondary impressions or diagnoses.
@@ -296,7 +302,7 @@ As an expert in Natural Language Processing (NLP), your job is to pull out relev
 4. Review the entire document for the transport mode (emergent/non-emergent) used to get to the destination.
 5. Review the entire document to see if the patient refused further care or transport (yes/no).
 
-Once you have obtained all the information, give your response using the following template. Use Plain text. Do not add any comments or additional information.
+Once you have obtained all the information, give your response using the following template. Use plain text. Do not add any comments or additional information.
 
 Template
 
@@ -309,7 +315,7 @@ Impression Information
 
 Here is the information: ({transcript})""",
     "treatments": """
-As an expert in Natural Language Processing (NLP), your job is to pull out relevant medical information from documents provided to you. These documents will all be about EMS medical incidents. This information will not always be provided. If no information is provided for a section, answer '[No Info]'. If so each one should be listed individually. Follow the steps below to find the required information and respond.
+As an expert in Natural Language Processing (NLP), your job is to pull out relevant medical information from documents provided to you. These documents will all be about EMS medical incidents. This information will not always be provided. If no information is provided for a section, answer '[No Info]'. Follow the steps below to find the required information and respond.
 
 1. Review the entire document for the medications given to the patient by the EMS provider.
 2. Review the entire document for the procedures performed on the patient by the EMS provider.
@@ -328,11 +334,9 @@ Treatments
 - Unsuccessful Treatments: 
 - Deferred Treatments: 
 
-Once you have obtained all the information, give your response using the following template. Use Plain text. Do not add any comments or additional information.
-
 Here is the information: ({transcript})""",
     "packaging": """
-As an expert in Natural Language Processing (NLP), your job is to extract relevant medical information from documents provided to you. These documents will all be about EMS medical incidents. This information will not always be provided. If no information is provided for a section, answer '[No Info]'. If so, each one should be listed individually. Follow the steps below to find the required information and respond.
+As an expert in Natural Language Processing (NLP), your job is to extract relevant medical information from documents provided to you. These documents will all be about EMS medical incidents. This information will not always be provided. If no information is provided for a section, answer '[No Info]'. Follow the steps below to find the required information and respond.
 
 1. Review the entire document for any important events that happened before the patient was transported to the destination.
 2. Review the entire document for any events that delayed transport to the destination.
@@ -340,7 +344,7 @@ As an expert in Natural Language Processing (NLP), your job is to extract releva
 4. Review the entire document for the safety equipment used to secure the patient to the transport stretcher.
 5. Review the entire document for the monitoring equipment that was connected to the patient.
 
-Once you have obtained all the information, give your response using the following template. Use Plain text. Do not add any comments or additional information.
+Once you have obtained all the information, give your response using the following template. Use plain text. Do not add any comments or additional information.
 
 Template
 
@@ -352,7 +356,7 @@ Patient Packaging
 
 Here is the information: ({transcript})""",
     "transport": """
-As an expert in Natural Language Processing (NLP), your job is to extract relevant medical information from documents provided to you. These documents will all be about EMS medical incidents. This information will not always be provided. If no information is provided for a section, answer '[No Info]'. If so, each one should be listed individually. Follow the steps below to find the required information and respond.
+As an expert in Natural Language Processing (NLP), your job is to extract relevant medical information from documents provided to you. These documents will all be about EMS medical incidents. This information will not always be provided. If no information is provided for a section, answer '[No Info]'. Follow the steps below to find the required information and respond.
 
 1. Review the entire document for any notifications made to the destination.
 2. Review the entire document for any events that occurred during transport.
@@ -360,9 +364,7 @@ As an expert in Natural Language Processing (NLP), your job is to extract releva
 4. Review the entire document for changes to the patient's clinical condition.
 5. Review the entire document for changes to the patient's vital signs or monitoring status.
 
-
-
-Once you have obtained all the information, give your response using the following template. Use Plain text. Do not add any comments or additional information.
+Once you have obtained all the information, give your response using the following template. Use plain text. Do not add any comments or additional information.
 
 Template
 
@@ -375,7 +377,7 @@ Transport Info
 
 Here is the information: ({transcript})""",
     "transfer_of_care": """
-As an expert in Natural Language Processing (NLP), your job is to extract relevant medical information from documents provided to you. These documents will all be about EMS medical incidents. This information will not always be provided. If no information is provided for a section, answer '[No Info]'. If so, each one should be listed individually. Follow the steps below to find the required information and respond.
+As an expert in Natural Language Processing (NLP), your job is to extract relevant medical information from documents provided to you. These documents will all be about EMS medical incidents. This information will not always be provided. If no information is provided for a section, answer '[No Info]'. Follow the steps below to find the required information and respond.
 
 1. Review the entire document for the name and medical license of the person who received a report at the destination.
 2. Review the entire document for the specific room, bed, unit, or department where the patient was transferred to at the destination.
@@ -385,9 +387,7 @@ As an expert in Natural Language Processing (NLP), your job is to extract releva
 6. Review the entire document for delays in the unit returning to service.
 7. Review the entire document for any actions taken by the crew or events after the transfer of care and before the unit returned to service.
 
-
-
-Once you have obtained all the information, give your response using the following template. Use Plain text. Do not add any comments or additional information.
+Once you have obtained all the information, give your response using the following template. Use plain text. Do not add any comments or additional information.
 
 Template
 

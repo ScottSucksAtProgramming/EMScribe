@@ -29,6 +29,9 @@ def fixture_extract_reviewer(mock_model_loader, mock_prompt_manager):
 def test_review_section_with_user_input(
     extract_reviewer, mock_prompt_manager, mock_model_loader
 ):
+    """
+    Test review_section method with user input.
+    """
     mock_prompt_manager.get_prompt.return_value = "formatted prompt"
     mock_model_loader.generate.return_value = "model response"
 
@@ -44,6 +47,9 @@ def test_review_section_with_user_input(
 def test_review_section_without_user_input(
     extract_reviewer, mock_prompt_manager, mock_model_loader
 ):
+    """
+    Test review_section method without user input.
+    """
     mock_prompt_manager.get_prompt.return_value = "formatted prompt"
     mock_model_loader.generate.return_value = "model response"
 
@@ -57,6 +63,9 @@ def test_review_section_without_user_input(
 
 
 def test_final_review(extract_reviewer, mock_prompt_manager, mock_model_loader):
+    """
+    Test final_review method.
+    """
     mock_prompt_manager.get_prompt.return_value = "formatted prompt"
     mock_model_loader.generate.return_value = "model response"
 
@@ -72,6 +81,9 @@ def test_final_review(extract_reviewer, mock_prompt_manager, mock_model_loader):
 def test_review_section_with_long_prompt(
     extract_reviewer, mock_prompt_manager, mock_model_loader
 ):
+    """
+    Test review_section method with a long prompt.
+    """
     long_prompt = "A" * 35000
     mock_prompt_manager.get_prompt.return_value = long_prompt
     mock_model_loader.generate.side_effect = ["response part 1", "response part 2"]
@@ -87,6 +99,9 @@ def test_review_section_with_long_prompt(
 def test_final_review_with_long_prompt(
     extract_reviewer, mock_prompt_manager, mock_model_loader
 ):
+    """
+    Test final_review method with a long prompt.
+    """
     long_prompt = "B" * 35000
     mock_prompt_manager.get_prompt.return_value = long_prompt
     mock_model_loader.generate.side_effect = ["response part 1", "response part 2"]
@@ -100,6 +115,9 @@ def test_final_review_with_long_prompt(
 
 
 def test_review_section_nonexistent_prompt_key(extract_reviewer, mock_prompt_manager):
+    """
+    Test review_section method with a nonexistent prompt key.
+    """
     mock_prompt_manager.get_prompt.side_effect = KeyError("No prompt found")
 
     with pytest.raises(KeyError):
@@ -107,6 +125,9 @@ def test_review_section_nonexistent_prompt_key(extract_reviewer, mock_prompt_man
 
 
 def test_final_review_nonexistent_prompt_key(extract_reviewer, mock_prompt_manager):
+    """
+    Test final_review method with a nonexistent prompt key.
+    """
     mock_prompt_manager.get_prompt.side_effect = KeyError("No prompt found")
 
     with pytest.raises(KeyError):
@@ -116,6 +137,9 @@ def test_final_review_nonexistent_prompt_key(extract_reviewer, mock_prompt_manag
 def test_review_section_empty_string(
     extract_reviewer, mock_prompt_manager, mock_model_loader
 ):
+    """
+    Test review_section method with an empty string.
+    """
     mock_prompt_manager.get_prompt.return_value = ""
     mock_model_loader.generate.return_value = "model response"
 
@@ -131,6 +155,9 @@ def test_review_section_empty_string(
 def test_final_review_empty_string(
     extract_reviewer, mock_prompt_manager, mock_model_loader
 ):
+    """
+    Test final_review method with an empty string.
+    """
     mock_prompt_manager.get_prompt.return_value = ""
     mock_model_loader.generate.return_value = "model response"
 

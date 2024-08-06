@@ -20,16 +20,25 @@ def fixture_prompt_manager(sample_prompts):
 
 
 def test_get_prompt_existing_key(prompt_manager):
+    """
+    Test retrieving a prompt with an existing key.
+    """
     result = prompt_manager.get_prompt("extraction_prompt", field="name")
     assert result == "Extract data for name"
 
 
 def test_get_prompt_nonexistent_key(prompt_manager):
+    """
+    Test retrieving a prompt with a nonexistent key.
+    """
     with pytest.raises(KeyError):
         prompt_manager.get_prompt("nonexistent_key")
 
 
 def test_get_prompt_with_long_prompt(prompt_manager):
+    """
+    Test retrieving a prompt that exceeds the context window size.
+    """
     long_prompt = "A" * 35000
     prompt_manager.prompts["long_prompt"] = long_prompt
     result = prompt_manager.get_prompt("long_prompt")
@@ -40,6 +49,9 @@ def test_get_prompt_with_long_prompt(prompt_manager):
 
 
 def test_get_prompt_with_dict(prompt_manager):
+    """
+    Test retrieving a prompt that is a dictionary with placeholders.
+    """
     prompt_manager.prompts["dict_prompt"] = {
         "part1": "Part 1 for {field}",
         "part2": "Part 2 for {field}",
@@ -52,6 +64,9 @@ def test_get_prompt_with_dict(prompt_manager):
 
 
 def test_multi_substitution_prompt(prompt_manager):
+    """
+    Test retrieving a prompt with multiple placeholders.
+    """
     result = prompt_manager.get_prompt(
         "multi_sub_prompt", adjective="simple", field="test", sub="substitutions"
     )
@@ -59,15 +74,24 @@ def test_multi_substitution_prompt(prompt_manager):
 
 
 def test_no_substitution_prompt(prompt_manager):
+    """
+    Test retrieving a prompt that requires no substitutions.
+    """
     result = prompt_manager.get_prompt("no_sub_prompt")
     assert result == "This prompt requires no substitutions."
 
 
 def test_prompt_with_missing_placeholder(prompt_manager):
+    """
+    Test retrieving a prompt with missing placeholders.
+    """
     with pytest.raises(KeyError):
         prompt_manager.get_prompt("multi_sub_prompt", adjective="simple", field="test")
 
 
 def test_prompt_with_incorrect_placeholder(prompt_manager):
+    """
+    Test retrieving a prompt with incorrect placeholders.
+    """
     with pytest.raises(KeyError):
         prompt_manager.get_prompt("extraction_prompt", wrong_key="value")
