@@ -1,90 +1,92 @@
-# EMScribe API Reference
+# 🚀 EMScribe API Reference
 
-This document provides a comprehensive reference for the EMScribe 2.0 API, including details on the main modules, their classes, and methods.
+Welcome to the EMScribe API Reference! This document provides a comprehensive overview of the EMScribe API, detailing the main modules, their classes, and methods. Whether you're a developer looking to extend EMScribe or a user wanting to understand its internals, you've come to the right place.
 
-## Table of Contents
+## 📑 Table of Contents
 
-- [EMScribe API Reference](#emscribe-api-reference)
-   - [Table of Contents](#table-of-contents)
-   - [Modules](#modules)
+- [🚀 EMScribe API Reference](#-emscribe-api-reference)
+   - [📑 Table of Contents](#-table-of-contents)
+   - [📚 Modules](#-modules)
       - [Model Loader](#model-loader)
       - [Prompt Manager](#prompt-manager)
       - [Transcript Cleaner](#transcript-cleaner)
       - [Transcript Extractor](#transcript-extractor)
       - [Narrative Manager](#narrative-manager)
       - [Extract Reviewer](#extract-reviewer)
-   - [CLI](#cli)
-      - [Commands:](#commands)
-      - [Example Usage:](#example-usage)
-   - [Usage Examples](#usage-examples)
+   - [🛠️ CLI](#️-cli)
+      - [📜 Commands](#-commands)
+      - [🔧 Example Usage](#-example-usage)
+   - [🔍 Usage Examples](#-usage-examples)
       - [Example 1: Cleaning a Transcript](#example-1-cleaning-a-transcript)
       - [Example 2: Extracting Information from a Transcript](#example-2-extracting-information-from-a-transcript)
       - [Example 3: Generating an EMS Narrative](#example-3-generating-an-ems-narrative)
-   - [Conclusion](#conclusion)
+   - [🎉 Conclusion](#-conclusion)
 
-## Modules
+## 📚 Modules
 
-### Model Loader
+EMScribe is composed of several key modules, each serving a specific purpose in the workflow. Click on the links below for detailed documentation on each module.
 
-[Model Loader Documentation](model_loader.md)
+### [Model Loader](model_loader.md)
 
-### Prompt Manager
+Handles loading and managing AI models used throughout EMScribe.
 
-[Prompt Manager Documentation](prompt_manager.md)
+### [Prompt Manager](prompt_manager.md)
 
-### Transcript Cleaner
+Manages prompts used by the AI models to clean, extract, and review transcripts.
 
-[Transcript Cleaner Documentation](transcript_cleaner.md)
+### [Transcript Cleaner](transcript_cleaner.md)
 
-### Transcript Extractor
+Cleans and preprocesses transcripts to ensure accurate extraction of information.
 
-[Transcript Extractor Documentation](transcript_extractor.md)
+### [Transcript Extractor](transcript_extractor.md)
 
-### Narrative Manager
+Extracts detailed information from transcripts, including patient demographics, medical history, and chief complaints.
 
-[Narrative Manager Documentation](narrative_manager.md)
+### [Narrative Manager](narrative_manager.md)
 
-### Extract Reviewer
+Generates comprehensive EMS narratives from the extracted information.
 
-[Extract Reviewer Documentation](extract_reviewer.md)
+### [Extract Reviewer](extract_reviewer.md)
 
-## CLI
+Reviews and refines the extracted information to ensure accuracy and completeness.
 
-EMScribe 2.0 also includes a CLI tool to interact with the application.
+## 🛠️ CLI
 
-### Commands:
+EMScribe also includes a powerful command-line interface (CLI) to streamline interactions with the application.
 
-1. `clean`
+### 📜 Commands
+
+1. **`clean`**
    - Cleans the provided transcript.
    - Usage: `emscribe clean <transcript_path> [--output <output_path>]`
    - Default output: `data/cleaned_transcript.txt`
 
-2. `extract`
+2. **`extract`**
    - Extracts information from the provided transcript.
    - Usage: `emscribe extract <transcript_path> [--output <output_path>]`
    - Default input: `data/cleaned_transcript.txt`
    - Default output: `data/extract.txt`
 
-3. `generate`
+3. **`generate`**
    - Generates a narrative from the extracted data.
    - Usage: `emscribe generate <transcript_path> [--output <output_path>]`
    - Default input: `data/reviewed_extract.txt`
    - Default output: `data/narrative.txt`
 
-4. `review`
+4. **`review`**
    - Reviews the extracted information.
    - Usage: `emscribe review <extracted_data_path> [--output <output_path>]`
    - Default input: `data/extract.txt`
    - Default output: `data/reviewed_extract.txt`
 
-### Example Usage:
+### 🔧 Example Usage
 
 ```sh
 # Clean a transcript
 emscribe clean ./transcript.txt --output ./cleaned_transcript.txt
 
 # Extract information from a transcript
-emscribe extract ./transcript.txt --output ./extracted_data.txt
+emscribe extract ./cleaned_transcript.txt --output ./extracted_data.txt
 
 # Generate a narrative from the extracted data
 emscribe generate ./extracted_data.txt --output ./narrative.txt
@@ -92,13 +94,15 @@ emscribe generate ./extracted_data.txt --output ./narrative.txt
 # Review extracted information
 emscribe review ./extracted_data.txt --output ./reviewed_extract.txt
 
-# Using piping to combine commands
-emscribe clean ./transcript.txt | emscribe extract - | emscribe generate - --output ./narrative.txt
+# Using pipes to combine commands
+emscribe clean ./transcript.txt | emscribe extract - | emscribe review - | emscribe generate - --output ./narrative.txt
 ```
 
-## Usage Examples
+## 🔍 Usage Examples
 
 ### Example 1: Cleaning a Transcript
+
+Here’s a Python example of how to clean a transcript using the EMScribe API:
 
 ```python
 from modules.model_loader import ModelLoader
@@ -119,6 +123,8 @@ print(cleaned_transcript)
 
 ### Example 2: Extracting Information from a Transcript
 
+Here’s a Python example of how to extract information from a transcript:
+
 ```python
 from modules.model_loader import ModelLoader
 from modules.transcript_extractor import TranscriptExtractor
@@ -137,6 +143,8 @@ print(extracted_data)
 ```
 
 ### Example 3: Generating an EMS Narrative
+
+Here’s a Python example of how to generate an EMS narrative from extracted data:
 
 ```python
 from modules.model_loader import ModelLoader
@@ -162,8 +170,8 @@ print("Generated Narrative:")
 print(narrative)
 ```
 
-## Conclusion
+## 🎉 Conclusion
 
-This API reference provides detailed information on the main modules and their functionalities in the EMScribe 2.0 project. For more details on how to use these modules, refer to the usage examples and the rest of the documentation.
+This API reference provides detailed information on the main modules and their functionalities in the EMScribe project. For more details on how to use these modules, refer to the usage examples and the rest of the documentation.
 
 For any questions or support, please contact [ScottSucks](https://github.com/ScottSucksAtProgramming).
