@@ -5,10 +5,11 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/ScottSucksAtProgramming/EMScribe/actions/workflows/python-app.yml"><img src="https://github.com/ScottSucksAtProgramming/EMScribe/actions/workflows/python-app.yml/badge.svg" alt="Build Status"></a>
   <a href="https://github.com/ScottSucksAtProgramming/EMScribe/issues"><img src="https://img.shields.io/github/issues/ScottSucksAtProgramming/EMScribe" alt="Issues"></a>
   <a href="https://github.com/ScottSucksAtProgramming/EMScribe/pulls"><img src="https://img.shields.io/github/issues-pr/ScottSucksAtProgramming/EMScribe" alt="Pull Requests"></a>
   <a href="https://github.com/ScottSucksAtProgramming/EMScribe/stargazers"><img src="https://img.shields.io/github/stars/ScottSucksAtProgramming/EMScribe" alt="Stars"></a>
-  <a href="https://github.com/ScottSucksAtProgramming/EMScribe/blob/main/LICENSE"><img src="https://img.shields.io/github/license/ScottSucksAtProgramming/EMScribe" alt="License"></a>
+  <a href="https://github.com/ScottSucksAtProgramming/EMScribe/blob/main/LICENSE.md"><img src="https://img.shields.io/badge/license-Prohibitive%20License-orange" alt="License"></a>
   <a href="https://pypi.org/project/emscribe/"><img src="https://img.shields.io/pypi/pyversions/emscribe" alt="Python Versions"></a>
 </p>
 
