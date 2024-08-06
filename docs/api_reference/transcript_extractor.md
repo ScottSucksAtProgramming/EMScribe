@@ -32,6 +32,3 @@ Extracts information from the transcript using the specified prompts.
 
 **Returns:**
 - `str`: A string containing the extracted information.
-```
-
-

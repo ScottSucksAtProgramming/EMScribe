@@ -22,17 +22,25 @@ Initializes the `NarrativeManager` with a `ModelLoader` and `PromptManager` inst
 - `model_loader (ModelLoader)`: An instance of `ModelLoader` to interact with the AI model.
 - `prompt_manager (PromptManager)`: An instance of `PromptManager` to manage prompts.
 
-#### `generate_narrative(self, narrative_format: str, data: dict) -> str`
+#### `generate_narrative(self, narrative_format: str, data: Dict) -> str`
 
 **Description:**
-Generates an EMS narrative based on the provided narrative format and extracted data.
+Generates a narrative based on the specified format and data.
 
 **Args:**
-- `narrative_format (str)`: The format to use for the narrative.
-- `data (dict)`: The extracted data to include in the narrative.
+- `narrative_format (str)`: The key for the desired narrative format.
+- `data (Dict)`: The extracted information in a dictionary.
 
 **Returns:**
-- `str`: The generated EMS narrative.
-```
+- `str`: The generated narrative.
 
+#### `_generate_response(self, prompt: str) -> str`
 
+**Description:**
+Generates a response from the AI model based on the provided prompt.
+
+**Args:**
+- `prompt (str)`: The input prompt for the model.
+
+**Returns:**
+- `str`: The AI model's response.

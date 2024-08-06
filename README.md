@@ -1,4 +1,4 @@
-# EMScribe 2.0
+# EMScribe
 
 <p align="center">
   <img src="images/emscribe_logo.png" alt="EMScribe Logo" width="500" />
@@ -6,7 +6,7 @@
 
 ## Overview
 
-EMScribe 2.0 is a project designed to create comprehensive EMS narratives in a user-selected format. The application can extract information from text transcripts of patient interactions, providing detailed reports that include patient demographics, medical history, chief complaints, history of present illness, treatments done, objective assessment, treatment plans, transport information, and transfer of care.
+EMScribe is a project designed to create comprehensive EMS narratives in a user-selected format. The application can extract information from text transcripts of patient interactions, providing detailed reports that include patient demographics, medical history, chief complaints, history of present illness, treatments done, objective assessment, treatment plans, transport information, and transfer of care.
 
 ## Features
 

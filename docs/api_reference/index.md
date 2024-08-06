@@ -65,9 +65,7 @@ EMScribe 2.0 also includes a CLI tool to interact with the application.
    - Default input: `data/cleaned_transcript.txt`
    - Default output: `data/extract.txt`
 
-3
-
-. `generate`
+3. `generate`
    - Generates a narrative from the extracted data.
    - Usage: `emscribe generate <transcript_path> [--output <output_path>]`
    - Default input: `data/reviewed_extract.txt`

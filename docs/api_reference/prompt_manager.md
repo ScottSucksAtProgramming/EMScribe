@@ -5,26 +5,34 @@ The `prompt_manager` module contains the `PromptManager` class, which is respons
 ## Class: `PromptManager`
 
 **Description:**
-A class to manage and format prompts for various tasks.
+A class to manage and format prompts for various tasks such as extraction, cleaning, narrative generation, and quality control.
 
 ### Attributes:
-- `prompts (dict)`: A dictionary of predefined prompts.
+- `prompts (Dict[str, Union[str, Dict[str, str]]])`: A dictionary of predefined prompts.
+- `context_window_size (int)`: The maximum context window size for the prompts.
 
 ### Methods:
 
-#### `__init__(self)`
+#### `__init__(self, prompts: Dict[str, Union[str, Dict[str, str]]] = None, context_window_size: int = 32000)`
 
 **Description:**
-Initializes the `PromptManager` with a dictionary of prompts.
-
-#### `get_prompt(self, key: str, **kwargs) -> str`
-
-**Description:**
-Returns a formatted prompt based on the key and provided keyword arguments.
+Initializes the `PromptManager` with a dictionary of prompts and a context window size.
 
 **Args:**
-- `key (str)`: The key for the desired prompt.
-- `**kwargs`: Keyword arguments to format the prompt.
+- `prompts (Dict[str, Union[str, Dict[str, str]]], optional)`: A dictionary of prompts. Defaults to None.
+- `context_window_size (int)`: The maximum context window size for the prompts.
+
+#### `get_prompt(self, key: str, **kwargs: Any) -> Union[str, Dict[str, str], list[str]]`
+
+**Description:**
+Retrieves a prompt template and formats it with the provided keyword arguments.
+
+**Args:**
+- `key (str)`: The key for the prompt template.
+- `**kwargs`: Keyword arguments to format the template.
 
 **Returns:**
-- `str`: The formatted prompt.
+- `Union[str, Dict[str, str], list[str]]`: The formatted prompt.
+
+**Raises:**
+- `KeyError`: If no prompt is found for the given key.

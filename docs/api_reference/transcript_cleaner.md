@@ -25,11 +25,21 @@ Initializes the `TranscriptCleaner` with a `ModelLoader` and `PromptManager` ins
 #### `clean(self, transcript: str) -> str`
 
 **Description:**
-Cleans the transcript using the specified prompt.
+Cleans the transcript using specified prompts.
 
 **Args:**
 - `transcript (str)`: The transcript to clean.
 
 **Returns:**
 - `str`: The cleaned transcript.
-```
+
+#### `_generate_cleaned_transcript(self, prompt: Union[str, list[str]]) -> str`
+
+**Description:**
+Generates the cleaned transcript based on the provided prompt.
+
+**Args:**
+- `prompt (Union[str, list[str]])`: The input prompt for the model.
+
+**Returns:**
+- `str`: The cleaned transcript.

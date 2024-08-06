@@ -22,14 +22,14 @@ Initializes the `ExtractReviewer` with a `ModelLoader` and `PromptManager` insta
 - `model_loader (ModelLoader)`: An instance of `ModelLoader` to interact with the AI model.
 - `prompt_manager (PromptManager)`: An instance of `PromptManager` to manage prompts.
 
-#### `review_section(self, section: str, user_input: str = None) -> str`
+#### `review_section(self, section: str, user_input: Optional[str] = None) -> str`
 
 **Description:**
 Reviews a section of extracted data using the AI model.
 
 **Args:**
 - `section (str)`: The section of extracted data to review.
-- `user_input (str)`: The user's input for modifications (optional).
+- `user_input (Optional[str])`: The user's input for modifications, if any.
 
 **Returns:**
 - `str`: The AI model's response.
@@ -44,6 +44,27 @@ Performs a final review of a section after changes have been made.
 
 **Returns:**
 - `str`: The AI model's response after final review.
-```
 
+#### `_get_review_prompt(self, prompt_key: str, section: str, user_input: Optional[str] = None) -> str`
 
+**Description:**
+Retrieves and formats the review prompt.
+
+**Args:**
+- `prompt_key (str)`: The key for the review prompt.
+- `section (str)`: The section of extracted data.
+- `user_input (Optional[str])`: The user's input for modifications, if any.
+
+**Returns:**
+- `str`: The formatted review prompt.
+
+#### `_generate_response(self, prompt: str) -> str`
+
+**Description:**
+Generates a response from the AI model based on the provided prompt.
+
+**Args:**
+- `prompt (str)`: The input prompt for the model.
+
+**Returns:**
+- `str`: The AI model's response.
