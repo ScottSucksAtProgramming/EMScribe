@@ -1,11 +1,11 @@
-# 🚀 Narrative Manager
+# 🚀 Extract Reviewer
 
-Welcome to the Narrative Manager module documentation! The `NarrativeManager` class is crucial for generating comprehensive EMS narratives from extracted data. This guide provides detailed information about its attributes, methods, and usage examples.
+Welcome to the Extract Reviewer module documentation! The `ExtractReviewer` class is essential for reviewing and refining extracted information, ensuring its accuracy and completeness. This guide provides detailed information about its attributes, methods, and usage examples.
 
-## 📚 Class: `NarrativeManager`
+## 📚 Class: `ExtractReviewer`
 
 ### **Description:**
-The `NarrativeManager` class is designed to generate EMS narratives using extracted data and an AI model. It leverages the `ModelLoader` and `PromptManager` classes to interact with the AI model and manage prompts efficiently.
+The `ExtractReviewer` class is responsible for reviewing and refining the extracted information from EMS transcripts. It leverages the `ModelLoader` and `PromptManager` classes to interact with the AI model and manage prompts effectively.
 
 ### 🏗️ Attributes:
 
@@ -17,7 +17,7 @@ The `NarrativeManager` class is designed to generate EMS narratives using extrac
 #### `__init__(self, model_loader: ModelLoader, prompt_manager: PromptManager)`
 
 **Description:**
-Initializes the `NarrativeManager` with a `ModelLoader` and `PromptManager` instance.
+Initializes the `ExtractReviewer` with a `ModelLoader` and `PromptManager` instance.
 
 **Parameters:**
 - `model_loader (ModelLoader)`: An instance of `ModelLoader` to interact with the AI model.
@@ -28,49 +28,79 @@ Initializes the `NarrativeManager` with a `ModelLoader` and `PromptManager` inst
 ```python
 from modules.model_loader import ModelLoader
 from modules.prompt_manager import PromptManager
-from modules.narrative_manager import NarrativeManager
+from modules.extract_reviewer import ExtractReviewer
 
 # Initialize ModelLoader and PromptManager
 model_loader = ModelLoader(model_name="llama3.1")
-prompt_manager = PromptManager(prompts={"generate_narrative": "Generate a narrative from the following information: {info}"})
+prompt_manager = PromptManager(prompts={"review": "Review and refine the following information: {info}"})
 
-# Initialize NarrativeManager
-narrative_manager = NarrativeManager(model_loader=model_loader, prompt_manager=prompt_manager)
+# Initialize ExtractReviewer
+reviewer = ExtractReviewer(model_loader=model_loader, prompt_manager=prompt_manager)
 ```
 
-#### `generate_narrative(self, narrative_format: str, data: Dict) -> str`
+#### `review_section(self, section: str, user_input: Optional[str] = None) -> str`
 
 **Description:**
-Generates a narrative based on the specified format and data.
+Reviews a section of extracted data using the AI model.
 
 **Parameters:**
-- `narrative_format (str)`: The key for the desired narrative format.
-- `data (Dict)`: The extracted information in a dictionary.
+- `section (str)`: The section of extracted data to review.
+- `user_input (Optional[str])`: The user's input for modifications, if any.
 
 **Returns:**
-- `str`: The generated narrative.
+- `str`: The AI model's response.
 
 **Example:**
 
 ```python
-data = {
-    "incident_info": "Incident at 123 Main St.",
-    "patient_demographics": "John Doe, 45, Male",
-    "chief_complaints": "Chest pain, shortness of breath",
-    "history_of_present_illness": "Chest pain started 2 hours ago. No relief with rest.",
-    "past_medical_history": "Hypertension, diabetes",
-    "medications": "Lisinopril, Metformin",
-    "allergies": "None",
-    "vital_signs": "BP 140/90, HR 88, RR 20, SpO2 98%",
-    "physical_exam": "Normal S1S2, no murmurs. Clear lungs bilaterally.",
-    "treatment_plan": "Aspirin 325 mg PO, Nitro 0.4 mg SL, IV access, transport to ED.",
-    "transport_info": "Transported to General Hospital, code 2.",
-    "transfer_of_care": "Patient care transferred to ED staff."
-}
+section = "Incident Information\n- Unit: [No Info]\n- Response Mode: emergent\n..."
+reviewed_section = reviewer.review_section(section)
+print("Reviewed Section:")
+print(reviewed_section)
+```
 
-narrative = narrative_manager.generate_narrative("presoaped_format", data)
-print("Generated Narrative:")
-print(narrative)
+#### `final_review(self, updated_section: str) -> str`
+
+**Description:**
+Performs a final review of a section after changes have been made.
+
+**Parameters:**
+- `updated_section (str)`: The section of data after user modifications.
+
+**Returns:**
+- `str`: The AI model's response after final review.
+
+**Example:**
+
+```python
+updated_section = "Incident Information\n- Unit: 123\n- Response Mode: emergent\n..."
+final_reviewed_section = reviewer.final_review(updated_section)
+print("Final Reviewed Section:")
+print(final_reviewed_section)
+```
+
+#### `_get_review_prompt(self, prompt_key: str, section: str, user_input: Optional[str] = None) -> str`
+
+**Description:**
+Retrieves and formats the review prompt.
+
+**Parameters:**
+- `prompt_key (str)`: The key for the review prompt.
+- `section (str)`: The section of extracted data.
+- `user_input (Optional[str])`: The user's input for modifications, if any.
+
+**Returns:**
+- `str`: The formatted review prompt.
+
+**Example:**
+
+```python
+prompt_key = "review"
+section = "Incident Information\n- Unit: [No Info]\n- Response Mode: emergent\n..."
+user_input = "Unit: 123"
+formatted_prompt = reviewer._get_review_prompt(prompt_key, section, user_input)
+print("Formatted Prompt:")
+print(formatted_prompt)
 ```
 
 #### `_generate_response(self, prompt: str) -> str`
@@ -87,87 +117,72 @@ Generates a response from the AI model based on the provided prompt.
 **Example:**
 
 ```python
-prompt = "Generate a narrative from the following information: Patient John Doe, 45 years old, male, experiencing chest pain for the past 2 hours. History of hypertension and diabetes."
-response = narrative_manager._generate_response(prompt)
+prompt = "Review and refine the following information: Incident Information\n- Unit: 123\n- Response Mode: emergent\n..."
+response = reviewer._generate_response(prompt)
 print("Generated Response:")
 print(response)
 ```
 
 ## 🌟 Usage Examples
 
-### Example 1: Initializing the NarrativeManager
+### Example 1: Initializing the ExtractReviewer
 
 ```python
 from modules.model_loader import ModelLoader
 from modules.prompt_manager import PromptManager
-from modules.narrative_manager import NarrativeManager
+from modules.extract_reviewer import ExtractReviewer
 
 # Initialize ModelLoader with a specific model name
 model_loader = ModelLoader(model_name="llama3.1")
 
 # Initialize PromptManager with predefined prompts
 prompts = {
-    "generate_narrative": "Generate a narrative from the following information: {info}"
+    "review": "Review and refine the following information: {info}"
 }
 prompt_manager = PromptManager(prompts=prompts, context_window_size=32000)
 
-# Initialize NarrativeManager
-narrative_manager = NarrativeManager(model_loader=model_loader, prompt_manager=prompt_manager)
+# Initialize ExtractReviewer
+reviewer = ExtractReviewer(model_loader=model_loader, prompt_manager=prompt_manager)
 ```
 
-### Example 2: Generating a Narrative from Extracted Data
+### Example 2: Reviewing a Section of Extracted Data
 
 ```python
 from modules.model_loader import ModelLoader
 from modules.prompt_manager import PromptManager
-from modules.narrative_manager import NarrativeManager
+from modules.extract_reviewer import ExtractReviewer
 
 # Initialize components
 model_loader = ModelLoader(model_name="llama3.1")
-prompt_manager = PromptManager(prompts={"generate_narrative": "Generate a narrative from the following information: {info}"})
-narrative_manager = NarrativeManager(model_loader=model_loader, prompt_manager=prompt_manager)
+prompt_manager = PromptManager(prompts={"review": "Review and refine the following information: {info}"})
+reviewer = ExtractReviewer(model_loader=model_loader, prompt_manager=prompt_manager)
 
-# Example data extracted from a transcript
-data = {
-    "incident_info": "Incident at 123 Main St.",
-    "patient_demographics": "John Doe, 45, Male",
-    "chief_complaints": "Chest pain, shortness of breath",
-    "history_of_present_illness": "Chest pain started 2 hours ago. No relief with rest.",
-    "past_medical_history": "Hypertension, diabetes",
-    "medications": "Lisinopril, Metformin",
-    "allergies": "None",
-    "vital_signs": "BP 140/90, HR 88, RR 20, SpO2 98%",
-    "physical_exam": "Normal S1S2, no murmurs. Clear lungs bilaterally.",
-    "treatment_plan": "Aspirin 325 mg PO, Nitro 0.4 mg SL, IV access, transport to ED.",
-    "transport_info": "Transported to General Hospital, code 2.",
-    "transfer_of_care": "Patient care transferred to ED staff."
-}
-
-# Generate a narrative
-narrative = narrative_manager.generate_narrative("presoaped_format", data)
-print("Generated Narrative:")
-print(narrative)
+# Review a section of extracted data
+section = "Incident Information\n- Unit: [No Info]\n- Response Mode: emergent\n..."
+reviewed_section = reviewer.review_section(section)
+print("Reviewed Section:")
+print(reviewed_section)
 ```
 
-### Example 3: Generating a Response from a Prompt
+### Example 3: Performing a Final Review of a Section
 
 ```python
 from modules.model_loader import ModelLoader
 from modules.prompt_manager import PromptManager
-from modules.narrative_manager import NarrativeManager
+from modules.extract_reviewer import ExtractReviewer
 
 # Initialize components
 model_loader = ModelLoader(model_name="llama3.1")
-prompt_manager = PromptManager(prompts={"generate_narrative": "Generate a narrative from the following information: {info}"})
-narrative_manager = NarrativeManager(model_loader=model_loader, prompt_manager=prompt_manager)
+prompt_manager = PromptManager(prompts={"review": "Review and refine the following information: {info}"})
+reviewer = ExtractReviewer(model_loader=model_loader, prompt_manager=prompt_manager)
 
-# Generate a response from a prompt
-prompt = "Generate a narrative from the following information: Patient John Doe, 45 years old, male, experiencing chest pain for the past 2 hours. History of hypertension and diabetes."
-response = narrative_manager._generate_response(prompt)
-print("Generated Response:")
-print(response)
+# Perform a final review of a section after user modifications
+updated_section = "Incident Information\n- Unit: 123\n- Response Mode: emergent\n..."
+final_reviewed_section = reviewer.final_review(updated_section)
+print("Final Reviewed Section:")
+print(final_reviewed_section)
 ```
 
 ## 🎉 Conclusion
 
-The `NarrativeManager` class is an essential tool for generating comprehensive EMS narratives from extracted data. By understanding its attributes and methods, you can effectively create detailed and accurate EMS reports. For any questions or support, please contact [ScottSucks](https://github.com/ScottSucksAtProgramming).
+The `ExtractReviewer` class is an essential tool for reviewing and refining extracted information, ensuring its accuracy and completeness. By understanding its attributes and methods, you can effectively improve the quality of extracted data in EMS documentation. For any questions or support, please contact [ScottSucks](https://github.com/ScottSucksAtProgramming).
