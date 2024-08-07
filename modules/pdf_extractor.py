@@ -80,7 +80,6 @@ class PDFExtractor:
             if line.lower().startswith("crew members"):
                 in_crew_section = True
 
-        print(crew_members)  # Debugging print statement
         return crew_members
 
     def _extract_response_delays(self, text: str) -> str:
