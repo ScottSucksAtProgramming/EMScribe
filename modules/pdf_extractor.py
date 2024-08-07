@@ -61,23 +61,27 @@ class PDFExtractor:
 
     def _extract_crew_members(self, text: str) -> list:
         """Extracts the list of crew members from the text."""
-        crew_members_section = re.search(
-            r"Crew Members\s*(.*?)\s*(?:Mileage|Delays|Personal Items|Patient Transport Details|Transfer Details)",
-            text,
-            re.IGNORECASE | re.DOTALL,
-        )
-        if crew_members_section:
-            crew_members_text = crew_members_section.group(1)
-            crew_members = re.findall(r"(\w+),\s+(\w+)", crew_members_text)
-            return crew_members
-        return []
+        crew_members = []
+        lines = text.split("\n")
+        in_crew_section = False
 
-    def _extract_response_delays(self, text: str) -> str:
-        """Extracts the response delays from the text."""
-        match = re.search(r"Response Delays\s+([\w\s]+)", text, re.IGNORECASE)
-        if match:
-            return match.group(1).strip()
-        return "No response delays found"
+        for line in lines:
+            line = line.strip()
+
+            if in_crew_section:
+                if line.lower().startswith("transport"):
+                    break
+                match = re.match(r"([A-Za-z]+),\s*([A-Za-z]+)", line)
+                if match:
+                    crew_members.append(
+                        (match.group(1).upper(), match.group(2).upper())
+                    )  # Normalize to uppercase
+
+            if line.lower().startswith("crew members"):
+                in_crew_section = True
+
+        print(crew_members)  # Debugging print statement
+        return crew_members
 
     def _extract_response_delays(self, text: str) -> str:
         """Extracts the response delays from the text."""
@@ -106,6 +110,13 @@ if __name__ == "__main__":
     with open("pdf_1.pdf", "rb") as file:
         content = file.read()
     pdf_extractor = PDFExtractor(None, None)
+
+    # Extract text from the PDF and print it
+    text = pdf_extractor._extract_text(content)
+    print("Extracted text from PDF:")
+    print(text)
+
+    # Extracted data
     extracted_data = pdf_extractor.extract(content)
     for category, info in extracted_data.items():
         print(f"{category}:")
