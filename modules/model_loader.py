@@ -1,5 +1,6 @@
 from langchain_community.llms.ollama import Ollama
 from typing import Optional, Dict
+import logging
 
 
 class ModelLoader:
@@ -30,6 +31,8 @@ class ModelLoader:
         self.model_name = model_name
         self.client = client or Ollama(base_url=base_url)
         self.context_window = 32768  # Fixed context window size
+        self.logger = logging.getLogger(__name__)
+        logging.basicConfig(level=logging.INFO)  # Ensure logging is configured
 
     def _get_options(self) -> Dict[str, int]:
         """
@@ -51,14 +54,17 @@ class ModelLoader:
             str: The generated response from the model.
         """
         try:
+            if isinstance(prompt, dict):
+                prompt = prompt["prompt"]  # Ensure prompt is a string
             response = self.client.generate(
-                model=self.model_name,
-                prompts=[prompt],
-                options=self._get_options(),  # Ensure num_ctx is correctly placed in options
+                prompts=[prompt],  # Pass the prompt as a list of strings
+                max_tokens=150,
+                temperature=0.7,
             )
-
-            # Extract and return the text from the first generation response
-            return response.generations[0][0].text.strip()
+            # Access the text from the response object
+            return response.generations[0][
+                0
+            ].text  # Adjusting to access the first text item
         except Exception as e:
-            # Log the exception and handle it appropriately
+            self.logger.error(f"Error generating response: {e}")
             raise RuntimeError(f"Error generating response: {e}")
