@@ -41,9 +41,12 @@ class PDFExtractor:
 
     def _extract_response_mode(self, text: str) -> str:
         """Extracts the response mode from the text."""
-        match = re.search(r"Response Mode\s+([\w\s]+)", text, re.IGNORECASE)
+        match = re.search(r"Response Mode\s+([^\n]+)", text, re.IGNORECASE)
         if match:
-            return match.group(1).strip()
+            response_mode = match.group(1).split(" ")[
+                0
+            ]  # Ensure only the first word is captured
+            return response_mode.strip()
         return "No response mode found"
 
     def _extract_crew_type(self, text: str) -> str:
