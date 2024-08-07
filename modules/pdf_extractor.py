@@ -50,11 +50,34 @@ class PDFExtractor:
         return "No response mode found"
 
     def _extract_crew_type(self, text: str) -> str:
-        """Extracts the crew type from the text."""
-        match = re.search(r"Crew Type\s+([\w\s]+)", text, re.IGNORECASE)
+        """Extracts and infers the crew type from the text."""
+        crew_members = self._extract_crew_members(text)
+        num_personnel = len(crew_members)
+        if num_personnel == 1:
+            return "Medic Only"
+        elif num_personnel >= 2:
+            return "Full Crew"
+        return "No crew type found"
+
+    def _extract_crew_members(self, text: str) -> list:
+        """Extracts the list of crew members from the text."""
+        crew_members_section = re.search(
+            r"Crew Members\s*(.*?)\s*(?:Mileage|Delays|Personal Items|Patient Transport Details|Transfer Details)",
+            text,
+            re.IGNORECASE | re.DOTALL,
+        )
+        if crew_members_section:
+            crew_members_text = crew_members_section.group(1)
+            crew_members = re.findall(r"(\w+),\s+(\w+)", crew_members_text)
+            return crew_members
+        return []
+
+    def _extract_response_delays(self, text: str) -> str:
+        """Extracts the response delays from the text."""
+        match = re.search(r"Response Delays\s+([\w\s]+)", text, re.IGNORECASE)
         if match:
             return match.group(1).strip()
-        return "No crew type found"
+        return "No response delays found"
 
     def _extract_response_delays(self, text: str) -> str:
         """Extracts the response delays from the text."""
