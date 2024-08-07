@@ -56,10 +56,15 @@ class ModelLoader:
         try:
             if isinstance(prompt, dict):
                 prompt = prompt["prompt"]  # Ensure prompt is a string
+            options = self._get_options()  # Get options including context window size
+            self.logger.info(
+                f"Generating response with context window: {self.context_window}"
+            )
+            self.logger.debug(f"Prompt: {prompt}")
+
             response = self.client.generate(
                 prompts=[prompt],  # Pass the prompt as a list of strings
-                max_tokens=150,
-                temperature=0.7,
+                options=options,  # Pass options including context window size
             )
             # Access the text from the response object
             return response.generations[0][
