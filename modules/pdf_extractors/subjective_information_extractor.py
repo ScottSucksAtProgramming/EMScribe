@@ -14,7 +14,7 @@ class SubjectiveInformationExtractor:
         }
 
     def _extract_address_or_facility_name(self, text: str) -> str:
-        match = re.search(r"Address or Facility Name:\s*([^\n]*)", text, re.IGNORECASE)
+        match = re.search(r"Location\s+(.+?)\s+Unit", text, re.IGNORECASE)
         if match:
             return match.group(1).strip()
         return "No address or facility name found"

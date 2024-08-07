@@ -9,10 +9,41 @@ def subjective_information_extractor():
     return SubjectiveInformationExtractor()
 
 
+import pytest
+from modules.pdf_extractors.subjective_information_extractor import (
+    SubjectiveInformationExtractor,
+)
+
+
+@pytest.fixture
+def subjective_information_extractor():
+    return SubjectiveInformationExtractor()
+
+
 def test_extract_address_or_facility_name(subjective_information_extractor):
-    text = "Subjective Information\nAddress or Facility Name: General Hospital"
-    result = subjective_information_extractor._extract_address_or_facility_name(text)
-    assert result == "General Hospital"
+    text = """
+    Incident Details Destination Details Incident Times
+    Location Type Hospital Disposition PSAP Call 17:57:00
+    Location Stony Brook University Hospital Unit Disposition Patient Contact Made Dispatch Notified
+    Patient Evaluation and/or
+    """
+    address_or_facility_name = (
+        subjective_information_extractor._extract_address_or_facility_name(text)
+    )
+    assert address_or_facility_name == "Stony Brook University Hospital"
+
+
+def test_extract_address_or_facility_name_not_found(subjective_information_extractor):
+    text = """
+    Incident Details Destination Details Incident Times
+    Location Type Hospital Disposition PSAP Call 17:57:00
+    Location Unit Disposition Patient Contact Made Dispatch Notified
+    Patient Evaluation and/or
+    """
+    address_or_facility_name = (
+        subjective_information_extractor._extract_address_or_facility_name(text)
+    )
+    assert address_or_facility_name == "No address or facility name found"
 
 
 def test_extract_patient_location_and_position(subjective_information_extractor):
