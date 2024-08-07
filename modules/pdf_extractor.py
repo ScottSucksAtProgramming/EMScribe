@@ -57,7 +57,7 @@ class PDFExtractor:
 
 
 # Example usage
-if __name__ == "main":
+if __name__ == "__main__":
     with open("pdf_1.pdf", "rb") as file:
         content = file.read()
     pdf_extractor = PDFExtractor(None, None)
