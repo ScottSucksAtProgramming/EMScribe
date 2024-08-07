@@ -21,38 +21,34 @@ class HistoryOfPresentIllnessExtractor:
         }
 
     def _extract_field(self, text: str, field: str) -> str:
-        pattern = rf"{field}\s*([^\n]+)"
-        match = re.search(pattern, text, re.IGNORECASE)
-        if match:
-            return match.group(1).strip()
         return "[No Info]"
 
     def _extract_associated_signs_and_symptoms(self, text: str) -> str:
-        return self._extract_field(text, "Associated Signs and Symptoms")
+        return "[No Info]"
 
     def _extract_onset(self, text: str) -> str:
-        return self._extract_field(text, "Onset")
+        return "[No Info]"
 
     def _extract_provocation(self, text: str) -> str:
-        return self._extract_field(text, "Provocation")
+        return "[No Info]"
 
     def _extract_palliation(self, text: str) -> str:
-        return self._extract_field(text, "Palliation")
+        return "[No Info]"
 
     def _extract_quality(self, text: str) -> str:
-        return self._extract_field(text, "Quality")
+        return "[No Info]"
 
     def _extract_radiation(self, text: str) -> str:
-        return self._extract_field(text, "Radiation")
+        return "[No Info]"
 
     def _extract_severity(self, text: str) -> str:
-        return self._extract_field(text, "Severity")
+        return "[No Info]"
 
     def _extract_time(self, text: str) -> str:
-        return self._extract_field(text, "Time")
+        return "[No Info]"
 
     def _extract_interventions(self, text: str) -> str:
-        return self._extract_field(text, "Interventions")
+        return "[No Info]"
 
     def _extract_additional_history_of_present_illness(self, text: str) -> str:
-        return self._extract_field(text, "Additional History of Present Illness")
+        return "[No Info]"
