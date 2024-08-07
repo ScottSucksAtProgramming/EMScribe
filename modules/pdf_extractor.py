@@ -31,3 +31,22 @@ class PDFExtractor:
                 page_text = page.extract_text()
                 text += page_text + "\n"
         return text
+
+    def format_extracted_data(self, data: dict) -> str:
+        formatted_data = []
+        for section, content in data.items():
+            formatted_data.append(f"{section}:")
+            for key, value in content.items():
+                formatted_data.append(f"{key}: {value}")
+            formatted_data.append("")  # Add a newline between sections
+        return "\n".join(formatted_data).replace("\n\n", "\n")  # Remove extra newlines
+
+
+# Example usage
+if __name__ == "main":
+    with open("pdf_1.pdf", "rb") as file:
+        content = file.read()
+    pdf_extractor = PDFExtractor(None, None)
+    extracted_data = pdf_extractor.extract(content)
+    formatted_data = pdf_extractor.format_extracted_data(extracted_data)
+    print(formatted_data)

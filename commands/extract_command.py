@@ -44,23 +44,23 @@ class ExtractCommand:
         """
         try:
             if transcript_path == "-":
-                content = sys.stdin.read()
+                content = sys.stdin.read().encode("utf-8")
+                file_type = ".txt"
             else:
                 with open(transcript_path, "rb") as file:
                     content = file.read()
+                file_type = os.path.splitext(transcript_path)[1]
 
-            if transcript_path.endswith(".pdf"):
+            if file_type == ".pdf":
                 extracted_data = self.pdf_extractor.extract(content)
                 extracted_data_str = self._format_extracted_data(extracted_data)
-            elif transcript_path.endswith(".txt"):
+            elif file_type == ".txt":
                 transcript = content.decode("utf-8")
                 extracted_data_str = self.transcript_extractor.extract(transcript)
             else:
                 raise ValueError(
                     "Unsupported file type. Only .txt and .pdf files are supported."
                 )
-
-            print(f"Extracted data: {extracted_data_str}")  # Debugging statement
 
             if output_path:
                 os.makedirs(os.path.dirname(output_path), exist_ok=True)
@@ -83,5 +83,6 @@ class ExtractCommand:
         for category, info in data.items():
             formatted_data += f"{category}:\n"
             for key, value in info.items():
-                formatted_data += f"  {key}: {value}\n"
+                formatted_data += f"{key}: {value}\n"
+            formatted_data += "\n"
         return formatted_data
