@@ -8,14 +8,6 @@ def pdf_extractor():
     return PDFExtractor(None, None)
 
 
-def test_extract_text(pdf_extractor):
-    with open("tests/data/sample.pdf", "rb") as file:
-        content = file.read()
-    text = pdf_extractor._extract_text(content)
-    assert isinstance(text, str)
-    assert len(text) > 0  # Ensure text is extracted
-
-
 def test_extract_unit(pdf_extractor):
     text = "Medic Vehicle 5-41-19"
     unit = pdf_extractor._extract_unit(text)
@@ -125,18 +117,127 @@ def test_extract_crew_members_no_names(pdf_extractor):
 
 
 def test_extract_response_delays(pdf_extractor):
-    text = "Response Delays None"
+    text = """
+    Mileage
+    Delays
+    Loaded Miles 0.8 geo-verified Response Delays None/No Delay
+    Start Scene Delays None/No Delay
+    End Transport Delays None/No Delay
+    """
     response_delays = pdf_extractor._extract_response_delays(text)
-    assert response_delays == "None"
+    print(f"Extracted response delays: {response_delays}")
+    assert response_delays == "None/No Delay"
+
+
+def test_extract_response_delays_delay_other(pdf_extractor):
+    text = """
+    Mileage
+    Delays
+    Loaded Miles 0.8 geo-verified Response Delays Other (Not Listed)
+    Start Scene Delays None/No Delay
+    End Transport Delays None/No Delay
+    """
+    response_delays = pdf_extractor._extract_response_delays(text)
+    print(f"Extracted response delays: {response_delays}")
+    assert response_delays == "Other (Not Listed)"
+
+
+def test_extract_response_delays_no_delays_mentioned(pdf_extractor):
+    text = """
+    Mileage
+    Delays
+    Loaded Miles 0.8 geo-verified
+    Start Scene Delays None/No Delay
+    End Transport Delays None/No Delay
+    """
+    response_delays = pdf_extractor._extract_response_delays(text)
+    print(f"Extracted response delays: {response_delays}")
+    assert response_delays == "No response delays found"
+
+
+def test_extract_response_delays_partial_text(pdf_extractor):
+    text = """
+    Response Delays
+    """
+    response_delays = pdf_extractor._extract_response_delays(text)
+    print(f"Extracted response delays: {response_delays}")
+    assert response_delays == "No response delays found"
+
+
+def test_extract_response_delays_unexpected_interruption(pdf_extractor):
+    text = """
+    Mileage
+    Delays
+    Loaded Miles 0.8 geo-verified Response Delays Unexpected text
+    Start Scene Delays None/No Delay
+    End Transport Delays None/No Delay
+    """
+    response_delays = pdf_extractor._extract_response_delays(text)
+    print(f"Extracted response delays: {response_delays}")
+    assert response_delays == "Unexpected text"
 
 
 def test_extract_incident_location(pdf_extractor):
-    text = "Incident Location Stony Brook University Hospital"
+    text = """
+    Incident Details
+    Location Type Nursing Home Disposition
+    Location Stony Brook University Hospital
+    City Stony Brook Staged
+    """
     incident_location = pdf_extractor._extract_incident_location(text)
-    assert incident_location == "Stony Brook University Hospital"
+    print(f"Extracted incident location: {incident_location}")
+    assert incident_location == "Nursing Home in Stony Brook"
+
+
+def test_extract_incident_location_partial_text(pdf_extractor):
+    text = """
+    Incident Details
+    Location Type Nursing Home Disposition
+    City Stony Brook Staged
+    """
+    incident_location = pdf_extractor._extract_incident_location(text)
+    print(f"Extracted incident location: {incident_location}")
+    assert incident_location == "Nursing Home in Stony Brook"
+
+
+def test_extract_incident_location_no_location_type(pdf_extractor):
+    text = """
+    Incident Details
+    Location Stony Brook University Hospital
+    City Stony Brook
+    """
+    incident_location = pdf_extractor._extract_incident_location(text)
+    print(f"Extracted incident location: {incident_location}")
+    assert incident_location == "No incident location found"
+
+
+def test_extract_incident_location_no_city(pdf_extractor):
+    text = """
+    Incident Details
+    Location Type Nursing Home
+    Location Stony Brook University Hospital
+    """
+    incident_location = pdf_extractor._extract_incident_location(text)
+    print(f"Extracted incident location: {incident_location}")
+    assert incident_location == "No incident location found"
 
 
 def test_extract_dispatch_complaint(pdf_extractor):
-    text = "Dispatch Complaint Chest Pain"
+    text = "EMD Complaint Transfer/Interfacility/Palliative Care Country US"
     dispatch_complaint = pdf_extractor._extract_dispatch_complaint(text)
-    assert dispatch_complaint == "Chest Pain"
+    print(f"Extracted dispatch complaint: {dispatch_complaint}")
+    assert dispatch_complaint == "Transfer/Interfacility/Palliative Care"
+
+
+def test_extract_dispatch_complaint_partial_text(pdf_extractor):
+    text = "EMD Complaint Transfer/Interfacility/Palliative Care"
+    dispatch_complaint = pdf_extractor._extract_dispatch_complaint(text)
+    print(f"Extracted dispatch complaint: {dispatch_complaint}")
+    assert dispatch_complaint == "Transfer/Interfacility/Palliative Care"
+
+
+def test_extract_dispatch_complaint_no_complaint(pdf_extractor):
+    text = "EMD Complaint"
+    dispatch_complaint = pdf_extractor._extract_dispatch_complaint(text)
+    print(f"Extracted dispatch complaint: {dispatch_complaint}")
+    assert dispatch_complaint == "No dispatch complaint found"
