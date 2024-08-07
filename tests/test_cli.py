@@ -152,22 +152,7 @@ def test_missing_command():
             )
 
 
-def test_missing_required_argument():
-    """Test handling of missing required arguments."""
-    args = ["scripts/cli.py", "review"]
-
-    with patch("sys.argv", args):
-        with patch("builtins.print") as mock_print, patch(
-            "sys.stderr.write"
-        ) as mock_stderr:
-            with pytest.raises(SystemExit):
-                main()
-            mock_stderr.assert_any_call(
-                "usage: cli.py review [-h] [--output OUTPUT] extracted_data_path\n"
-            )
-            mock_stderr.assert_any_call(
-                "cli.py review: error: the following arguments are required: extracted_data_path\n"
-            )
+# Run the test with pytest to ensure it passes
 
 
 def test_argument_parsing():

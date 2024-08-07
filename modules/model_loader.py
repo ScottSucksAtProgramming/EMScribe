@@ -63,6 +63,7 @@ class ModelLoader:
             self.logger.debug(f"Prompt: {prompt}")
 
             response = self.client.generate(
+                model=self.model_name,  # Include the model name
                 prompts=[prompt],  # Pass the prompt as a list of strings
                 options=options,  # Pass options including context window size
             )
