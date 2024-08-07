@@ -84,23 +84,42 @@ class PDFExtractor:
 
     def _extract_response_delays(self, text: str) -> str:
         """Extracts the response delays from the text."""
-        match = re.search(r"Response Delays\s+([\w\s]+)", text, re.IGNORECASE)
+        match = re.search(r"Response Delays\s*([^\n]*)", text, re.IGNORECASE)
         if match:
-            return match.group(1).strip()
+            response_delays = match.group(1).strip()
+            if response_delays:
+                return response_delays
+            else:
+                return "No response delays found"
         return "No response delays found"
 
     def _extract_incident_location(self, text: str) -> str:
-        """Extracts the incident location from the text."""
-        match = re.search(r"Incident Location\s+([\w\s,]+)", text, re.IGNORECASE)
-        if match:
-            return match.group(1).strip()
+        """Extracts the incident location details from the text."""
+        location_type = self._extract_between(text, "Location Type", "Disposition")
+        city = self._extract_between(text, "City", "Staged")
+
+        if location_type and city:
+            return f"{location_type} in {city}"
         return "No incident location found"
+
+    def _extract_between(self, text: str, start: str, end: str) -> str:
+        """Extracts text between two markers."""
+        pattern = rf"{start}\s*([^\n]+?)\s*{end}"
+        match = re.search(pattern, text, re.IGNORECASE | re.DOTALL)
+        if match:
+            extracted_text = match.group(1).strip()
+            return extracted_text
+        return None
 
     def _extract_dispatch_complaint(self, text: str) -> str:
         """Extracts the dispatch complaint from the text."""
-        match = re.search(r"Dispatch Complaint\s+([\w\s]+)", text, re.IGNORECASE)
+        match = re.search(r"EMD Complaint\s+([^\n]*)", text, re.IGNORECASE)
         if match:
-            return match.group(1).strip()
+            dispatch_complaint = match.group(1).strip()
+            if dispatch_complaint:
+                return dispatch_complaint.split("Country")[
+                    0
+                ].strip()  # Stop before the word "Country"
         return "No dispatch complaint found"
 
 
@@ -109,15 +128,3 @@ if __name__ == "__main__":
     with open("pdf_1.pdf", "rb") as file:
         content = file.read()
     pdf_extractor = PDFExtractor(None, None)
-
-    # Extract text from the PDF and print it
-    text = pdf_extractor._extract_text(content)
-    print("Extracted text from PDF:")
-    print(text)
-
-    # Extracted data
-    extracted_data = pdf_extractor.extract(content)
-    for category, info in extracted_data.items():
-        print(f"{category}:")
-        for key, value in info.items():
-            print(f"  {key}: {value}")
