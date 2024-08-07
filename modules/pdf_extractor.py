@@ -3,6 +3,9 @@ import io
 from modules.pdf_extractors.incident_information_extractor import (
     IncidentInformationExtractor,
 )
+from modules.pdf_extractors.patient_demographics_extractor import (
+    PatientDemographicsExtractor,
+)
 
 
 class PDFExtractor:
@@ -10,11 +13,13 @@ class PDFExtractor:
         self.model_loader = model_loader
         self.prompt_manager = prompt_manager
         self.incident_information_extractor = IncidentInformationExtractor()
+        self.patient_demographics_extractor = PatientDemographicsExtractor()
 
     def extract(self, content: bytes) -> dict:
         text = self._extract_text(content)
         data = {
             "Incident Information": self.incident_information_extractor.extract(text),
+            "Patient Demographics": self.patient_demographics_extractor.extract(text),
             # Add other sections here
         }
         return data
