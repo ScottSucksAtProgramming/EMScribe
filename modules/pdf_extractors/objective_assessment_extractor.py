@@ -5,14 +5,13 @@ import tabula
 class ObjectiveAssessmentExtractor:
     def extract(self, pdf_path: str) -> dict:
         try:
-            # Read the PDF file
+            # Read all tables from the PDF file
             tables = tabula.read_pdf(pdf_path, pages="all", multiple_tables=True)
 
             # Extract information for each section
             general_info = self._extract_general(tables)
             skin_info = self._extract_skin(tables)
             cardiovascular_info = self._extract_cardiovascular(tables)
-            # Add more sections as needed
         except Exception as e:
             return {"Error": f"Error extracting objective assessment: {e}"}
 
@@ -30,7 +29,6 @@ class ObjectiveAssessmentExtractor:
         return self._extract_section(tables, "Skin")
 
     def _extract_cardiovascular(self, tables) -> str:
-        # Combine results from "Chest", "Heart Sounds", "Lung Sounds"
         chest_info = self._extract_section(tables, "Chest")
         heart_sounds_info = self._extract_section(tables, "Heart Sounds")
         lung_sounds_info = self._extract_section(tables, "Lung Sounds")
@@ -40,27 +38,32 @@ class ObjectiveAssessmentExtractor:
         return combined_info
 
     def _extract_section(self, tables, label) -> str:
-        for table in tables:
-            df = pd.DataFrame(table)
-            df = df.fillna("").astype(
-                str
-            )  # Fill NaN with empty string and cast to string type
+        # Ensure we are looking at table 7
+        if len(tables) < 7:
+            return "[No Info]"
 
-            for i, row in df.iterrows():
-                for j, cell in row.items():
-                    if label in cell:
-                        info_col_left = df.columns.get_loc("Unnamed: 0")
-                        info_col_right = df.columns.get_loc("Unnamed: 1")
-                        section_info = []
+        df = pd.DataFrame(tables[6])
+        df = df.fillna("").astype(
+            str
+        )  # Fill NaN with empty string and cast to string type
 
-                        for k in range(i + 1, len(df)):
-                            if df.iloc[k, df.columns.get_loc(j)] == "":
-                                section_info.append(df.iloc[k, info_col_left])
-                                section_info.append(df.iloc[k, info_col_right])
-                            else:
-                                break
-                        combined_info = ", ".join(filter(None, section_info)).strip()
-                        return combined_info
+        for i, row in df.iterrows():
+            for j, cell in row.items():
+                if label in cell:
+                    section_info = []
+                    # Collect information below the label in the same column
+                    for k in range(i + 1, len(df)):
+                        if df.iloc[k, df.columns.get_loc("Assessments")] == "":
+                            section_info.append(
+                                df.iloc[k, df.columns.get_loc("Unnamed: 1")]
+                            )
+                            section_info.append(
+                                df.iloc[k, df.columns.get_loc("Unnamed: 0")]
+                            )
+                        else:
+                            break
+                    combined_info = ", ".join(filter(None, section_info)).strip()
+                    return combined_info
         return "[No Info]"
 
 
