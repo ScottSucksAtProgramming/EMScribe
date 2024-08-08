@@ -14,6 +14,7 @@ class PatientHistoriesExtractor:
             patient_histories = {
                 "Medical History": f"Error extracting patient histories: {e}",
                 "Medications": f"Error extracting patient histories: {e}",
+                "Allergies": f"Error extracting patient histories: {e}",
             }
 
         return {
@@ -37,7 +38,7 @@ class PatientHistoriesExtractor:
             "Allergies": "[No Info]",
         }
 
-        if len(tables) > 1:
+        if len(ttables) > 1:
             df = pd.DataFrame(tables[1])
             df = df.fillna("").astype(str)
 
@@ -49,6 +50,9 @@ class PatientHistoriesExtractor:
                     if "Medications" in cell:
                         if j + 1 < len(df.columns):
                             histories["Medications"] = df.iat[i, j + 1]
+                    if "Allergies" in cell:
+                        if j + 1 < len(df.columns):
+                            histories["Allergies"] = df.iat[i, j + 1]
 
         return histories
 
