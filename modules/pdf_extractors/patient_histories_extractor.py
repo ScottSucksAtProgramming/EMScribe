@@ -38,7 +38,7 @@ class PatientHistoriesExtractor:
             "Allergies": "[No Info]",
         }
 
-        if len(ttables) > 1:
+        if len(tables) > 1:
             df = pd.DataFrame(tables[1])
             df = df.fillna("").astype(str)
 
