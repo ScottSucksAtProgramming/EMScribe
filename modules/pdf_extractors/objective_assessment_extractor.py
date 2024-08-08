@@ -8,126 +8,60 @@ class ObjectiveAssessmentExtractor:
             # Read the PDF file
             tables = tabula.read_pdf(pdf_path, pages="all", multiple_tables=True)
 
-            # Find and extract objective assessment information
-            objective_assessment = self.extract_assessment(tables)
+            # Extract information for each section
+            general_info = self._extract_general(tables)
+            skin_info = self._extract_skin(tables)
+            cardiovascular_info = self._extract_cardiovascular(tables)
+            # Add more sections as needed
         except Exception as e:
-            objective_assessment = {
-                section: f"Error extracting {section.lower()}: {e}"
-                for section in self.sections()
-            }
+            return {"Error": f"Error extracting objective assessment: {e}"}
 
         return {
-            section: objective_assessment.get(section, "[No Info]")
-            for section in self.sections()
+            "GENERAL": general_info,
+            "SKIN": skin_info,
+            "CARDIOVASCULAR": cardiovascular_info,
+            # Add more sections as needed
         }
 
-    def extract_assessment(self, tables) -> dict:
-        assessment = {section: "[No Info]" for section in self.sections()}
+    def _extract_general(self, tables) -> str:
+        return self._extract_section(tables, "Mental Status")
 
+    def _extract_skin(self, tables) -> str:
+        return self._extract_section(tables, "Skin")
+
+    def _extract_cardiovascular(self, tables) -> str:
+        # Combine results from "Chest", "Heart Sounds", "Lung Sounds"
+        chest_info = self._extract_section(tables, "Chest")
+        heart_sounds_info = self._extract_section(tables, "Heart Sounds")
+        lung_sounds_info = self._extract_section(tables, "Lung Sounds")
+        combined_info = ", ".join(
+            filter(None, [chest_info, heart_sounds_info, lung_sounds_info])
+        ).strip()
+        return combined_info
+
+    def _extract_section(self, tables, label) -> str:
         for table in tables:
             df = pd.DataFrame(table)
-            df = df.fillna("").astype(str)
+            df = df.fillna("").astype(
+                str
+            )  # Fill NaN with empty string and cast to string type
 
             for i, row in df.iterrows():
                 for j, cell in row.items():
-                    if "Mental Status" in cell:
-                        assessment["GENERAL"] = self._extract_information(
-                            df, i, df.columns.get_loc(j)
-                        )
-                    elif "Skin" in cell:
-                        assessment["SKIN"] = self._extract_information(
-                            df, i, df.columns.get_loc(j)
-                        )
-                    elif "HEENT" in cell:
-                        assessment["HEENT"] = self._extract_information(
-                            df, i, df.columns.get_loc(j)
-                        )
-                    elif "NECK" in cell:
-                        assessment["NECK"] = self._extract_information(
-                            df, i, df.columns.get_loc(j)
-                        )
-                    elif "CARDIOVASCULAR" in cell:
-                        assessment["CARDIOVASCULAR"] = self._extract_information(
-                            df, i, df.columns.get_loc(j)
-                        )
-                    elif "RESPIRATORY" in cell:
-                        assessment["RESPIRATORY"] = self._extract_information(
-                            df, i, df.columns.get_loc(j)
-                        )
-                    elif "ABDOMEN" in cell:
-                        assessment["ABDOMEN"] = self._extract_information(
-                            df, i, df.columns.get_loc(j)
-                        )
-                    elif "GENITOURINARY" in cell:
-                        assessment["GENITOURINARY"] = self._extract_information(
-                            df, i, df.columns.get_loc(j)
-                        )
-                    elif "GASTROINTESTINAL" in cell:
-                        assessment["GASTROINTESTINAL"] = self._extract_information(
-                            df, i, df.columns.get_loc(j)
-                        )
-                    elif "SPINE" in cell:
-                        assessment["SPINE"] = self._extract_information(
-                            df, i, df.columns.get_loc(j)
-                        )
-                    elif "MUSCULOSKELETAL" in cell:
-                        assessment["MUSCULOSKELETAL"] = self._extract_information(
-                            df, i, df.columns.get_loc(j)
-                        )
-                    elif "NEUROLOGICAL" in cell:
-                        assessment["NEUROLOGICAL"] = self._extract_information(
-                            df, i, df.columns.get_loc(j)
-                        )
-                    elif "PSYCHIATRIC" in cell:
-                        assessment["PSYCHIATRIC"] = self._extract_information(
-                            df, i, df.columns.get_loc(j)
-                        )
+                    if label in cell:
+                        info_col_left = df.columns.get_loc("Unnamed: 0")
+                        info_col_right = df.columns.get_loc("Unnamed: 1")
+                        section_info = []
 
-        return assessment
-
-    def _extract_information(self, df: pd.DataFrame, row: int, col: int) -> str:
-        left_col = col - 1
-        right_col = col + 1
-        below_empty_count = 0
-
-        # Check cells below for empty values
-        for k in range(row + 1, len(df)):
-            if df.iat[k, col] == "":
-                below_empty_count += 1
-            else:
-                break
-
-        start_row = row
-        end_row = row + below_empty_count
-
-        left_info = df.iloc[start_row : end_row + 1, left_col].tolist()
-        right_info = df.iloc[start_row : end_row + 1, right_col].tolist()
-
-        # Filter out any header or non-relevant info
-        relevant_info = []
-        for info in left_info + right_info:
-            if not any(keyword in info for keyword in self.sections()):
-                relevant_info.append(info.strip())
-
-        combined_info = ", ".join([info for info in relevant_info if info]).strip()
-        return combined_info
-
-    def sections(self):
-        return [
-            "GENERAL",
-            "SKIN",
-            "HEENT",
-            "NECK",
-            "CARDIOVASCULAR",
-            "RESPIRATORY",
-            "ABDOMEN",
-            "GENITOURINARY",
-            "GASTROINTESTINAL",
-            "SPINE",
-            "MUSCULOSKELETAL",
-            "NEUROLOGICAL",
-            "PSYCHIATRIC",
-        ]
+                        for k in range(i + 1, len(df)):
+                            if df.iloc[k, df.columns.get_loc(j)] == "":
+                                section_info.append(df.iloc[k, info_col_left])
+                                section_info.append(df.iloc[k, info_col_right])
+                            else:
+                                break
+                        combined_info = ", ".join(filter(None, section_info)).strip()
+                        return combined_info
+        return "[No Info]"
 
 
 # Example usage
@@ -141,5 +75,5 @@ if __name__ == "__main__":
 
     for pdf_file in pdf_files:
         result = extractor.extract(pdf_file)
-        for key, value in result.items():
-            print(f"{key}: {value}")
+        for section, info in result.items():
+            print(f"{section}: {info}")

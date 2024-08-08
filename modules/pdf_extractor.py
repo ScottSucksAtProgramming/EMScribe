@@ -14,11 +14,11 @@ from modules.pdf_extractors.patient_demographics_extractor import (
 from modules.pdf_extractors.subjective_information_extractor import (
     SubjectiveInformationExtractor,
 )
-from modules.pdf_extractors.patient_histories_extractor import (
-    PatientHistoriesExtractor,
-)
 from modules.pdf_extractors.objective_assessment_extractor import (
     ObjectiveAssessmentExtractor,
+)
+from modules.pdf_extractors.patient_histories_extractor import (
+    PatientHistoriesExtractor,
 )
 
 
@@ -39,6 +39,10 @@ class PDFExtractor:
             f.write(content)
 
         text = self._extract_text(temp_pdf_path)
+        objective_assessment_info = self.objective_assessment_extractor.extract(
+            temp_pdf_path
+        )
+
         data = {
             "Incident Information": self.incident_information_extractor.extract(text),
             "Patient Demographics": self.patient_demographics_extractor.extract(text),
@@ -51,9 +55,7 @@ class PDFExtractor:
             "Patient Histories": self.patient_histories_extractor.extract(
                 temp_pdf_path
             ),
-            "Objective Assessment": self.objective_assessment_extractor.extract(
-                temp_pdf_path
-            ),
+            "Objective Assessment": objective_assessment_info,
         }
 
         os.remove(temp_pdf_path)
@@ -71,8 +73,11 @@ class PDFExtractor:
         formatted_data = []
         for section, content in data.items():
             formatted_data.append(f"{section}:")
-            for key, value in content.items():
-                formatted_data.append(f"{key}: {value}")
+            if isinstance(content, dict):
+                for key, value in content.items():
+                    formatted_data.append(f"{key}: {value}")
+            else:
+                formatted_data.append(str(content))
             formatted_data.append("")  # Add a newline between sections
         return "\n".join(formatted_data).replace("\n\n", "\n")  # Remove extra newlines
 
