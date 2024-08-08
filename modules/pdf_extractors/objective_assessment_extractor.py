@@ -8,36 +8,17 @@ class ObjectiveAssessmentExtractor:
             # Read all tables from the PDF file
             tables = tabula.read_pdf(pdf_path, pages="all", multiple_tables=True)
 
-            # Extract information for each section
+            # Extract information for the "GENERAL" section
             general_info = self._extract_general(tables)
-            skin_info = self._extract_skin(tables)
-            cardiovascular_info = self._extract_cardiovascular(tables)
         except Exception as e:
             return {"Error": f"Error extracting objective assessment: {e}"}
 
         return {
             "GENERAL": general_info,
-            "SKIN": skin_info,
-            "CARDIOVASCULAR": cardiovascular_info,
             # Add more sections as needed
         }
 
     def _extract_general(self, tables) -> str:
-        return self._extract_section(tables, "Mental Status")
-
-    def _extract_skin(self, tables) -> str:
-        return self._extract_section(tables, "Skin")
-
-    def _extract_cardiovascular(self, tables) -> str:
-        chest_info = self._extract_section(tables, "Chest")
-        heart_sounds_info = self._extract_section(tables, "Heart Sounds")
-        lung_sounds_info = self._extract_section(tables, "Lung Sounds")
-        combined_info = ", ".join(
-            filter(None, [chest_info, heart_sounds_info, lung_sounds_info])
-        ).strip()
-        return combined_info
-
-    def _extract_section(self, tables, label) -> str:
         # Ensure we are looking at table 7
         if len(tables) < 7:
             return "[No Info]"
@@ -49,21 +30,29 @@ class ObjectiveAssessmentExtractor:
 
         for i, row in df.iterrows():
             for j, cell in row.items():
-                if label in cell:
-                    section_info = []
-                    # Collect information below the label in the same column
+                if "Mental Status" in cell:
+                    # Label found, now count empty cells below it
+                    below_empty_count = 0
                     for k in range(i + 1, len(df)):
-                        if df.iloc[k, df.columns.get_loc("Assessments")] == "":
-                            section_info.append(
-                                df.iloc[k, df.columns.get_loc("Unnamed: 1")]
-                            )
-                            section_info.append(
-                                df.iloc[k, df.columns.get_loc("Unnamed: 0")]
-                            )
+                        if df.iloc[k, j] == "":
+                            below_empty_count += 1
                         else:
                             break
-                    combined_info = ", ".join(filter(None, section_info)).strip()
+
+                    # Extract information from the range to the left and right of the label column
+                    left_info = []
+                    right_info = []
+                    start_row = i + 1
+                    end_row = i + 1 + below_empty_count
+                    for k in range(start_row, end_row):
+                        left_info.append(df.iloc[k, df.columns.get_loc("Unnamed: 0")])
+                        right_info.append(df.iloc[k, df.columns.get_loc("Unnamed: 1")])
+
+                    combined_info = ", ".join(
+                        filter(None, left_info + right_info)
+                    ).strip()
                     return combined_info
+
         return "[No Info]"
 
 
