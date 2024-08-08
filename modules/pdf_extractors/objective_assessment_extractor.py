@@ -29,13 +29,44 @@ class ObjectiveAssessmentExtractor:
             df = df.fillna("").astype(str)
 
             for i, row in df.iterrows():
-                for j, cell in enumerate(row):
-                    for section in self.sections():
-                        if section in cell:
-                            if j + 1 < len(df.columns):
-                                assessment[section] = df.iat[i, j + 1]
+                for j, cell in row.items():
+                    if "Mental Status" in cell:
+                        assessment["GENERAL"] = self._extract_information(
+                            df, i, df.columns.get_loc(j)
+                        )
 
         return assessment
+
+    def _extract_information(self, df: pd.DataFrame, row: int, col: int) -> str:
+        left_col = col - 1
+        right_col = col + 1
+        above_empty_count = 0
+        below_empty_count = 0
+
+        # Check cells above for empty values
+        for k in range(row - 1, -1, -1):
+            if df.iat[k, col] == "":
+                above_empty_count += 1
+            else:
+                break
+
+        # Check cells below for empty values
+        for k in range(row + 1, len(df)):
+            if df.iat[k, col] == "":
+                below_empty_count += 1
+            else:
+                break
+
+        start_row = row - above_empty_count
+        end_row = row + below_empty_count
+
+        left_info = df.iloc[start_row : end_row + 1, left_col].tolist()
+        right_info = df.iloc[start_row : end_row + 1, right_col].tolist()
+
+        combined_info = ", ".join(
+            [info.strip() for info in left_info + right_info if info.strip()]
+        ).strip()
+        return combined_info
 
     def sections(self):
         return [
