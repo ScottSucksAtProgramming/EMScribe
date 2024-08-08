@@ -1,5 +1,10 @@
-import pdfplumber
 import io
+import os
+import pdfplumber
+
+from modules.pdf_extractors.history_of_present_illness_extractor import (
+    HistoryOfPresentIllnessExtractor,
+)
 from modules.pdf_extractors.incident_information_extractor import (
     IncidentInformationExtractor,
 )
@@ -8,9 +13,6 @@ from modules.pdf_extractors.patient_demographics_extractor import (
 )
 from modules.pdf_extractors.subjective_information_extractor import (
     SubjectiveInformationExtractor,
-)
-from modules.pdf_extractors.history_of_present_illness_extractor import (
-    HistoryOfPresentIllnessExtractor,
 )
 
 
@@ -24,7 +26,11 @@ class PDFExtractor:
         self.history_of_present_illness_extractor = HistoryOfPresentIllnessExtractor()
 
     def extract(self, content: bytes) -> dict:
-        text = self._extract_text(content)
+        temp_pdf_path = "temp_pdf.pdf"
+        with open(temp_pdf_path, "wb") as f:
+            f.write(content)
+
+        text = self._extract_text(temp_pdf_path)
         data = {
             "Incident Information": self.incident_information_extractor.extract(text),
             "Patient Demographics": self.patient_demographics_extractor.extract(text),
@@ -32,15 +38,16 @@ class PDFExtractor:
                 text
             ),
             "History of Present Illness": self.history_of_present_illness_extractor.extract(
-                text
+                temp_pdf_path
             ),
-            # Add other sections here
         }
+
+        os.remove(temp_pdf_path)
         return data
 
-    def _extract_text(self, content: bytes) -> str:
+    def _extract_text(self, pdf_path: str) -> str:
         text = ""
-        with pdfplumber.open(io.BytesIO(content)) as pdf:
+        with pdfplumber.open(pdf_path) as pdf:
             for page in pdf.pages:
                 page_text = page.extract_text()
                 text += page_text + "\n"
