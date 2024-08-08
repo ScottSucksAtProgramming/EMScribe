@@ -20,6 +20,9 @@ from modules.pdf_extractors.objective_assessment_extractor import (
 from modules.pdf_extractors.patient_histories_extractor import (
     PatientHistoriesExtractor,
 )
+from modules.pdf_extractors.vital_signs_extractor import (
+    VitalSignsExtractor,
+)
 
 
 class PDFExtractor:
@@ -32,6 +35,7 @@ class PDFExtractor:
         self.history_of_present_illness_extractor = HistoryOfPresentIllnessExtractor()
         self.patient_histories_extractor = PatientHistoriesExtractor()
         self.objective_assessment_extractor = ObjectiveAssessmentExtractor()
+        self.vital_signs_extractor = VitalSignsExtractor()
 
     def extract(self, content: bytes) -> dict:
         temp_pdf_path = "temp_pdf.pdf"
@@ -42,6 +46,7 @@ class PDFExtractor:
         objective_assessment_info = self.objective_assessment_extractor.extract(
             temp_pdf_path
         )
+        vital_signs_info = self.vital_signs_extractor.extract(temp_pdf_path)
 
         data = {
             "Incident Information": self.incident_information_extractor.extract(text),
@@ -56,6 +61,7 @@ class PDFExtractor:
                 temp_pdf_path
             ),
             "Objective Assessment": objective_assessment_info,
+            "Vital Signs": vital_signs_info,
         }
 
         os.remove(temp_pdf_path)
