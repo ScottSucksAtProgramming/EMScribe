@@ -41,9 +41,10 @@ class PatientHistoriesExtractor:
             df = df.fillna("").astype(str)
 
             for i, row in df.iterrows():
-                for j, cell in row.items():
+                for j, cell in enumerate(row):
                     if "History" in cell:
-                        histories["Medical History"] = df.iat[i, j + 1]
+                        if j + 1 < len(df.columns):
+                            histories["Medical History"] = df.iat[i, j + 1]
                         break
 
         return histories
