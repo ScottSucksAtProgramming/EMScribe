@@ -1,4 +1,3 @@
-# patient_histories_extractor.py
 import pandas as pd
 import tabula
 
@@ -9,75 +8,45 @@ class PatientHistoriesExtractor:
             # Read the PDF file
             tables = tabula.read_pdf(pdf_path, pages="all", multiple_tables=True)
 
-            # Find and extract patient histories information
-            medical_history = self._extract_medical_history(tables)
-            surgical_history = self._extract_surgical_history(tables)
-            social_history = self._extract_social_history(tables)
-            family_history = self._extract_family_history(tables)
-            sexual_history = self._extract_sexual_history(tables)
-            medications = self._extract_medications(tables)
-            allergies = self._extract_allergies(tables)
+            # Find and extract patient histories
+            patient_histories = self.extract_medical_history(tables)
         except Exception as e:
-            medical_history = surgical_history = social_history = family_history = (
-                sexual_history
-            ) = medications = allergies = f"Error extracting patient histories: {e}"
+            patient_histories = {
+                "Medical History": f"Error extracting patient histories: {e}"
+            }
 
         return {
-            "Medical History": medical_history,
-            "Surgical History": surgical_history,
-            "Social History": social_history,
-            "Family History": family_history,
-            "Sexual History": sexual_history,
-            "Medications": medications,
-            "Allergies": allergies,
+            "Medical History": patient_histories.get("Medical History", "[No Info]"),
+            "Surgical History": patient_histories.get("Surgical History", "[No Info]"),
+            "Social History": patient_histories.get("Social History", "[No Info]"),
+            "Family History": patient_histories.get("Family History", "[No Info]"),
+            "Sexual History": patient_histories.get("Sexual History", "[No Info]"),
+            "Medications": patient_histories.get("Medications", "[No Info]"),
+            "Allergies": patient_histories.get("Allergies", "[No Info]"),
         }
 
-    def _extract_medical_history(self, tables) -> str:
-        for table in tables:
-            df = pd.DataFrame(table)
-            df = df.fillna("").astype(
-                str
-            )  # Fill NaN with empty string and cast to string type
+    def extract_medical_history(self, tables) -> dict:
+        histories = {
+            "Medical History": "[No Info]",
+            "Surgical History": "[No Info]",
+            "Social History": "[No Info]",
+            "Family History": "[No Info]",
+            "Sexual History": "[No Info]",
+            "Medications": "[No Info]",
+            "Allergies": "[No Info]",
+        }
+
+        if len(tables) > 1:
+            df = pd.DataFrame(tables[1])
+            df = df.fillna("").astype(str)
 
             for i, row in df.iterrows():
                 for j, cell in row.items():
-                    if "Medical History" in cell:
-                        info_col = df.columns[df.columns.get_loc(j) + 1]
-                        medical_history_info = df[info_col].tolist()
-                        medical_history_text = ", ".join(
-                            [
-                                info.strip()
-                                for info in medical_history_info
-                                if info.strip()
-                            ]
-                        ).strip()
-                        return medical_history_text
+                    if "History" in cell:
+                        histories["Medical History"] = df.iat[i, j + 1]
+                        break
 
-        return "[No Info]"
-
-    def _extract_surgical_history(self, tables) -> str:
-        # Placeholder method to be implemented
-        return "[No Info]"
-
-    def _extract_social_history(self, tables) -> str:
-        # Placeholder method to be implemented
-        return "[No Info]"
-
-    def _extract_family_history(self, tables) -> str:
-        # Placeholder method to be implemented
-        return "[No Info]"
-
-    def _extract_sexual_history(self, tables) -> str:
-        # Placeholder method to be implemented
-        return "[No Info]"
-
-    def _extract_medications(self, tables) -> str:
-        # Placeholder method to be implemented
-        return "[No Info]"
-
-    def _extract_allergies(self, tables) -> str:
-        # Placeholder method to be implemented
-        return "[No Info]"
+        return histories
 
 
 # Example usage
@@ -91,7 +60,5 @@ if __name__ == "__main__":
 
     for pdf_file in pdf_files:
         result = extractor.extract(pdf_file)
-        print(f"Results for {pdf_file}:")
         for key, value in result.items():
             print(f"{key}: {value}")
-        print("\n")
