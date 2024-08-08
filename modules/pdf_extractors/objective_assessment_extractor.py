@@ -34,21 +34,61 @@ class ObjectiveAssessmentExtractor:
                         assessment["GENERAL"] = self._extract_information(
                             df, i, df.columns.get_loc(j)
                         )
+                    elif "Skin" in cell:
+                        assessment["SKIN"] = self._extract_information(
+                            df, i, df.columns.get_loc(j)
+                        )
+                    elif "HEENT" in cell:
+                        assessment["HEENT"] = self._extract_information(
+                            df, i, df.columns.get_loc(j)
+                        )
+                    elif "NECK" in cell:
+                        assessment["NECK"] = self._extract_information(
+                            df, i, df.columns.get_loc(j)
+                        )
+                    elif "CARDIOVASCULAR" in cell:
+                        assessment["CARDIOVASCULAR"] = self._extract_information(
+                            df, i, df.columns.get_loc(j)
+                        )
+                    elif "RESPIRATORY" in cell:
+                        assessment["RESPIRATORY"] = self._extract_information(
+                            df, i, df.columns.get_loc(j)
+                        )
+                    elif "ABDOMEN" in cell:
+                        assessment["ABDOMEN"] = self._extract_information(
+                            df, i, df.columns.get_loc(j)
+                        )
+                    elif "GENITOURINARY" in cell:
+                        assessment["GENITOURINARY"] = self._extract_information(
+                            df, i, df.columns.get_loc(j)
+                        )
+                    elif "GASTROINTESTINAL" in cell:
+                        assessment["GASTROINTESTINAL"] = self._extract_information(
+                            df, i, df.columns.get_loc(j)
+                        )
+                    elif "SPINE" in cell:
+                        assessment["SPINE"] = self._extract_information(
+                            df, i, df.columns.get_loc(j)
+                        )
+                    elif "MUSCULOSKELETAL" in cell:
+                        assessment["MUSCULOSKELETAL"] = self._extract_information(
+                            df, i, df.columns.get_loc(j)
+                        )
+                    elif "NEUROLOGICAL" in cell:
+                        assessment["NEUROLOGICAL"] = self._extract_information(
+                            df, i, df.columns.get_loc(j)
+                        )
+                    elif "PSYCHIATRIC" in cell:
+                        assessment["PSYCHIATRIC"] = self._extract_information(
+                            df, i, df.columns.get_loc(j)
+                        )
 
         return assessment
 
     def _extract_information(self, df: pd.DataFrame, row: int, col: int) -> str:
         left_col = col - 1
         right_col = col + 1
-        above_empty_count = 0
         below_empty_count = 0
-
-        # Check cells above for empty values
-        for k in range(row - 1, -1, -1):
-            if df.iat[k, col] == "":
-                above_empty_count += 1
-            else:
-                break
 
         # Check cells below for empty values
         for k in range(row + 1, len(df)):
@@ -57,15 +97,19 @@ class ObjectiveAssessmentExtractor:
             else:
                 break
 
-        start_row = row - above_empty_count
+        start_row = row
         end_row = row + below_empty_count
 
         left_info = df.iloc[start_row : end_row + 1, left_col].tolist()
         right_info = df.iloc[start_row : end_row + 1, right_col].tolist()
 
-        combined_info = ", ".join(
-            [info.strip() for info in left_info + right_info if info.strip()]
-        ).strip()
+        # Filter out any header or non-relevant info
+        relevant_info = []
+        for info in left_info + right_info:
+            if not any(keyword in info for keyword in self.sections()):
+                relevant_info.append(info.strip())
+
+        combined_info = ", ".join([info for info in relevant_info if info]).strip()
         return combined_info
 
     def sections(self):
