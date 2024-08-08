@@ -17,6 +17,9 @@ from modules.pdf_extractors.subjective_information_extractor import (
 from modules.pdf_extractors.patient_histories_extractor import (
     PatientHistoriesExtractor,
 )
+from modules.pdf_extractors.objective_assessment_extractor import (
+    ObjectiveAssessmentExtractor,
+)
 
 
 class PDFExtractor:
@@ -28,6 +31,7 @@ class PDFExtractor:
         self.subjective_information_extractor = SubjectiveInformationExtractor()
         self.history_of_present_illness_extractor = HistoryOfPresentIllnessExtractor()
         self.patient_histories_extractor = PatientHistoriesExtractor()
+        self.objective_assessment_extractor = ObjectiveAssessmentExtractor()
 
     def extract(self, content: bytes) -> dict:
         temp_pdf_path = "temp_pdf.pdf"
@@ -45,6 +49,9 @@ class PDFExtractor:
                 temp_pdf_path
             ),
             "Patient Histories": self.patient_histories_extractor.extract(
+                temp_pdf_path
+            ),
+            "Objective Assessment": self.objective_assessment_extractor.extract(
                 temp_pdf_path
             ),
         }
