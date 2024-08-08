@@ -83,6 +83,9 @@ class ExtractCommand:
         for category, info in data.items():
             formatted_data += f"{category}:\n"
             for key, value in info.items():
-                formatted_data += f"{key}: {value}\n"
+                if isinstance(value, list):
+                    formatted_data += f"{key}: {', '.join(value)}\n"
+                else:
+                    formatted_data += f"{key}: {value}\n"
             formatted_data += "\n"
         return formatted_data
