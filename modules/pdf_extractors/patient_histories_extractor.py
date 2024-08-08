@@ -9,10 +9,11 @@ class PatientHistoriesExtractor:
             tables = tabula.read_pdf(pdf_path, pages="all", multiple_tables=True)
 
             # Find and extract patient histories
-            patient_histories = self.extract_medical_history(tables)
+            patient_histories = self.extract_histories(tables)
         except Exception as e:
             patient_histories = {
-                "Medical History": f"Error extracting patient histories: {e}"
+                "Medical History": f"Error extracting patient histories: {e}",
+                "Medications": f"Error extracting patient histories: {e}",
             }
 
         return {
@@ -25,7 +26,7 @@ class PatientHistoriesExtractor:
             "Allergies": patient_histories.get("Allergies", "[No Info]"),
         }
 
-    def extract_medical_history(self, tables) -> dict:
+    def extract_histories(self, tables) -> dict:
         histories = {
             "Medical History": "[No Info]",
             "Surgical History": "[No Info]",
@@ -45,7 +46,9 @@ class PatientHistoriesExtractor:
                     if "History" in cell:
                         if j + 1 < len(df.columns):
                             histories["Medical History"] = df.iat[i, j + 1]
-                        break
+                    if "Medications" in cell:
+                        if j + 1 < len(df.columns):
+                            histories["Medications"] = df.iat[i, j + 1]
 
         return histories
 
