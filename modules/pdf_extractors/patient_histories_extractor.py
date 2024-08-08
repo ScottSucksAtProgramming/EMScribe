@@ -33,7 +33,26 @@ class PatientHistoriesExtractor:
         }
 
     def _extract_medical_history(self, tables) -> str:
-        # Placeholder method to be implemented
+        for table in tables:
+            df = pd.DataFrame(table)
+            df = df.fillna("").astype(
+                str
+            )  # Fill NaN with empty string and cast to string type
+
+            for i, row in df.iterrows():
+                for j, cell in row.items():
+                    if "Medical History" in cell:
+                        info_col = df.columns[df.columns.get_loc(j) + 1]
+                        medical_history_info = df[info_col].tolist()
+                        medical_history_text = ", ".join(
+                            [
+                                info.strip()
+                                for info in medical_history_info
+                                if info.strip()
+                            ]
+                        ).strip()
+                        return medical_history_text
+
         return "[No Info]"
 
     def _extract_surgical_history(self, tables) -> str:
