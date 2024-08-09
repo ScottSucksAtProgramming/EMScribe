@@ -58,8 +58,12 @@ class VitalSignsExtractor:
 
             best_match_column = column_candidates[0]
 
-            for i, value in enumerate(table[best_match_column]):
-                value = str(value).strip()
+            for i, row in table.iterrows():
+                # Skip rows where 'PTA' is present
+                if "PTA" in row.str.upper().tolist():
+                    continue
+
+                value = str(row[best_match_column]).strip()
 
                 # Specific handling for BP - validate using regex
                 if label == "BP":
@@ -73,7 +77,7 @@ class VitalSignsExtractor:
 
             return "[No Info]"
 
-        except Exception as e:
+        except Exception:
             return "[No Info]"
 
 
