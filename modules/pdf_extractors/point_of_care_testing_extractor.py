@@ -1,5 +1,6 @@
 import pandas as pd
 import tabula
+import re
 
 
 class PointOfCareTestingExtractor:
@@ -8,7 +9,7 @@ class PointOfCareTestingExtractor:
             # Read all tables from the PDF file
             tables = tabula.read_pdf(pdf_path, pages="all", multiple_tables=True)
 
-            # Placeholder methods for each Point of Care Testing field
+            # Extract information for each Point of Care Testing field
             capillary_blood_glucose = self._extract_capillary_blood_glucose(tables)
             ekg = self._extract_ekg(tables)
             etco2 = self._extract_etco2(tables)
@@ -28,6 +29,13 @@ class PointOfCareTestingExtractor:
         }
 
     def _extract_capillary_blood_glucose(self, tables) -> str:
+        for table in tables:
+            df = pd.DataFrame(table)
+            df = df.fillna("").astype(str)
+
+            # Look for the column related to Capillary Blood Glucose
+            if any(df.columns.str.contains("BG", case=False)):
+                return self._extract_first_value(df, "BG")
         return "[No Info]"
 
     def _extract_ekg(self, tables) -> str:
@@ -45,14 +53,44 @@ class PointOfCareTestingExtractor:
     def _extract_nihss(self, tables) -> str:
         return "[No Info]"
 
+    def _extract_first_value(self, table: pd.DataFrame, label: str) -> str:
+        try:
+            # Find the best matching column for the given label
+            column_candidates = [
+                col
+                for col in table.columns
+                if pd.Series(col).str.contains(label, case=False, na=False).any()
+            ]
+
+            if not column_candidates:
+                return "[No Info]"
+
+            best_match_column = column_candidates[0]
+
+            for i, row in table.iterrows():
+                time_value = row.get("Time", "").strip()
+                value = str(row[best_match_column]).strip()
+
+                # Skip rows with 'PTA' in the Time column
+                if "PTA" in time_value:
+                    continue
+
+                if value:
+                    return value
+
+            return "[No Info]"
+
+        except Exception:
+            return "[No Info]"
+
 
 # Example usage
 if __name__ == "__main__":
     extractor = PointOfCareTestingExtractor()
     pdf_files = [
-        "pdf_1.pdf",
-        "pdf_2.pdf",
-        "pdf_3.pdf",
+        "data/pdf_1.pdf",
+        "data/pdf_2.pdf",
+        "data/pdf_3.pdf",
     ]  # Add paths to your test PDFs here
 
     for pdf_file in pdf_files:
