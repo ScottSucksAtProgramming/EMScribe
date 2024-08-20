@@ -10,7 +10,6 @@ from modules.narrative_manager import NarrativeManager
 from modules.prompt_manager import PromptManager
 from modules.transcript_cleaner import TranscriptCleaner
 from modules.transcript_extractor import TranscriptExtractor
-from modules.pdf_extractor import PDFExtractor
 
 
 def initialize_components(base_url="http://localhost:11434", model_name="llama3.1"):
@@ -20,14 +19,12 @@ def initialize_components(base_url="http://localhost:11434", model_name="llama3.
 
     cleaner = TranscriptCleaner(model_loader, prompt_manager)
     transcript_extractor = TranscriptExtractor(model_loader, prompt_manager)
-    pdf_extractor = PDFExtractor(model_loader, prompt_manager)
     narrative_manager = NarrativeManager(model_loader, prompt_manager)
     extract_reviewer = ExtractReviewer(model_loader, prompt_manager)
 
     return (
         cleaner,
         transcript_extractor,
-        pdf_extractor,
         narrative_manager,
         extract_reviewer,
     )
@@ -110,7 +107,7 @@ def execute_command(args, components):
 
     command_map = {
         "clean": CleanCommand(cleaner),
-        "extract": ExtractCommand(transcript_extractor, pdf_extractor),
+        "extract": ExtractCommand(transcript_extractor),
         "generate": GenerateCommand(narrative_manager),
         "review": ReviewCommand(extract_reviewer),
     }
