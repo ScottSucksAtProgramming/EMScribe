@@ -3,7 +3,6 @@ import os
 from typing import Optional
 
 from modules.transcript_extractor import TranscriptExtractor
-from modules.pdf_extractor import PDFExtractor
 
 
 class ExtractCommand:
@@ -15,9 +14,7 @@ class ExtractCommand:
         pdf_extractor (PDFExtractor): An instance of PDFExtractor to extract information from PDF files.
     """
 
-    def __init__(
-        self, transcript_extractor: TranscriptExtractor, pdf_extractor: PDFExtractor
-    ):
+    def __init__(self, transcript_extractor: TranscriptExtractor):
         """
         Initializes the ExtractCommand with a TranscriptExtractor and PDFExtractor instance.
 
@@ -26,7 +23,6 @@ class ExtractCommand:
             pdf_extractor (PDFExtractor): An instance of PDFExtractor to extract information from PDF files.
         """
         self.transcript_extractor = transcript_extractor
-        self.pdf_extractor = pdf_extractor
 
     def execute(
         self, transcript_path: str, output_path: Optional[str] = "data/extract.txt"
