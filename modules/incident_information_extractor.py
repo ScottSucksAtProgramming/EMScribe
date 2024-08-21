@@ -1,7 +1,7 @@
 import pdfplumber
 import pandas as pd
-from dataclasses import dataclass, field
-from base_pdf_extractor import BasePDFExtractor
+from dataclasses import asdict, dataclass, field
+from modules.base_pdf_extractor import BasePDFExtractor
 
 
 @dataclass
@@ -132,13 +132,43 @@ class IncidentInformationExtractor(BasePDFExtractor):
         if not dispatch_complaint_row.empty:
             self.incident_info.dispatch_complaint = dispatch_complaint_row.iloc[0, 1]
 
+    def extract_response_delays(self):
+        response_delays_table = None
+
+        with pdfplumber.open(self.pdf_path) as pdf:
+            for page in pdf.pages:
+                tables = page.extract_tables()
+                for table in tables:
+                    df = pd.DataFrame(table)
+                    if "Response Delays" in df.values:
+                        response_delays_table = df
+                        break
+                if response_delays_table is not None:
+                    break
+
+        if response_delays_table is None:
+            self.incident_info.response_delays = "Not found"
+            return
+
+        # Extract the "Response Delays" information
+        response_delays_row = response_delays_table[
+            response_delays_table.iloc[:, 3] == "Response Delays"
+        ]
+        if not response_delays_row.empty:
+            self.incident_info.response_delays = response_delays_row.iloc[0, 4].strip()
+        else:
+            self.incident_info.response_delays = "Not available"
+
     def extract(self):
         self.extract_crew_type()
         self.extract_unit_and_response_mode()
         self.extract_incident_location_and_dispatch_complaint()
+        self.extract_response_delays()
         # Add methods to extract other fields and populate self.incident_info
 
-        return self.incident_info
+        return asdict(
+            self.incident_info
+        )  # Convert dataclass to dictionary before returning
 
 
 if __name__ == "__main__":
