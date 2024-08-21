@@ -39,7 +39,7 @@ class PDFExtractor:
 
 if __name__ == "__main__":
     # Example usage
-    file_path = "data/pdf_2.pdf"  # Path to your PDF file
+    file_path = "data/demo_eso.pdf"  # Path to your PDF file
     extractor = PDFExtractor(file_path)
     text = extractor.extract_text()
     print(text)
