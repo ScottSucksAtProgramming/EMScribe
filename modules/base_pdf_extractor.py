@@ -1,26 +1,57 @@
 from abc import ABC, abstractmethod
+import pdfplumber
 
 
 class BasePDFExtractor(ABC):
+    """
+    A base class for PDF extractors, providing common methods and structure for all specific extractors.
+
+    Attributes:
+        pdf_path (str): The path to the PDF file to be processed.
+    """
+
     def __init__(self, pdf_path):
+        """
+        Initializes the BasePDFExtractor with the path to the PDF.
+
+        Args:
+            pdf_path (str): The path to the PDF file.
+        """
         self.pdf_path = pdf_path
 
     @abstractmethod
-    def extract_patient_information(self):
-        """Extracts patient information from the PDF."""
+    def extract(self):
+        """
+        Abstract method to be implemented by subclasses to extract data from the PDF.
+
+        Returns:
+            dict: A dictionary containing the extracted information.
+        """
         pass
 
-    @abstractmethod
-    def extract_medication_info(self):
-        """Extracts medication information from the PDF."""
-        pass
+    def detect_and_split_tables(self, df, known_headings):
+        """
+        Detects where tables should be split based on known table headings.
 
-    @abstractmethod
-    def extract_clinical_impression(self):
-        """Extracts clinical impression information from the PDF."""
-        pass
+        Args:
+            df (pd.DataFrame): The original DataFrame containing multiple tables.
+            known_headings (list): A list of known table headings to look for.
 
-    @abstractmethod
-    def extract_all(self):
-        """Extracts all relevant information from the PDF."""
-        pass
+        Returns:
+            dict: A dictionary where keys are table headings and values are DataFrames of the split tables.
+        """
+        tables = {}
+        current_table_start = 0
+        current_heading = None
+
+        for i in range(df.shape[1]):  # Iterate over columns
+            if df.iloc[0, i] in known_headings:
+                if current_heading is not None:
+                    tables[current_heading] = df.iloc[:, current_table_start:i].copy()
+                current_heading = df.iloc[0, i]
+                current_table_start = i
+
+        if current_heading is not None:
+            tables[current_heading] = df.iloc[:, current_table_start:].copy()
+
+        return tables
