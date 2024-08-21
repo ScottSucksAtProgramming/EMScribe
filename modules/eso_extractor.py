@@ -1,5 +1,6 @@
 from base_pdf_extractor import BasePDFExtractor
 from patient_demographics_extractor import PatientDemographicsExtractor
+from medication_information_extractor import MedicationInformationExtractor
 
 
 class ESOExtractor(BasePDFExtractor):
@@ -12,16 +13,7 @@ class ESOExtractor(BasePDFExtractor):
     def __init__(self, pdf_path):
         super().__init__(pdf_path)
         self.demographics_extractor = PatientDemographicsExtractor(pdf_path)
-
-    def extract(self):
-        """
-        Extracts all relevant information from the PDF. This method is required
-        to fulfill the abstract method requirement from BasePDFExtractor.
-
-        Returns:
-            dict: A dictionary containing all the extracted information.
-        """
-        return self.extract_all()
+        self.medication_extractor = MedicationInformationExtractor(pdf_path)
 
     def extract_patient_information(self):
         """
@@ -32,7 +24,16 @@ class ESOExtractor(BasePDFExtractor):
         """
         return self.demographics_extractor.extract()
 
-    def extract_all(self):
+    def extract_medication_information(self):
+        """
+        Extracts medication information using the MedicationInformationExtractor.
+
+        Returns:
+            dict: Extracted medication information.
+        """
+        return self.medication_extractor.extract()
+
+    def extract(self):
         """
         Extracts all relevant information from the PDF.
 
@@ -41,8 +42,8 @@ class ESOExtractor(BasePDFExtractor):
         """
         return {
             "Patient Information": self.extract_patient_information(),
+            "Medication Information": self.extract_medication_information(),
             # Placeholder for future extractions:
-            # "Medication Information": self.extract_medication_info(),
             # "Clinical Impression": self.extract_clinical_impression(),
         }
 
@@ -56,3 +57,4 @@ if __name__ == "__main__":
         print(f"{section}:")
         for key, value in info.items():
             print(f"  {key}: {value}")
+        print()  # Adds an empty line after each section
