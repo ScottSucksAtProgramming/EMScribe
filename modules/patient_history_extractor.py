@@ -1,7 +1,7 @@
 import pdfplumber
 import pandas as pd
 from dataclasses import dataclass, field
-from base_pdf_extractor import BasePDFExtractor
+from modules.base_pdf_extractor import BasePDFExtractor
 
 
 @dataclass
