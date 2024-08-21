@@ -1,7 +1,7 @@
-from base_pdf_extractor import BasePDFExtractor
-from patient_demographics_extractor import PatientDemographicsExtractor
-from medication_information_extractor import MedicationInformationExtractor
-from clinical_impression_extractor import ClinicalImpressionExtractor
+from modules.base_pdf_extractor import BasePDFExtractor
+from modules.patient_demographics_extractor import PatientDemographicsExtractor
+from modules.medication_information_extractor import MedicationInformationExtractor
+from modules.clinical_impression_extractor import ClinicalImpressionExtractor
 
 
 class ESOExtractor(BasePDFExtractor):

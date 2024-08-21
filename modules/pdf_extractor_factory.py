@@ -1,6 +1,6 @@
 import re
 import pdfplumber
-from eso_extractor import ESOExtractor
+from modules.eso_extractor import ESOExtractor
 
 
 class PDFExtractorFactory:

@@ -1,6 +1,6 @@
 import pdfplumber
 import pandas as pd
-from base_pdf_extractor import BasePDFExtractor
+from modules.base_pdf_extractor import BasePDFExtractor
 
 
 class ClinicalImpressionExtractor(BasePDFExtractor):
