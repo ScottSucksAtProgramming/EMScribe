@@ -2,71 +2,78 @@ import pdfplumber
 import pandas as pd
 
 
-def extract_raw_tables(pdf_path, page_number):
+def extract_raw_tables_from_all_pages(pdf_path):
     """
-    Extracts tables from a given page of the PDF without any modifications.
+    Extracts tables from all pages of the PDF without any modifications.
 
     Args:
         pdf_path (str): Path to the PDF file.
-        page_number (int): Page number to extract tables from (0-indexed).
 
     Returns:
-        List[pd.DataFrame]: List of DataFrames, each representing a table.
+        dict: A dictionary where the keys are page numbers and the values are lists of DataFrames, each representing a table.
     """
     # Set pandas display options to avoid truncation
     pd.set_option("display.max_columns", None)
     pd.set_option("display.expand_frame_repr", False)
 
+    all_tables = {}
+
     with pdfplumber.open(pdf_path) as pdf:
-        page = pdf.pages[page_number]
-        tables = page.extract_tables()
-        dataframes = [pd.DataFrame(table) for table in tables]
-        for i, df in enumerate(dataframes):
-            print(f"--- Raw Table {i + 1} ---")
-            print(df)
-        return dataframes
+        for page_number, page in enumerate(pdf.pages):
+            tables = page.extract_tables()
+            dataframes = [pd.DataFrame(table) for table in tables]
+            all_tables[page_number] = dataframes
+            for i, df in enumerate(dataframes):
+                print(f"--- Page {page_number + 1} - Raw Table {i + 1} ---")
+                print(df)
+
+    return all_tables
 
 
-def extract_advance_directives(pdf_path, page_number):
+def extract_advance_directives(pdf_path):
     """
-    Extracts the 'Advance Directives' information from the first table of the PDF page.
+    Extracts the 'Advance Directives' information from the first table of each page of the PDF.
 
     Args:
         pdf_path (str): Path to the PDF file.
-        page_number (int): Page number to extract information from (0-indexed).
 
     Returns:
-        str: The extracted 'Advance Directives' information, with newlines replaced by spaces.
+        dict: A dictionary with page numbers as keys and the 'Advance Directives' information as values.
     """
+    advance_directives_info = {}
+
     with pdfplumber.open(pdf_path) as pdf:
-        page = pdf.pages[page_number]
-        tables = page.extract_tables()
+        for page_number, page in enumerate(pdf.pages):
+            tables = page.extract_tables()
 
-        # Assuming you want to extract from the first table (index 0)
-        if tables:
-            df = pd.DataFrame(tables[0])
+            # Assuming you want to extract from the first table (index 0)
+            if tables:
+                df = pd.DataFrame(tables[0])
 
-            # Find the row where "Advance Directives" is mentioned
-            advance_directives_row = df[df[0] == "Advance Directives"]
+                # Find the row where "Advance Directives" is mentioned
+                advance_directives_row = df[df[0] == "Advance Directives"]
 
-            # Extract the relevant information from that row
-            if not advance_directives_row.empty:
-                advance_directives_info = advance_directives_row.iloc[
-                    0, 2
-                ]  # Assuming the info is in the third column
-                # Replace newline characters with a space
-                return advance_directives_info.replace("\n", " ")
-            else:
-                return "Advance Directives not found."
+                # Extract the relevant information from that row
+                if not advance_directives_row.empty:
+                    info = advance_directives_row.iloc[
+                        0, 2
+                    ]  # Assuming the info is in the third column
+                    # Replace newline characters with a space
+                    advance_directives_info[page_number] = info.replace("\n", " ")
+                else:
+                    advance_directives_info[page_number] = (
+                        "Advance Directives not found."
+                    )
+
+    return advance_directives_info
 
 
-def display_full_table(pdf_path, page_number):
+def display_full_table_from_all_pages(pdf_path):
     """
-    Extracts and displays the entire table from the specified page of the PDF without any truncation.
+    Extracts and displays all tables from all pages of the PDF without any truncation.
 
     Args:
         pdf_path (str): Path to the PDF file.
-        page_number (int): Page number to extract the table from (0-indexed).
     """
     # Set pandas display options to ensure all data is shown
     pd.set_option("display.max_columns", None)  # Show all columns
@@ -77,16 +84,26 @@ def display_full_table(pdf_path, page_number):
     )  # Prevent DataFrame from being split across multiple lines
 
     with pdfplumber.open(pdf_path) as pdf:
-        page = pdf.pages[page_number]
-        tables = page.extract_tables()
+        for page_number, page in enumerate(pdf.pages):
+            tables = page.extract_tables()
 
-        for i, table in enumerate(tables):
-            df = pd.DataFrame(table)
-            print(f"--- Table {i + 1} ---")
-            print(df)
+            for i, table in enumerate(tables):
+                df = pd.DataFrame(table)
+                print(f"--- Page {page_number + 1} - Table {i + 1} ---")
+                print(df)
 
 
 if __name__ == "__main__":
     pdf_path = "data/demo_eso.pdf"  # Path to your PDF file
-    page_number = 0  # Specific page you want to analyze
-    display_full_table(pdf_path, page_number)
+
+    # Example: Extract and display all tables from all pages
+    display_full_table_from_all_pages(pdf_path)
+
+    # Example: Extract raw tables from all pages
+    all_tables = extract_raw_tables_from_all_pages(pdf_path)
+
+    # Example: Extract 'Advance Directives' from all pages
+    advance_directives_info = extract_advance_directives(pdf_path)
+    print("\nAdvance Directives Information:")
+    for page, info in advance_directives_info.items():
+        print(f"Page {page + 1}: {info}")
