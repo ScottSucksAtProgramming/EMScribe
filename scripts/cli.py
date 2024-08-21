@@ -52,7 +52,7 @@ def create_parser():
         "transcript_path",
         nargs="?",
         default="data/cleaned_transcript.txt",
-        help="Path to the transcript file",
+        help="Path to the transcript or PDF file",
     )
     parser_extract.add_argument(
         "--output",
@@ -100,7 +100,6 @@ def execute_command(args, components):
     (
         cleaner,
         transcript_extractor,
-        pdf_extractor,
         narrative_manager,
         extract_reviewer,
     ) = components

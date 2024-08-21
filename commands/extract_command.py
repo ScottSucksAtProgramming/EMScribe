@@ -3,6 +3,9 @@ import os
 from typing import Optional
 
 from modules.transcript_extractor import TranscriptExtractor
+from modules.pdf_extractor_factory import (
+    PDFExtractorFactory,
+)  # Import the factory for PDF extraction
 
 
 class ExtractCommand:
@@ -11,16 +14,14 @@ class ExtractCommand:
 
     Attributes:
         transcript_extractor (TranscriptExtractor): An instance of TranscriptExtractor to extract information from text files.
-        pdf_extractor (PDFExtractor): An instance of PDFExtractor to extract information from PDF files.
     """
 
     def __init__(self, transcript_extractor: TranscriptExtractor):
         """
-        Initializes the ExtractCommand with a TranscriptExtractor and PDFExtractor instance.
+        Initializes the ExtractCommand with a TranscriptExtractor instance.
 
         Args:
             transcript_extractor (TranscriptExtractor): An instance of TranscriptExtractor to extract information from text files.
-            pdf_extractor (PDFExtractor): An instance of PDFExtractor to extract information from PDF files.
         """
         self.transcript_extractor = transcript_extractor
 
@@ -48,7 +49,9 @@ class ExtractCommand:
                 file_type = os.path.splitext(transcript_path)[1]
 
             if file_type == ".pdf":
-                extracted_data = self.pdf_extractor.extract(content)
+                # Use the PDFExtractorFactory to get the correct extractor
+                extractor = PDFExtractorFactory.get_extractor(transcript_path)
+                extracted_data = extractor.extract()
                 extracted_data_str = self._format_extracted_data(extracted_data)
             elif file_type == ".txt":
                 transcript = content.decode("utf-8")
