@@ -1,6 +1,7 @@
 from base_pdf_extractor import BasePDFExtractor
 from patient_demographics_extractor import PatientDemographicsExtractor
 from medication_information_extractor import MedicationInformationExtractor
+from clinical_impression_extractor import ClinicalImpressionExtractor
 
 
 class ESOExtractor(BasePDFExtractor):
@@ -14,6 +15,7 @@ class ESOExtractor(BasePDFExtractor):
         super().__init__(pdf_path)
         self.demographics_extractor = PatientDemographicsExtractor(pdf_path)
         self.medication_extractor = MedicationInformationExtractor(pdf_path)
+        self.clinical_impression_extractor = ClinicalImpressionExtractor(pdf_path)
 
     def extract_patient_information(self):
         """
@@ -41,10 +43,9 @@ class ESOExtractor(BasePDFExtractor):
             dict: A dictionary containing all the extracted information.
         """
         return {
-            "Patient Information": self.extract_patient_information(),
-            "Medication Information": self.extract_medication_information(),
-            # Placeholder for future extractions:
-            # "Clinical Impression": self.extract_clinical_impression(),
+            "Patient Information": self.demographics_extractor.extract(),
+            "Medication Information": self.medication_extractor.extract(),
+            "Clinical Impression": self.clinical_impression_extractor.extract(),
         }
 
 
