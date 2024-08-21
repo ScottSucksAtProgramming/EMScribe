@@ -5,6 +5,7 @@ from modules.clinical_impression_extractor import ClinicalImpressionExtractor
 from modules.incident_information_extractor import IncidentInformationExtractor
 from modules.subjective_information_extractor import SubjectiveInformationExtractor
 from modules.hpi_extractor import HPIExtractor
+from modules.patient_history_extractor import PatientHistoriesExtractor
 
 
 class ESOExtractor(BasePDFExtractor):
@@ -22,6 +23,7 @@ class ESOExtractor(BasePDFExtractor):
         self.clinical_impression_extractor = ClinicalImpressionExtractor(pdf_path)
         self.subjective_information_extractor = SubjectiveInformationExtractor(pdf_path)
         self.hpi_extractor = HPIExtractor(pdf_path)
+        self.patient_histories_extractor = PatientHistoriesExtractor(pdf_path)
 
     def extract_incident_information(self):
         """
@@ -71,6 +73,7 @@ class ESOExtractor(BasePDFExtractor):
             "Patient Information": self.extract_patient_information(),
             "Subjective Information": self.extract_subjective_information(),
             "History of Present Illness Information": self.hpi_extractor.extract(),
+            "Patient Histories": self.patient_histories_extractor.extract(),
             "Medication Information": self.extract_medication_information(),
             "Clinical Impression": self.clinical_impression_extractor.extract(),
         }
