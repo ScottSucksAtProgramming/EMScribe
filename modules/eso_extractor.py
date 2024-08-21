@@ -3,6 +3,7 @@ from modules.patient_demographics_extractor import PatientDemographicsExtractor
 from modules.medication_information_extractor import MedicationInformationExtractor
 from modules.clinical_impression_extractor import ClinicalImpressionExtractor
 from modules.incident_information_extractor import IncidentInformationExtractor
+from modules.subjective_information_extractor import SubjectiveInformationExtractor
 
 
 class ESOExtractor(BasePDFExtractor):
@@ -18,6 +19,7 @@ class ESOExtractor(BasePDFExtractor):
         self.demographics_extractor = PatientDemographicsExtractor(pdf_path)
         self.medication_extractor = MedicationInformationExtractor(pdf_path)
         self.clinical_impression_extractor = ClinicalImpressionExtractor(pdf_path)
+        self.subjective_information_extractor = SubjectiveInformationExtractor(pdf_path)
 
     def extract_incident_information(self):
         """
@@ -46,6 +48,15 @@ class ESOExtractor(BasePDFExtractor):
         """
         return self.medication_extractor.extract()
 
+    def extract_subjective_information(self):
+        """
+        Extracts subjective information using the SubjectiveInformationExtractor.
+
+        Returns:
+            dict: Extracted subjective information.
+        """
+        return self.subjective_information_extractor.extract()
+
     def extract(self):
         """
         Extracts all relevant information from the PDF.
@@ -54,9 +65,10 @@ class ESOExtractor(BasePDFExtractor):
             dict: A dictionary containing all the extracted information.
         """
         return {
-            "Incident Information": self.incident_information_extractor.extract(),
-            "Patient Information": self.demographics_extractor.extract(),
-            "Medication Information": self.medication_extractor.extract(),
+            "Incident Information": self.extract_incident_information(),
+            "Patient Information": self.extract_patient_information(),
+            "Subjective Information": self.extract_subjective_information(),
+            "Medication Information": self.extract_medication_information(),
             "Clinical Impression": self.clinical_impression_extractor.extract(),
         }
 

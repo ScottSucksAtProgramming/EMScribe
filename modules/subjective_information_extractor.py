@@ -1,7 +1,9 @@
-import pdfplumber
+from dataclasses import asdict, dataclass, field
+
 import pandas as pd
-from base_pdf_extractor import BasePDFExtractor
-from dataclasses import dataclass, field
+import pdfplumber
+
+from modules.base_pdf_extractor import BasePDFExtractor
 
 
 @dataclass
@@ -26,36 +28,28 @@ class SubjectiveInformationExtractor(BasePDFExtractor):
                 tables = page.extract_tables()
                 for table in tables:
                     df = pd.DataFrame(table)
-                    if "Incident Details" in df.iloc[0].values:
+                    if "Incident Details" in df.values:
                         incident_details_table = df
                         break
                 if incident_details_table is not None:
                     break
 
         if incident_details_table is None:
-            self.subjective_info.facility_name = "Not found"
+            self.subjective_info.facility_name = "Private Residence"
             return
 
-        # Clean the dataframe by dropping empty rows and columns
-        incident_details_table.dropna(how="all", inplace=True)
-        incident_details_table.dropna(axis=1, how="all", inplace=True)
-
-        # Find the location type and facility name
         location_type_row = incident_details_table[
-            incident_details_table.iloc[:, 0] == "Location Type"
+            incident_details_table[0] == "Location Type"
         ]
-        location_name_row = incident_details_table[
-            incident_details_table.iloc[:, 0] == "Location"
-        ]
+        location_row = incident_details_table[incident_details_table[0] == "Location"]
 
-        if not location_type_row.empty and not location_name_row.empty:
+        if not location_type_row.empty:
             location_type = location_type_row.iloc[0, 1]
             if "Residence" not in location_type and "Home" not in location_type:
-                self.subjective_info.facility_name = location_name_row.iloc[
-                    0, 1
-                ].strip()
+                facility_name = location_row.iloc[0, 1].replace("\n", " ")
+                self.subjective_info.facility_name = facility_name
             else:
-                self.subjective_info.facility_name = ""
+                self.subjective_info.facility_name = "Private Residence"
         else:
             self.subjective_info.facility_name = "Private Residence"
 
@@ -95,7 +89,7 @@ class SubjectiveInformationExtractor(BasePDFExtractor):
         self.extract_chief_complaint()
         # Extract other fields as needed
 
-        return self.subjective_info
+        return asdict(self.subjective_info)
 
 
 if __name__ == "__main__":
