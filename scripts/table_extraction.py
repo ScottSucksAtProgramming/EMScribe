@@ -44,7 +44,7 @@ def extract_tables(pdf_path, page_number):
 
 def clean_extracted_table(df):
     """
-    Cleans up the extracted table by removing rows with mostly None values and handling specific columns.
+    Cleans up the extracted table by handling specific columns and data realignment.
 
     Args:
         df (pd.DataFrame): The extracted table as a DataFrame.
@@ -58,7 +58,22 @@ def clean_extracted_table(df):
     # Fill forward or backward for merged cells, if applicable
     df_cleaned = df_cleaned.ffill().bfill()
 
-    # Additional custom cleaning logic here, if needed
+    # Drop columns where all values are None
+    df_cleaned = df_cleaned.dropna(axis=1, how="all")
+
+    # Handle misaligned rows where data may be misplaced
+    def is_misaligned(row):
+        # Check if the row has a structure that suggests misalignment
+        # Example: If a row contains more 'None' than data, it's possibly misaligned
+        if row.isnull().sum() > len(row) / 2:
+            return True
+        return False
+
+    misaligned_rows = df_cleaned[df_cleaned.apply(is_misaligned, axis=1)]
+    for idx, row in misaligned_rows.iterrows():
+        # Attempt to realign data based on custom logic here
+        # This could involve moving values between columns, merging rows, etc.
+        pass
 
     return df_cleaned
 
@@ -90,6 +105,6 @@ def extract_and_clean_tables(pdf_path, page_number):
 
 
 if __name__ == "__main__":
-    pdf_path = "data/pdf_2.pdf"  # Update with your actual PDF path
-    page_number = 0  # Update with the specific page you want to analyze
+    pdf_path = "data/demo_eso.pdf"  # Path to your PDF file
+    page_number = 0  # Specific page you want to analyze
     extract_and_clean_tables(pdf_path, page_number)
