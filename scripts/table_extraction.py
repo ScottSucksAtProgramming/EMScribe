@@ -56,7 +56,7 @@ def clean_extracted_table(df):
     df_cleaned = df.dropna(how="all")
 
     # Fill forward or backward for merged cells, if applicable
-    df_cleaned = df_cleaned.fillna(method="ffill").fillna(method="bfill")
+    df_cleaned = df_cleaned.ffill().bfill()
 
     # Additional custom cleaning logic here, if needed
 
