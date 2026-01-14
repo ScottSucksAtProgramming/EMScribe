@@ -12,7 +12,10 @@ from modules.transcript_cleaner import TranscriptCleaner
 from modules.transcript_extractor import TranscriptExtractor
 
 
-def initialize_components(base_url="http://localhost:11434", model_name="llama3.1"):
+def initialize_components(
+    base_url="http://localhost:1234",
+    model_name="qwen/qwen3-30b-a3b-2507",
+):
     """Initialize all the required components."""
     prompt_manager = PromptManager()
     model_loader = ModelLoader(base_url=base_url, model_name=model_name)
