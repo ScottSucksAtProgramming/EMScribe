@@ -3,3 +3,7 @@ source = ["modules", "commands", "scripts", "utils"]
 
 [tool.pytest.ini_options]
 addopts = "--cov --cov-report=lcov:lcov.info --cov-report=term"
+testpaths = ["tests"]
+
+[tool.flake8]
+max-line-length = 88
