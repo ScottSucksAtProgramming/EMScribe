@@ -1,7 +1,6 @@
 from dataclasses import asdict, dataclass, field
 
 import pandas as pd
-import pdfplumber
 
 from modules.base_pdf_extractor import BasePDFExtractor
 
@@ -22,6 +21,8 @@ class SubjectiveInformationExtractor(BasePDFExtractor):
 
     def extract_facility_name(self):
         incident_details_table = None
+
+        import pdfplumber  # type: ignore
 
         with pdfplumber.open(self.pdf_path) as pdf:
             for page in pdf.pages:
@@ -54,6 +55,8 @@ class SubjectiveInformationExtractor(BasePDFExtractor):
             self.subjective_info.facility_name = "Private Residence"
 
     def extract_chief_complaint(self):
+        import pdfplumber  # type: ignore
+
         with pdfplumber.open(self.pdf_path) as pdf:
             for page in pdf.pages:
                 tables = page.extract_tables()

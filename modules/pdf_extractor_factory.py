@@ -1,11 +1,13 @@
 import re
-import pdfplumber
 from modules.eso_extractor import ESOExtractor
 
 
 class PDFExtractorFactory:
     @staticmethod
     def get_extractor(pdf_path):
+        # Lazy import to avoid requiring pdfplumber when not using PDF features
+        import pdfplumber  # type: ignore
+
         with pdfplumber.open(pdf_path) as pdf:
             content = pdf.pages[0].extract_text()
 

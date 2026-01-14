@@ -1,4 +1,3 @@
-import pdfplumber
 import pandas as pd
 from modules.base_pdf_extractor import BasePDFExtractor
 
@@ -23,6 +22,9 @@ class PatientDemographicsExtractor(BasePDFExtractor):
             dict: A dictionary containing the extracted patient demographics.
         """
         patient_info = {}
+        # Lazy import to avoid requiring pdfplumber at import time
+        import pdfplumber  # type: ignore
+
         with pdfplumber.open(self.pdf_path) as pdf:
             page = pdf.pages[0]
             tables = page.extract_tables()

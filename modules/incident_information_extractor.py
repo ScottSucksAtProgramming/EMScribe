@@ -1,4 +1,3 @@
-import pdfplumber
 import pandas as pd
 from dataclasses import asdict, dataclass, field
 from modules.base_pdf_extractor import BasePDFExtractor
@@ -21,6 +20,8 @@ class IncidentInformationExtractor(BasePDFExtractor):
 
     def extract_crew_type(self):
         crew_members_table = None
+
+        import pdfplumber  # type: ignore
 
         with pdfplumber.open(self.pdf_path) as pdf:
             for page in pdf.pages:
@@ -67,6 +68,8 @@ class IncidentInformationExtractor(BasePDFExtractor):
     def extract_unit_and_response_mode(self):
         incident_details_table = None
 
+        import pdfplumber  # type: ignore
+
         with pdfplumber.open(self.pdf_path) as pdf:
             for page in pdf.pages:
                 tables = page.extract_tables()
@@ -100,6 +103,8 @@ class IncidentInformationExtractor(BasePDFExtractor):
 
     def extract_incident_location_and_dispatch_complaint(self):
         incident_details_table = None
+
+        import pdfplumber  # type: ignore
 
         with pdfplumber.open(self.pdf_path) as pdf:
             for page in pdf.pages:

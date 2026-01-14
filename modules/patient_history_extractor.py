@@ -1,4 +1,3 @@
-import pdfplumber
 import pandas as pd
 from dataclasses import dataclass, field
 from modules.base_pdf_extractor import BasePDFExtractor
@@ -45,6 +44,8 @@ class PatientHistoriesExtractor(BasePDFExtractor):
         """
         Extracts all relevant information from the medications/allergies/history table.
         """
+        import pdfplumber  # type: ignore
+
         with pdfplumber.open(self.pdf_path) as pdf:
             for page in pdf.pages:
                 tables = page.extract_tables()
