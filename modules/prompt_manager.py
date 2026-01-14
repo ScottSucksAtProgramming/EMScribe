@@ -1,3 +1,4 @@
+import os
 from typing import Any, Dict, Union
 
 from modules.prompts import (
@@ -10,8 +11,8 @@ from modules.prompts import (
 
 class PromptManager:
     """
-    Manages prompts for various tasks such as extraction, cleaning, narrative generation,
-    and quality control.
+    Manages prompts for tasks such as extraction, cleaning, narrative
+    generation, and quality control.
     """
 
     def __init__(
@@ -23,8 +24,10 @@ class PromptManager:
         Initializes the PromptManager with a dictionary of prompts.
 
         Args:
-            prompts (Dict[str, Union[str, Dict[str, str]]], optional): A dictionary of prompts. Defaults to None.
-            context_window_size (int): The maximum context window size for the prompts.
+            prompts (Dict[str, Union[str, Dict[str, str]]], optional): A
+                dictionary of prompts. Defaults to None.
+            context_window_size (int): The maximum context window size for the
+                prompts.
         """
         if prompts is None:
             prompts = {
@@ -34,7 +37,12 @@ class PromptManager:
                 **review_prompts.review_prompts,
             }
         self.prompts = prompts
-        self.context_window_size = context_window_size
+        env_prompt_window = os.getenv("EMS_PROMPT_CONTEXT_WINDOW")
+        self.context_window_size = (
+            int(env_prompt_window)
+            if env_prompt_window is not None
+            else context_window_size
+        )
 
     def get_prompt(
         self, key: str, **kwargs: Any
